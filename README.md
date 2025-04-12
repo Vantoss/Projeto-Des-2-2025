@@ -6,5 +6,5 @@ O usuário pode anotar e visualizar seus gastos diários, receber notificações
 # Setup do Projeto
 A adicionar...
 
-#Executando o Projeto
+# Executando o Projeto
 A adicionar...
