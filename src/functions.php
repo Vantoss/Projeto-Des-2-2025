@@ -14,12 +14,32 @@ function iniBanco(){
     return $dbconn;
 }
 
+function getBanco(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
 
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
 
+    $sql = "SELECT nome, senha FROM usuarios";
+    $result = $dbconn->query($sql);
 
+    $dbconn->close();
 
+    return $result;
+}
 
+function postBanco(){
 
+}
+
+function putBanco(){
+
+}
+
+function delBanco(){
+
+}
 
 
 
