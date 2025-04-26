@@ -1,5 +1,7 @@
 <?php 
 
+header("Content-type: application/json");
+
 function iniBanco(){
     $host = "localhost";
     $dbUser = "root";
@@ -14,7 +16,7 @@ function iniBanco(){
     return $dbconn;
 }
 
-function getBanco(){
+function get(){
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
@@ -23,26 +25,32 @@ function getBanco(){
 
     $sql = "SELECT nome, senha FROM usuarios";
     $result = $dbconn->query($sql);
+    $array = array();
+    while($linha = mysqli_fetch_assoc($result)){
+        $array[] = $linha;
+    }
+    echo '{ "usuarios" : ' . json_encode($array) . ' } ';
 
     $dbconn->close();
 
-    return $result;
 }
 
-function postBanco(){
-
-}
-
-function putBanco(){
+function post(){
 
 }
 
-function delBanco(){
+function put(){
+
+}
+
+function del(){
 
 }
 
 
-
+if (isset($_REQUEST["get"])){
+    get();
+}
 
 
 
