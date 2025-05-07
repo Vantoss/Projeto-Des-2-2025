@@ -25,5 +25,11 @@
             <td id="pass">a</td>
         </tr>
     </table>
+
+    
+    <input type="text" id="userNome" placeholder="Nome de usuário" required>
+    <input type="password" id="userPass" placeholder="Senha" required>
+    <button type="submit" id="post" onclick="postBanco()">Enviar</input>
+    
 </body>
 </html>

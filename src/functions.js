@@ -18,3 +18,24 @@ function getBanco(){
     xhttp.open("GET", "../functions.php?get", true);
     xhttp.send();
 }
+
+function postBanco(){
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText)
+        }
+    };
+    url = "../functions.php?post&nome=" + document.getElementById("userNome").value + "&senha=" + document.getElementById("userPass").value;
+    xhttp.open("GET", url, true);
+    xhttp.send()
+}
+
+function putBanco(){
+
+}
+
+function delBanco(){
+
+}
