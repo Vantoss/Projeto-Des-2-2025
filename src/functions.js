@@ -33,9 +33,27 @@ function postBanco(){
 }
 
 function putBanco(){
+    var xhttp = new XMLHttpRequest();
 
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText)
+        }
+    };
+    url = "../functions.php?put&nome=" + document.getElementById("userNome").value + "&senha=" + document.getElementById("userPass").value + "&id=" + document.getElementById("userId").value;
+    xhttp.open("GET", url, true);
+    xhttp.send()
 }
 
 function delBanco(){
+    var xhttp = new XMLHttpRequest();
 
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText)
+        }
+    };
+    url = "../functions.php?del&id=" + document.getElementById("userId").value;
+    xhttp.open("GET", url, true);
+    xhttp.send()
 }

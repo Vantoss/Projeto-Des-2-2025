@@ -16,6 +16,30 @@ function iniBanco(){
     return $dbconn;
 }
 
+function login(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $nome = $_GET["nome"];
+    $senha = $_GET["senha"];
+    if (!$nome || !$senha){
+        die("Dados não entraram!");
+    }
+    $sql = "SELECT nome, senha FROM usuarios WHERE nome = '$nome' AND senha = '$senha'";
+    $result = $dbconn->query($sql);
+    if (mysqli_num_rows($result)){
+        while($col = mysqli_fetch_assoc($result)){
+            echo $col["nome"];
+        }
+    } else {
+        echo "Sem resultados!";
+    }
+    $dbconn->close();
+
+}
+
 function get(){
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
@@ -42,11 +66,11 @@ function post(){
         die("Conexão falhou");
     }
     $nome = $_GET["nome"];
-    $preco = $_GET["senha"];
-    if (!$nome || !$preco ){
+    $senha = $_GET["senha"];
+    if (!$nome || !$senha ){
         die("Dados não entraram!");
     }
-    $sql = "INSERT INTO usuarios (id, nome, senha) VALUES (NULL, '$nome', '$preco')";
+    $sql = "INSERT INTO usuarios (id, nome, senha) VALUES (NULL, '$nome', '$senha')";
     $result = $dbconn->query($sql);
     echo $result;
 
@@ -54,14 +78,44 @@ function post(){
 }
 
 function put(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
 
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $nome = $_GET["nome"];
+    $senha = $_GET["senha"];
+    $id = $_GET["id"];
+    if (!$nome || !$senha || !$id ){
+        die("Dados não entraram!");
+    }
+    $sql = "UPDATE usuarios SET nome = '$nome', senha = '$senha' WHERE usuarios.id = '$id'";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
 }
 
 function del(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
 
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $id = $_GET["id"];
+    if (!$id ){
+        die("Dados não entraram!");
+    }
+    $sql = "DELETE FROM usuarios WHERE usuarios.id = '$id'";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
 }
 
-
+if (isset($_REQUEST["login"])){
+    login();
+}
 if (isset($_REQUEST["get"])){
     get();
 }

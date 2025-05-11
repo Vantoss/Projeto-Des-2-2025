@@ -10,19 +10,13 @@
     <link rel="stylesheet" href="../css/login.css">
 </head>
 
-<?php 
-    if (isset($_POST['enviar'])){
-        header("location: main.php");
-    }
-?>
-
 <body>
     <h1>Faça seu login</h1>
 
-    <form action="" method="post">
+
         <input type="text" name="nome" id="nome" placeholder="Nome de usuário" required>
         <input type="password" name="senha" id="senha" placeholder="Senha" required>
-        <input type="submit" name="enviar" id="enviar" value="Enviar"></input>
-    </form>
+        <button type="submit" id="enviar" onclick="login()">Enviar</input>
+
 </body>
 </html>

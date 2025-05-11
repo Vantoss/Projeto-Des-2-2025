@@ -29,7 +29,10 @@
     
     <input type="text" id="userNome" placeholder="Nome de usuário" required>
     <input type="password" id="userPass" placeholder="Senha" required>
+    <input type="text" id="userId" placeholder="Id (PUT e DEL apenas)" required>
     <button type="submit" id="post" onclick="postBanco()">Enviar</input>
+    <button type="submit" id="put" onclick="putBanco()">Atualizar</input>
+    <button type="submit" id="delete" onclick="delBanco()">Deletar</input>
     
 </body>
 </html>
