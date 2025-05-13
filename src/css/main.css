@@ -1,3 +1,18 @@
 table, th, td{
     border: 1px solid black ;
 }
+
+table{
+    margin: auto;
+}
+
+.containertable{
+    border: 2px solid black;
+    width: 300px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+p{
+    text-align: center;
+}

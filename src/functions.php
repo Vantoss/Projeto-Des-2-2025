@@ -2,6 +2,8 @@
 
 header("Content-type: application/json");
 
+##  CONEXÃO AO BANCO ##
+
 function iniBanco(){
     $host = "localhost";
     $dbUser = "root";
@@ -15,6 +17,8 @@ function iniBanco(){
     }
     return $dbconn;
 }
+
+#################### PAG LOGIN ####################
 
 function login(){
     $dbconn = new mysqli("localhost", "root", "", "financas");
@@ -39,6 +43,43 @@ function login(){
     $dbconn->close();
 
 }
+
+function cadUser(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $nome = $_GET["nome"];
+    $senha = $_GET["senha"];
+    if (!$nome || !$senha ){
+        die("Dados não entraram!");
+    }
+    $sql = "INSERT INTO usuarios (id, nome, senha) VALUES (NULL, '$nome', '$senha')";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
+function delUser(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $id = $_GET["id"];
+    if (!$id ){
+        die("Dados não entraram!");
+    }
+    $sql = "DELETE FROM usuarios WHERE usuarios.id = '$id'";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
+#################### PAG MAIN ####################
 
 function get(){
     $dbconn = new mysqli("localhost", "root", "", "financas");
@@ -113,8 +154,16 @@ function del(){
     $dbconn->close();
 }
 
+################################################
+
 if (isset($_REQUEST["login"])){
     login();
+}
+if (isset($_REQUEST["caduser"])){
+    cadUser();
+}
+if (isset($_REQUEST["deluser"])){
+    delUser();
 }
 if (isset($_REQUEST["get"])){
     get();

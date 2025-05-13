@@ -14,25 +14,38 @@
 
     <button type="submit" class="sair" onclick="volta()">Sair</button>
     
-    <button type="submit" class="get" id="get" onclick="getBanco()">Encher tabela</button>
-    <table>
-        <tr>
-            <th>Usuário</th>
-            <th>Senha</th>
-        </tr>
-        <tr>
-            <td id="user">a</td>
-            <td id="pass">a</td>
-        </tr>
-    </table>
+    <div class="containertable">
+        <p>Despesas</p>
+        <table id="despesas">
+            <tr>
+                <th>Tipo</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td class="user">a</td>
+                <td class="pass">a</td>
+                <td class="pass">a</td>
+                <td class="pass">a</td>
+            </tr>
+        </table>
+    </div>
 
-    
-    <input type="text" id="userNome" placeholder="Nome de usuário" required>
-    <input type="password" id="userPass" placeholder="Senha" required>
-    <input type="text" id="userId" placeholder="Id (PUT e DEL apenas)" required>
-    <button type="submit" id="post" onclick="postBanco()">Enviar</input>
-    <button type="submit" id="put" onclick="putBanco()">Atualizar</input>
-    <button type="submit" id="delete" onclick="delBanco()">Deletar</input>
-    
+    <div class="containertable">
+        <p>Contas</p>
+        <table id="contas">
+            <tr>
+                <th>Tipo</th>
+                <th>Prazo</th>
+                <th>Valor</th>
+            </tr>
+            <tr>
+                <td class="user">a</td>
+                <td class="pass">a</td>
+                <td class="pass">a</td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>

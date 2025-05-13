@@ -21,9 +21,9 @@ Por fim, haverá algumas linhas no canto inferior da página indicando o quanto 
 Tais linhas são resultados de cálculos feitos pela aplicação a cada vez que uma nova despesa/conta for cadastrada.
 
 = Resumo =
-- Cadastrar usuário
-- Login do usuário
-- Opção de sair da página principal
+- Cadastrar usuário ✔
+- Login do usuário ✔
+- Opção de sair da página principal ✔
 - Lista de despesas, com filtros
 - Cadastrar, editar e apagar despesas
 - Leitura do extrato bancário, com filtros
