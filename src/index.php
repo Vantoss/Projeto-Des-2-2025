@@ -6,6 +6,8 @@ $conn = iniBanco();
 
 if ($conn){
     header("location: pags/login.php");
+} else{
+    die("Banco não existe!");
 }
 
 ?>

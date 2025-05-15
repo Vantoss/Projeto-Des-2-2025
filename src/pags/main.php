@@ -10,9 +10,11 @@
     <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-    <h1> Bem vindo, usuário! </h1>
+    <header>
+        <h1> Bem vindo, usuário! </h1>
 
-    <button type="submit" class="sair" onclick="volta()">Sair</button>
+        <button type="submit" class="sair" onclick="volta()">Sair</button>
+    </header>
     
     <div class="containertable">
         <p>Despesas</p>
@@ -24,10 +26,10 @@
                 <th>Valor</th>
             </tr>
             <tr>
-                <td class="user">a</td>
-                <td class="pass">a</td>
-                <td class="pass">a</td>
-                <td class="pass">a</td>
+                <td class="tipodesp"></td>
+                <td class="data"></td>
+                <td class="hora"></td>
+                <td class="valordesp"></td>
             </tr>
         </table>
     </div>
@@ -41,11 +43,28 @@
                 <th>Valor</th>
             </tr>
             <tr>
-                <td class="user">a</td>
-                <td class="pass">a</td>
-                <td class="pass">a</td>
+                <td class="tipoconta"></td>
+                <td class="prazo"></td>
+                <td class="valorconta"></td>
             </tr>
         </table>
+    </div>
+
+    <div class="container" id="caddesp">
+        <p>Cadastro de Despesa</p>
+        <input type="text" name="tipod" id="tipodesp" placeholder="Tipo de despesa" required>
+        <input type="date" name="datad" id="data" placeholder="Data" required>
+        <input type="time" name="horad" id="hora" placeholder="Hora">
+        <input type="number" name="valord" id="valordesp" placeholder="Valor" required>
+        <button type="submit" id="enviar" onclick="cadDesp()">Enviar</input>
+    </div>
+
+    <div class="container" id="cadconta">
+        <p>Cadastro de conta</p>
+        <input type="text" name="tipoc" id="tipoconta" placeholder="Tipo de conta" required>
+        <input type="date" name="prazo" id="prazo" placeholder="Prazo" required>
+        <input type="number" name="valorc" id="valorconta" placeholder="Valor" required>
+        <button type="submit" id="enviar" onclick="cadConta()">Enviar</input>
     </div>
 </body>
 </html>

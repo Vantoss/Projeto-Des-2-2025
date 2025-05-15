@@ -81,6 +81,66 @@ function delUser(){
 
 #################### PAG MAIN ####################
 
+function cadDesp(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $tipo = $_GET["tipo"];
+    $data = $_GET["data"];
+    $hora = $_GET["hora"];
+    $valor = $_GET["valor"];
+    if (!$tipo || !$data || !$valor ){
+        die("Dados não entraram!");
+    }
+    $sql = "INSERT INTO despesas (id, id_usuario, tipo, data, hora, valor) VALUES (NULL, 1, '$tipo', '$data', '$hora', '$valor')";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
+function putDesp(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $tipo = $_GET["tipo"];
+    $data = $_GET["data"];
+    $hora = $_GET["hora"];
+    $valor = $_GET["valor"];
+    $id = $_GET["id"];
+    if (!$tipo || !$data || !$valor || !$id ){
+        die("Dados não entraram!");
+    }
+    $sql = "UPDATE despesas SET tipo = '$tipo', data = '$data', hora = '$hora', valor = '$valor' WHERE despesas.id = '$id'";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
+function delDesp(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $id = $_GET["id"];
+    if (!$id ){
+        die("Dados não entraram!");
+    }
+    $sql = "DELETE FROM despesas WHERE despesas.id = '$id'";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
+#################### UTILITARIOS ####################
+
 function get(){
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
@@ -164,6 +224,15 @@ if (isset($_REQUEST["caduser"])){
 }
 if (isset($_REQUEST["deluser"])){
     delUser();
+}
+if (isset($_REQUEST["caddesp"])){
+    cadDesp();
+}
+if (isset($_REQUEST["putdesp"])){
+    putDesp();
+}
+if (isset($_REQUEST["deldesp"])){
+    delDesp();
 }
 if (isset($_REQUEST["get"])){
     get();
