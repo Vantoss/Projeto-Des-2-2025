@@ -1,13 +1,17 @@
 <?php 
 
-require_once 'functions.php';
+require_once 'mysql.php';
 
-$conn = iniBanco();
-
-if ($conn){
-    header("location: pags/login.php");
-} else{
-    die("Banco não existe!");
+try{
+    $conn = iniBanco();
+    if ($conn){
+        header("location: pags/login.php");
+    }
+} catch (Exception $e){
+    $conn = createBanco();
+    if ($conn){
+        header("location: pags/login.php");
+    }
 }
 
 ?>
