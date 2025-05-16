@@ -18,8 +18,10 @@ function login(){
     $sql = "SELECT nome, senha FROM usuarios WHERE nome = '$nome' AND senha = '$senha'";
     $result = $dbconn->query($sql);
     if (mysqli_num_rows($result)){
+        session_start();
         while($col = mysqli_fetch_assoc($result)){
             echo $col["nome"];
+            $_SESSION["user"] = $col["nome"];
         }
     } else {
         echo "Sem resultados!";
@@ -123,6 +125,62 @@ function delDesp(){
     $dbconn->close();
 }
 
+function cadConta(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $tipo = $_GET["tipo"];
+    $prazo = $_GET["prazo"];
+    $valor = $_GET["valor"];
+    if (!$tipo || !$prazo || !$valor ){
+        die("Dados não entraram!");
+    }
+    $sql = "INSERT INTO contas (id, id_usuario, tipo, prazo, valor) VALUES (NULL, 1, '$tipo', '$prazo', '$valor')";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
+function putConta(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $tipo = $_GET["tipo"];
+    $data = $_GET["prazo"];
+    $valor = $_GET["valor"];
+    $id = $_GET["id"];
+    if (!$tipo || !$prazo || !$valor || !$id ){
+        die("Dados não entraram!");
+    }
+    $sql = "UPDATE contas SET tipo = '$tipo', prazo = '$prazo', valor = '$valor' WHERE contas.id = '$id'";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
+function delConta(){
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $id = $_GET["id"];
+    if (!$id ){
+        die("Dados não entraram!");
+    }
+    $sql = "DELETE FROM contas WHERE contas.id = '$id'";
+    $result = $dbconn->query($sql);
+    echo $result;
+
+    $dbconn->close();
+}
+
 #################### UTILITARIOS ####################
 
 function get(){
@@ -217,6 +275,15 @@ if (isset($_REQUEST["putdesp"])){
 }
 if (isset($_REQUEST["deldesp"])){
     delDesp();
+}
+if (isset($_REQUEST["cadconta"])){
+    cadConta();
+}
+if (isset($_REQUEST["putconta"])){
+    putConta();
+}
+if (isset($_REQUEST["delconta"])){
+    delConta();
 }
 if (isset($_REQUEST["get"])){
     get();

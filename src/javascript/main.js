@@ -54,7 +54,7 @@ function cadConta(){
             console.log(this.responseText)
         }
     };
-    url = "../functions.php?cadconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valorconta=" + document.getElementById("valorconta").value;
+    url = "../functions.php?cadconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valor=" + document.getElementById("valorconta").value;
     xhttp.open("POST", url, true);
     xhttp.send();
 }
@@ -67,7 +67,7 @@ function putConta(){
             console.log(this.responseText)
         }
     };
-    url = "../functions.php?putconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valorconta=" + document.getElementById("valorconta").value;
+    url = "../functions.php?putconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valor=" + document.getElementById("valorconta").value;
     xhttp.open("GET", url, true);
     xhttp.send()
 }
