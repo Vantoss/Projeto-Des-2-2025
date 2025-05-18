@@ -44,14 +44,20 @@ function atualizar(){
 }
 
 function deletar(){
-    var xhttp = new XMLHttpRequest();
+    if(document.getElementById("iddel").value == "1" || document.getElementById("iddel").value == "2"){
+        window.alert("Você não pode deletar este usuário");
+    }else{
+        var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
-        }
-    };
-    url = "../functions.php?deluser&id=" + document.getElementById("iddel").value;
-    xhttp.open("GET", url, true);
-    xhttp.send()
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                console.log(this.responseText)
+            }
+        };
+        
+        url = "../functions.php?deluser&id=" + document.getElementById("iddel").value;
+        xhttp.open("GET", url, true);
+        xhttp.send()
+    }
+    
 }

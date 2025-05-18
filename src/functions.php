@@ -15,13 +15,14 @@ function login(){
     if (!$nome || !$senha){
         die("Dados não entraram!");
     }
-    $sql = "SELECT nome, senha FROM usuarios WHERE nome = '$nome' AND senha = '$senha'";
+    $sql = "SELECT id, nome, senha FROM usuarios WHERE nome = '$nome' AND senha = '$senha'";
     $result = $dbconn->query($sql);
     if (mysqli_num_rows($result)){
         session_start();
         while($col = mysqli_fetch_assoc($result)){
             echo $col["nome"];
             $_SESSION["user"] = $col["nome"];
+            $_SESSION["id"] = $col["id"];
         }
     } else {
         echo "Sem resultados!";
@@ -67,7 +68,28 @@ function delUser(){
 
 #################### PAG MAIN ####################
 
+function getDesp(){
+    session_start();
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $id = $_SESSION["id"];
+    $sql = "SELECT id_usuario, tipo, data, hora, valor FROM despesas WHERE id_usuario = '$id'";
+    $result = $dbconn->query($sql);
+    $array = array();
+    while($linha = mysqli_fetch_assoc($result)){
+        $array[] = $linha;
+    }
+    echo '{ "despesas" : ' . json_encode($array) . ' } ';
+
+    $dbconn->close();
+
+}
+
 function cadDesp(){
+    session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
@@ -77,10 +99,11 @@ function cadDesp(){
     $data = $_GET["data"];
     $hora = $_GET["hora"];
     $valor = $_GET["valor"];
+    $userid = $_SESSION["id"];
     if (!$tipo || !$data || !$valor ){
         die("Dados não entraram!");
     }
-    $sql = "INSERT INTO despesas (id, id_usuario, tipo, data, hora, valor) VALUES (NULL, 1, '$tipo', '$data', '$hora', '$valor')";
+    $sql = "INSERT INTO despesas (id, id_usuario, tipo, data, hora, valor) VALUES (NULL, '$userid', '$tipo', '$data', '$hora', '$valor')";
     $result = $dbconn->query($sql);
     echo $result;
 
@@ -125,7 +148,30 @@ function delDesp(){
     $dbconn->close();
 }
 
+#-------------------------------------------------------------#
+
+function getConta(){
+    session_start();
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $id = $_SESSION["id"];
+    $sql = "SELECT id_usuario, tipo, prazo, valor FROM contas WHERE id_usuario = '$id'";
+    $result = $dbconn->query($sql);
+    $array = array();
+    while($linha = mysqli_fetch_assoc($result)){
+        $array[] = $linha;
+    }
+    echo '{ "contas" : ' . json_encode($array) . ' } ';
+
+    $dbconn->close();
+
+}
+
 function cadConta(){
+    session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
@@ -134,10 +180,11 @@ function cadConta(){
     $tipo = $_GET["tipo"];
     $prazo = $_GET["prazo"];
     $valor = $_GET["valor"];
+    $userid = $_SESSION["id"];
     if (!$tipo || !$prazo || !$valor ){
         die("Dados não entraram!");
     }
-    $sql = "INSERT INTO contas (id, id_usuario, tipo, prazo, valor) VALUES (NULL, 1, '$tipo', '$prazo', '$valor')";
+    $sql = "INSERT INTO contas (id, id_usuario, tipo, prazo, valor) VALUES (NULL, '$userid', '$tipo', '$prazo', '$valor')";
     $result = $dbconn->query($sql);
     echo $result;
 
@@ -267,6 +314,10 @@ if (isset($_REQUEST["caduser"])){
 if (isset($_REQUEST["deluser"])){
     delUser();
 }
+
+if (isset($_REQUEST["getdesp"])){
+    getDesp();
+}
 if (isset($_REQUEST["caddesp"])){
     cadDesp();
 }
@@ -275,6 +326,10 @@ if (isset($_REQUEST["putdesp"])){
 }
 if (isset($_REQUEST["deldesp"])){
     delDesp();
+}
+
+if (isset($_REQUEST["getconta"])){
+    getConta();
 }
 if (isset($_REQUEST["cadconta"])){
     cadConta();
@@ -285,6 +340,7 @@ if (isset($_REQUEST["putconta"])){
 if (isset($_REQUEST["delconta"])){
     delConta();
 }
+
 if (isset($_REQUEST["get"])){
     get();
 }

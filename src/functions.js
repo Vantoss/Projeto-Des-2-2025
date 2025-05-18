@@ -1,3 +1,6 @@
+
+///// UTILITARIOS /////
+
 function getBanco(){
     var xhttp = new XMLHttpRequest();
 

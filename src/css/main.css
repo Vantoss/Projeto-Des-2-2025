@@ -1,3 +1,23 @@
+body{
+    margin: 0;
+}
+
+header{
+    width: auto;
+    height: 100px;
+    position: sticky;
+    top: 0;
+    background-color: lightgreen;
+    padding: 10px;
+}
+
+footer{
+    width: auto;
+    height: 100px;
+    background-color: lightgreen;
+    padding: 10px;
+}
+
 table, th, td{
     border: 1px solid black ;
 }
@@ -18,6 +38,26 @@ table{
     padding: 20px;
     margin-top: 20px;
     width: 300px;
+}
+
+#separador1{
+    width: 900px;
+    margin: auto;
+    height: 450px;
+}
+
+#separador2{
+    width: 900px;
+    margin: auto;
+    height: 300px;
+}
+
+#tabeladesp, #caddesp {
+    float: left;
+}
+
+#tabelaconta, #cadconta{
+    float:right;
 }
 
 p{
