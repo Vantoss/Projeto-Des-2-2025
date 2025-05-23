@@ -22,20 +22,24 @@ function getDesp(){
             console.log(despesas);
             
             conteudo = "<table id='despesas'>";
-            conteudo += "<tr>";
-            conteudo += "   <th>Tipo</th>";
-            conteudo += "   <th>Data</th>";
-            conteudo += "   <th>Hora</th>";
-            conteudo += "   <th>Valor</th>";
-            conteudo += "</tr>";
+            conteudo += "<thead>";
+            conteudo += "   <tr>";
+            conteudo += "       <th>Tipo</th>";
+            conteudo += "       <th>Data</th>";
+            conteudo += "       <th>Hora</th>";
+            conteudo += "       <th>Valor</th>";
+            conteudo += "   </tr>";
+            conteudo += "</thead>";
+            conteudo += "<tbody>";
             despesas.forEach(desp => {
-                conteudo += "<tr>";
-                conteudo += "   <td>" + desp.tipo + "</td>";
-                conteudo += "   <td>" + desp.data + "</td>";
-                conteudo += "   <td>" + desp.hora + "</td>";
-                conteudo += "   <td>" + desp.valor + "</td>";
-                conteudo += "</tr>";
+                conteudo += "   <tr>";
+                conteudo += "       <td>" + desp.tipo + "</td>";
+                conteudo += "       <td>" + desp.data + "</td>";
+                conteudo += "       <td>" + desp.hora + "</td>";
+                conteudo += "       <td>" + desp.valor + "</td>";
+                conteudo += "   </tr>";
             });
+            conteudo +="</tbody>";
             document.getElementById("despesas").innerHTML = conteudo;
         }
     };
@@ -97,18 +101,22 @@ function getConta(){
             console.log(contas);
             
             conteudo = "<table id='contas'>";
-            conteudo += "<tr>";
-            conteudo += "   <th>Tipo</th>";
-            conteudo += "   <th>Prazo</th>";
-            conteudo += "   <th>Valor</th>";
-            conteudo += "</tr>";
+            conteudo += "<thead>";
+            conteudo += "   <tr>";
+            conteudo += "       <th>Tipo</th>";
+            conteudo += "       <th>Prazo</th>";
+            conteudo += "       <th>Valor</th>";
+            conteudo += "   </tr>";
+            conteudo += "</thead>";
+            conteudo += "<tbody>";
             contas.forEach(conta => {
-                conteudo += "<tr>";
-                conteudo += "   <td>" + conta.tipo + "</td>";
-                conteudo += "   <td>" + conta.prazo + "</td>";
-                conteudo += "   <td>" + conta.valor + "</td>";
-                conteudo += "</tr>";
+                conteudo += "   <tr>";
+                conteudo += "       <td>" + conta.tipo + "</td>";
+                conteudo += "       <td>" + conta.prazo + "</td>";
+                conteudo += "       <td>" + conta.valor + "</td>";
+                conteudo += "   </tr>";
             });
+            conteudo +="</tbody>";
             document.getElementById("contas").innerHTML = conteudo;
         }
     };
