@@ -54,6 +54,115 @@
         </div>
     </div>
 
+<!---------------------------------- MODALS ---------------------------------->   
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="eddmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Despesa</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Não terminado!
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="apdmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Apagar Despesa</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Não terminado!
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="edcmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Conta</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Não terminado!
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="apcmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Apagar Conta</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Não terminado!
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="bmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Dar Baixa na Conta</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Não terminado!
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
+
+<!----------------------------------------------------------------------------->  
+
     <footer id="footer"></footer> <!--Adicionar a soma das despesas e contas -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>

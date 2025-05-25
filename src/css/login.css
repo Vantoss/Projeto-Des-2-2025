@@ -1,12 +1,22 @@
-.container{
+body{
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.containerlogin{
     border: 2px solid black;
     padding: 20px;
     margin: auto;
     margin-top: 20px;
-    width: 300px;
-    height: 100px;
 }
 
 h1{
+    text-align: center;
+}
+
+p{
+    font-weight: bold;
     text-align: center;
 }
