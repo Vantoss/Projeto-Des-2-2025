@@ -8,25 +8,23 @@ header{
     position: sticky;
     top: 0;
     background-color: lightgreen;
+    border-bottom: 5px solid rgb(124, 207, 124);
     padding: 10px;
 }
 
 footer{
-    position: static ;
     bottom: 0;
     left: 0;
     width: 100%;
     height: 100px;
     background-color: lightgreen;
+    border-top: 5px solid rgb(124, 207, 124);
 }
 
 table, th, td{
     border: 1px solid black ;
 }
 
-table{
-    margin: auto;
-}
 
 .containertable{
     border: 2px solid black;
@@ -39,29 +37,10 @@ table{
     border: 2px solid black;
     padding: 20px;
     margin-top: 20px;
-    width: 400px;
-}
-
-#separador1{
-    width: 900px;
-    margin: auto;
-    height: 450px;
-}
-
-#separador2{
-    width: 900px;
-    margin: auto;
-    height: 300px;
-}
-
-#tabeladesp, #caddesp {
-    float: left;
-}
-
-#tabelaconta, #cadconta{
-    float:right;
+    width: auto;
 }
 
 p{
     text-align: center;
+    font-weight: bold;
 }

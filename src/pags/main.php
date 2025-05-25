@@ -17,42 +17,44 @@
         <button id="sair" type="submit" class="btn btn-success" onclick="volta()">Sair</button>
     </header>
     
-    <div class="container"> <!--Consertar o height dos separadores -->
-        <div id="separador1">
-            <div class="containertable rounded" id="tabeladesp"> <!--Adicionar botões de cadastrar, atualizar e deletar nas tabelas -->
+    <div class="container mt-2">
+        <div class="row" id="">
+            <div class="containertable col-md-5 rounded" id="tabeladesp">
                 <p>Despesas</p>
-                <table id="despesas" class="table table-bordered table-striped border-black">
+                <table id="despesas" class="table table-bordered table-striped">
                 </table>
             </div>
 
-            <div class="containertable rounded" id="tabelaconta">
+            <div class="containertable col-md-5 offset-md-2 rounded" id="tabelaconta">
                 <p>Contas</p>
-                <table id="contas" class="table table-bordered table-striped border-black">
+                <table id="contas" class="table table-bordered table-striped">
                 </table>
             </div>
         </div>
     </div>
 
-   <div id="separador2">
-        <div class="containerc" id="caddesp"> 
-            <p>Cadastro de Despesa</p>
-            <input type="text" name="tipod" id="tipodesp" placeholder="Tipo de despesa" required>
-            <input type="date" name="datad" id="data" placeholder="Data" required>
-            <input type="time" name="horad" id="hora" placeholder="Hora">
-            <input type="number" name="valord" id="valordesp" placeholder="Valor" required>
-            <button type="submit" id="enviar" onclick="cadDesp()">Enviar</input>
-        </div>
+    <div class="container mb-2">
+        <div class="row" id="">
+            <div class="containerc col-md-5 rounded" id="caddesp"> 
+                <p>Cadastro de Despesa</p>
+                <input type="text" name="tipod" id="tipodesp" placeholder="Tipo de despesa" required>
+                <input type="date" name="datad" id="data" placeholder="Data" required>
+                <input type="time" name="horad" id="hora" placeholder="Hora">
+                <input type="number" name="valord" id="valordesp" placeholder="Valor" required>
+                <button type="submit" id="enviar" onclick="cadDesp()">Enviar</button>
+            </div>
 
-        <div class="containerc" id="cadconta">
-            <p>Cadastro de conta</p>
-            <input type="text" name="tipoc" id="tipoconta" placeholder="Tipo de conta" required>
-            <input type="date" name="prazo" id="prazo" placeholder="Prazo" required>
-            <input type="number" name="valorc" id="valorconta" placeholder="Valor" required>
-            <button type="submit" id="enviar" onclick="cadConta()">Enviar</input>
+            <div class="containerc col-md-5 offset-md-2 rounded" id="cadconta">
+                <p>Cadastro de conta</p>
+                <input type="text" name="tipoc" id="tipoconta" placeholder="Tipo de conta" required>
+                <input type="date" name="prazo" id="prazo" placeholder="Prazo" required>
+                <input type="number" name="valorc" id="valorconta" placeholder="Valor" required>
+                <button type="submit" id="enviar" onclick="cadConta()">Enviar</button>
+            </div>
         </div>
     </div>
 
     <footer id="footer"></footer> <!--Adicionar a soma das despesas e contas -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -37,6 +37,8 @@ function getDesp(){
                 conteudo += "       <td>" + desp.data + "</td>";
                 conteudo += "       <td>" + desp.hora + "</td>";
                 conteudo += "       <td>" + desp.valor + "</td>";
+                conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' onclick=''>Editar</button></td>";
+                conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' onclick=''>Apagar</button></td>";
                 conteudo += "   </tr>";
             });
             conteudo +="</tbody>";
@@ -114,6 +116,9 @@ function getConta(){
                 conteudo += "       <td>" + conta.tipo + "</td>";
                 conteudo += "       <td>" + conta.prazo + "</td>";
                 conteudo += "       <td>" + conta.valor + "</td>";
+                conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' onclick=''>Editar</button></td>";
+                conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' onclick=''>Apagar</button></td>";
+                conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' onclick=''>Dar Baixa</button></td>";
                 conteudo += "   </tr>";
             });
             conteudo +="</tbody>";
