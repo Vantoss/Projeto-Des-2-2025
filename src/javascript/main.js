@@ -24,7 +24,7 @@ function getDesp(){
             conteudo = "<table id='despesas'>";
             conteudo += "<thead>";
             conteudo += "   <tr>";
-            conteudo += "       <th>Tipo</th>";
+            conteudo += "       <th>Nome</th>";
             conteudo += "       <th>Data</th>";
             conteudo += "       <th>Hora</th>";
             conteudo += "       <th>Valor</th>";
@@ -35,7 +35,12 @@ function getDesp(){
                 conteudo += "   <tr>";
                 conteudo += "       <td>" + desp.tipo + "</td>";
                 conteudo += "       <td>" + desp.data + "</td>";
-                conteudo += "       <td>" + desp.hora + "</td>";
+                if(desp.hora == "00:00:00"){
+                    conteudo += "       <td> N/A </td>";
+                } else{
+                    conteudo += "       <td>" + desp.hora + "</td>";
+                }
+                
                 conteudo += "       <td>" + desp.valor + "</td>";
                 conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#eddmodal'>Editar</button></td>";
                 conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apdmodal'>Apagar</button></td>";
@@ -55,7 +60,8 @@ function cadDesp(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
+            console.log(this.responseText);
+            window.alert("Despesa cadastrada com sucesso!")
         }
     };
     url = "../functions.php?caddesp&tipo=" + document.getElementById("tipodesp").value + "&data=" + document.getElementById("data").value + "&hora=" + document.getElementById("hora").value + "&valor=" + document.getElementById("valordesp").value;
@@ -68,7 +74,8 @@ function putDesp(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
+            console.log(this.responseText);
+            window.alert("Despesa atualizada com sucesso!");
         }
     };
     url = "../functions.php?putdesp&tipo=" + document.getElementById("tipodesp").value + "&data=" + document.getElementById("data").value + "&hora=" + document.getElementById("hora").value + "&valor=" + document.getElementById("valordesp").value;
@@ -81,7 +88,8 @@ function delDesp(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
+            console.log(this.responseText);
+            window.alert("Despesa apagada com sucesso!");
         }
     };
     url = "../functions.php?deldesp&id=" + document.getElementById("deldesp").value;
@@ -105,7 +113,7 @@ function getConta(){
             conteudo = "<table id='contas'>";
             conteudo += "<thead>";
             conteudo += "   <tr>";
-            conteudo += "       <th>Tipo</th>";
+            conteudo += "       <th>Nome</th>";
             conteudo += "       <th>Prazo</th>";
             conteudo += "       <th>Valor</th>";
             conteudo += "   </tr>";
@@ -135,7 +143,8 @@ function cadConta(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
+            console.log(this.responseText);
+            window.alert("Conta cadastrada com sucesso!");
         }
     };
     url = "../functions.php?cadconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valor=" + document.getElementById("valorconta").value;
@@ -148,7 +157,8 @@ function putConta(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
+            console.log(this.responseText);
+            window.alert("Conta atualizada com sucesso!");
         }
     };
     url = "../functions.php?putconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valor=" + document.getElementById("valorconta").value;
@@ -161,7 +171,8 @@ function delConta(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
+            console.log(this.responseText);
+            window.alert("Conta apagada com sucesso!");
         }
     };
     url = "../functions.php?delconta&id=" + document.getElementById("delconta").value;

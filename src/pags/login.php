@@ -15,21 +15,47 @@
 
     <div class="container mx-auto mt-4" id="login">
         <div class="row">
-            <div class="containerlogin col-5 rounded">
-                <p>Login</p>
-                <input type="text" name="nomelog" id="nomelog" placeholder="Nome de usuário" required>
-                <input type="password" name="senhalog" id="senhalog" placeholder="Senha" required>
-                <button id="enviar "type="submit" class="btn btn-success" onclick="login()">Enviar</input>
+            <div class="containerlogin col-5 rounded"> <!--Consertar o estilo do col do login -->
+                <label for="nomelog">Nome:</label>
+                <input type="text" name="nomelog" id="nomelog" placeholder="" required><br>
+                <label for="senhalog">Senha:</label>
+                <input type="password" name="senhalog" id="senhalog" placeholder="" required><br>
+                <button id="enviar "type="submit" class="btn btn-success" onclick="login()">Enviar</button>
+            </div>
+        </div>
+        <div class="row mt-3"> <!--Fazer com que ao cadastrar o usuário os dados são inseridos nos campos do login (ou logar direto, um ou o outro) -->
+            <div class="col-5 mx-auto">
+                <p id="cadtext">Não tem uma conta ainda? <a data-bs-toggle='modal' data-bs-target='#cadusermodal' href="">Crie uma.</a></p>
             </div>
         </div>
     </div>
 
-    <!--<div class="containerlogin" id="cadastro">
-        <p>Cadastro de usuário</p>
-        <input type="text" name="nomecad" id="nomecad" placeholder="Nome de usuário" required>
-        <input type="password" name="senhacad" id="senhacad" placeholder="Senha" required>
-        <button type="submit" id="enviar" onclick="cadastro()">Enviar</input>
-    </div>-->
+<!---------------------------------- MODALS/OUTROS ---------------------------------->   
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="cadusermodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Usuário</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <label for="nomecad">Nome:</label><br>
+                <input type="text" name="nomecad" id="nomecad" placeholder="" required><br>
+                <label for="senhacad">Senha:</label><br>
+                <input type="password" name="senhacad" id="senhacad" placeholder="" required>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" id="enviar" onclick="cadastro()" data-bs-dismiss="modal">Cadastrar usuário</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
 
 <!--Existe o atualizar nome de usuário mas acho que não tem utilidade. -->
 

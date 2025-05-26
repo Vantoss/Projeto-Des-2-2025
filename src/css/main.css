@@ -33,17 +33,17 @@ table, th, td{
     border: 2px solid black;
     width: auto;
     margin-top: 20px;
+    margin-bottom: 10px;
     padding: 10px;
-}
-
-.containerc{
-    border: 2px solid black;
-    padding: 20px;
-    margin-top: 20px;
-    width: auto;
 }
 
 p{
     text-align: center;
     font-weight: bold;
+}
+
+#cadbtns{
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }

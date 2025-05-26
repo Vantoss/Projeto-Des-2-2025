@@ -20,41 +20,82 @@
     <div class="container mt-2">
         <div class="row" id="">
             <div class="containertable col-md-5 rounded" id="tabeladesp">
-                <p>Despesas</p>
+                <p class="h3">Despesas</p>
+                <div id="cadbtns">
+                    <button type='submit' id='cadd' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#caddmodal'>Adicionar Despesa</button>
+                </div>
                 <table id="despesas" class="table table-bordered table-striped">
                 </table>
             </div>
 
             <div class="containertable col-md-5 offset-md-2 rounded" id="tabelaconta">
-                <p>Contas</p>
+                <p class="h3">Contas</p>
+                <div id="cadbtns">
+                    <button type='submit' id='cadc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadcmodal'>Adicionar Conta</button>
+                </div>
                 <table id="contas" class="table table-bordered table-striped">
                 </table>
             </div>
         </div>
     </div>
 
-    <div class="container mb-2">
-        <div class="row" id="">
-            <div class="containerc col-md-5 rounded" id="caddesp"> 
-                <p>Cadastro de Despesa</p>
-                <input type="text" name="tipod" id="tipodesp" placeholder="Tipo de despesa" required>
-                <input type="date" name="datad" id="data" placeholder="Data" required>
-                <input type="time" name="horad" id="hora" placeholder="Hora">
-                <input type="number" name="valord" id="valordesp" placeholder="Valor" required>
-                <button type="submit" id="enviar" onclick="cadDesp()">Enviar</button>
+<!---------------------------------- MODALS ---------------------------------->   
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="caddmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Despesa</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="containerc col-md-5 offset-md-2 rounded" id="cadconta">
-                <p>Cadastro de conta</p>
-                <input type="text" name="tipoc" id="tipoconta" placeholder="Tipo de conta" required>
-                <input type="date" name="prazo" id="prazo" placeholder="Prazo" required>
-                <input type="number" name="valorc" id="valorconta" placeholder="Valor" required>
-                <button type="submit" id="enviar" onclick="cadConta()">Enviar</button>
+            <div class="modal-body">
+                <label for="tipodesp">Nome da despesa:</label><br>
+                <input type="text" name="tipod" id="tipodesp" placeholder="(Supermercado, gasolina...)" required><br>
+                <label for="data">Dia da despesa:</label><br>
+                <input type="date" name="datad" id="data" placeholder="Data" required><br>
+                <label for="hora">Hora da despesa (opcional):</label><br>
+                <input type="time" name="horad" id="hora" placeholder="Hora"><br>
+                <label for="valordesp">Valor:</label><br>
+                <input type="number" name="valord" id="valordesp" placeholder="" required>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" id="enviar" onclick="cadDesp()" data-bs-dismiss="modal">Cadastrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
             </div>
         </div>
     </div>
 
-<!---------------------------------- MODALS ---------------------------------->   
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="cadcmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Cadastrar Conta</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <label for="tipoconta">Nome da conta:</label><br>
+                <input type="text" name="tipoc" id="tipoconta" placeholder="(Luz, água, parcela...)" required><br>
+                <label for="prazo">Prazo da conta:</label><br>
+                <input type="date" name="prazo" id="prazo" placeholder="Prazo" required><br>
+                <label for="valorconta">Valor:</label><br>
+                <input type="number" name="valorc" id="valorconta" placeholder="Valor" required>
+            </div>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" id="enviar" onclick="cadConta()" data-bs-dismiss="modal">Cadastrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="eddmodal">
         <div class="modal-dialog modal-dialog-centered">

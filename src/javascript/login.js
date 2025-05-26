@@ -22,7 +22,8 @@ function cadastro(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText)
+            console.log(this.responseText);
+            window.alert("Usuário cadastrado com sucesso!");
         }
     };
     url = "../functions.php?caduser&nome=" + document.getElementById("nomecad").value + "&senha=" + document.getElementById("senhacad").value;
