@@ -8,6 +8,8 @@ function tabelas(){
     getConta();
 }
 
+//Refazer tudo
+
 /////////////////////////////////// DESPESAS ///////////////////////////////////
 
 function getDesp(){
@@ -26,7 +28,7 @@ function getDesp(){
             conteudo += "   <tr>";
             conteudo += "       <th>Nome</th>";
             conteudo += "       <th>Data</th>";
-            conteudo += "       <th>Hora</th>";
+            conteudo += "       <th>Categoria</th>";
             conteudo += "       <th>Valor</th>";
             conteudo += "   </tr>";
             conteudo += "</thead>";
@@ -35,12 +37,7 @@ function getDesp(){
                 conteudo += "   <tr>";
                 conteudo += "       <td>" + desp.tipo + "</td>";
                 conteudo += "       <td>" + desp.data + "</td>";
-                if(desp.hora == "00:00:00"){
-                    conteudo += "       <td> N/A </td>";
-                } else{
-                    conteudo += "       <td>" + desp.hora + "</td>";
-                }
-                
+                conteudo += "       <td></td>";
                 conteudo += "       <td>" + desp.valor + "</td>";
                 conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#eddmodal'>Editar</button></td>";
                 conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apdmodal'>Apagar</button></td>";
@@ -61,6 +58,7 @@ function cadDesp(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
+            getDesp();
             window.alert("Despesa cadastrada com sucesso!")
         }
     };
@@ -115,6 +113,7 @@ function getConta(){
             conteudo += "   <tr>";
             conteudo += "       <th>Nome</th>";
             conteudo += "       <th>Prazo</th>";
+            //conteudo += "       <th>Categoria</th>";
             conteudo += "       <th>Valor</th>";
             conteudo += "   </tr>";
             conteudo += "</thead>";
@@ -123,6 +122,7 @@ function getConta(){
                 conteudo += "   <tr>";
                 conteudo += "       <td>" + conta.tipo + "</td>";
                 conteudo += "       <td>" + conta.prazo + "</td>";
+                //conteudo += "       <td></td>";
                 conteudo += "       <td>" + conta.valor + "</td>";
                 conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edcmodal'>Editar</button></td>";
                 conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apcmodal'>Apagar</button></td>";
@@ -144,6 +144,7 @@ function cadConta(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
+            getConta();
             window.alert("Conta cadastrada com sucesso!");
         }
     };

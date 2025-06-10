@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Maio-2025 às 02:36
+-- Tempo de geração: 10-Jun-2025 às 20:54
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 8.1.6
 
@@ -24,42 +24,33 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `contas`
+-- Estrutura da tabela `lancamentos`
 --
 
-CREATE TABLE `contas` (
+CREATE TABLE `lancamentos` (
   `id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `tipo` varchar(30) NOT NULL,
-  `prazo` date NOT NULL,
-  `valor` float NOT NULL
+  `nome` varchar(30) NOT NULL,
+  `validade` date NOT NULL,
+  `valor` float NOT NULL,
+  `foi_paga` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `despesas`
+-- Estrutura da tabela `movimentacoes`
 --
 
-CREATE TABLE `despesas` (
+CREATE TABLE `movimentacoes` (
   `id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `tipo` varchar(30) NOT NULL,
+  `nome` varchar(30) NOT NULL,
+  `categoria` varchar(30) NOT NULL,
   `data` date NOT NULL,
-  `hora` time DEFAULT NULL,
-  `valor` float NOT NULL
+  `valor` float NOT NULL,
+  `tipo` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Extraindo dados da tabela `despesas`
---
-
-INSERT INTO `despesas` (`id`, `id_usuario`, `tipo`, `data`, `hora`, `valor`) VALUES
-(1, 1, 'Pagamento a vista', '2025-05-14', '17:00:00', 190),
-(2, 1, 'Pix pro fulano', '2025-05-12', '22:05:00', 100),
-(3, 1, 'Pix pro armazém', '2025-05-13', '14:10:00', 35),
-(4, 1, 'Conserto do telhado', '2025-05-02', '12:43:00', 400),
-(5, 1, 'Teste da hora', '2025-05-14', '00:00:00', 20);
 
 -- --------------------------------------------------------
 
@@ -86,18 +77,18 @@ INSERT INTO `usuarios` (`id`, `nome`, `senha`) VALUES
 --
 
 --
--- Índices para tabela `contas`
+-- Índices para tabela `lancamentos`
 --
-ALTER TABLE `contas`
+ALTER TABLE `lancamentos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `lancamentos_ibfk_1` (`id_usuario`);
 
 --
--- Índices para tabela `despesas`
+-- Índices para tabela `movimentacoes`
 --
-ALTER TABLE `despesas`
+ALTER TABLE `movimentacoes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_usuario` (`id_usuario`);
+  ADD KEY `movimentacoes_ibfk_1` (`id_usuario`);
 
 --
 -- Índices para tabela `usuarios`
@@ -110,16 +101,16 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de tabela `contas`
+-- AUTO_INCREMENT de tabela `lancamentos`
 --
-ALTER TABLE `contas`
+ALTER TABLE `lancamentos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `despesas`
+-- AUTO_INCREMENT de tabela `movimentacoes`
 --
-ALTER TABLE `despesas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+ALTER TABLE `movimentacoes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -132,16 +123,16 @@ ALTER TABLE `usuarios`
 --
 
 --
--- Limitadores para a tabela `contas`
+-- Limitadores para a tabela `lancamentos`
 --
-ALTER TABLE `contas`
-  ADD CONSTRAINT `contas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
+ALTER TABLE `lancamentos`
+  ADD CONSTRAINT `lancamentos_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 
 --
--- Limitadores para a tabela `despesas`
+-- Limitadores para a tabela `movimentacoes`
 --
-ALTER TABLE `despesas`
-  ADD CONSTRAINT `despesas_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
+ALTER TABLE `movimentacoes`
+  ADD CONSTRAINT `movimentacoes_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
