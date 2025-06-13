@@ -1,7 +1,5 @@
 <?php 
 
-header("Content-type: application/json");
-
 #################### PAG LOGIN ####################
 
 function login(){
@@ -68,7 +66,7 @@ function delUser(){
 
 #################### PAG MAIN ####################
 
-function getDesp(){
+function getMovi(){
     session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
@@ -76,62 +74,69 @@ function getDesp(){
         die("Conexão falhou");
     }
     $id = $_SESSION["id"];
-    $sql = "SELECT id_usuario, tipo, data, hora, valor FROM despesas WHERE id_usuario = '$id'";
+    $sql = "SELECT * FROM movimentacoes WHERE id_usuario = '$id'";
     $result = $dbconn->query($sql);
     $array = array();
     while($linha = mysqli_fetch_assoc($result)){
         $array[] = $linha;
     }
-    echo '{ "despesas" : ' . json_encode($array) . ' } ';
+    $file = fopen("json/movi.json", "w");
+    $json = '{ "movimentacoes" : ' . json_encode($array) . ' } ';
+    fwrite($file, $json);
+    fclose($file);
 
     $dbconn->close();
 
 }
 
-function cadDesp(){
+function cadMovi(){
     session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
         die("Conexão falhou");
     }
-    $tipo = $_GET["tipo"];
+    $nome = $_GET["nome"];
     $data = $_GET["data"];
-    $hora = $_GET["hora"];
+    $categoria = $_GET["categoria"];
     $valor = $_GET["valor"];
+    $tipo = $_GET["tipo"];
     $userid = $_SESSION["id"];
-    if (!$tipo || !$data || !$valor ){
+    if (!$nome || !$data || !$categoria || !$valor || !$tipo ){
         die("Dados não entraram!");
     }
-    $sql = "INSERT INTO despesas (id, id_usuario, tipo, data, hora, valor) VALUES (NULL, '$userid', '$tipo', '$data', '$hora', '$valor')";
+    $sql = "INSERT INTO movimentacoes (id, id_usuario, nome, categoria, data, valor, tipo) VALUES (NULL, '$userid', '$nome', '$categoria', '$data', '$valor', '$tipo')";
     $result = $dbconn->query($sql);
     echo $result;
 
     $dbconn->close();
 }
 
-function putDesp(){
+function putMovi(){
+    session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
         die("Conexão falhou");
     }
-    $tipo = $_GET["tipo"];
+    $nome = $_GET["nome"];
     $data = $_GET["data"];
-    $hora = $_GET["hora"];
+    $categoria = $_GET["categoria"];
     $valor = $_GET["valor"];
+    $tipo = $_GET["tipo"];
     $id = $_GET["id"];
-    if (!$tipo || !$data || !$valor || !$id ){
+    if (!$nome || !$data || !$categoria || !$valor || !$tipo || !$id ){
         die("Dados não entraram!");
     }
-    $sql = "UPDATE despesas SET tipo = '$tipo', data = '$data', hora = '$hora', valor = '$valor' WHERE despesas.id = '$id'";
+    $sql = "UPDATE movimentacoes SET nome = '$nome', data = '$data', categoria = '$categoria', valor = '$valor', tipo = '$tipo' WHERE movimentacoes.id = '$id'";
     $result = $dbconn->query($sql);
     echo $result;
 
     $dbconn->close();
 }
 
-function delDesp(){
+function delMovi(){
+    session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
@@ -141,7 +146,7 @@ function delDesp(){
     if (!$id ){
         die("Dados não entraram!");
     }
-    $sql = "DELETE FROM despesas WHERE despesas.id = '$id'";
+    $sql = "DELETE FROM movimentacoes WHERE movimentacoes.id = '$id'";
     $result = $dbconn->query($sql);
     echo $result;
 
@@ -150,7 +155,7 @@ function delDesp(){
 
 #-------------------------------------------------------------#
 
-function getConta(){
+function getFixo(){
     session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
@@ -158,60 +163,63 @@ function getConta(){
         die("Conexão falhou");
     }
     $id = $_SESSION["id"];
-    $sql = "SELECT id_usuario, tipo, prazo, valor FROM contas WHERE id_usuario = '$id'";
+    $sql = "SELECT * FROM lancamentos WHERE id_usuario = '$id'";
     $result = $dbconn->query($sql);
     $array = array();
     while($linha = mysqli_fetch_assoc($result)){
         $array[] = $linha;
     }
-    echo '{ "contas" : ' . json_encode($array) . ' } ';
+    $file = fopen("json/fixos.json", "w");
+    $json = '{ "fixos" : ' . json_encode($array) . ' } ';
+    fwrite($file, $json);
+    fclose($file);
 
     $dbconn->close();
 
 }
 
-function cadConta(){
+function cadFixo(){
     session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
         die("Conexão falhou");
     }
-    $tipo = $_GET["tipo"];
-    $prazo = $_GET["prazo"];
+    $nome = $_GET["nome"];
+    $validade = $_GET["validade"];
     $valor = $_GET["valor"];
     $userid = $_SESSION["id"];
-    if (!$tipo || !$prazo || !$valor ){
+    if (!$nome || !$validade || !$valor ){
         die("Dados não entraram!");
     }
-    $sql = "INSERT INTO contas (id, id_usuario, tipo, prazo, valor) VALUES (NULL, '$userid', '$tipo', '$prazo', '$valor')";
+    $sql = "INSERT INTO lancamentos (id, id_usuario, nome, validade, valor, foi_paga) VALUES (NULL, '$userid', '$nome', '$validade', '$valor', 0)";
     $result = $dbconn->query($sql);
     echo $result;
 
     $dbconn->close();
 }
 
-function putConta(){
+function putFixo(){
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
         die("Conexão falhou");
     }
-    $tipo = $_GET["tipo"];
-    $data = $_GET["prazo"];
+    $nome = $_GET["nome"];
+    $validade = $_GET["validade"];
     $valor = $_GET["valor"];
     $id = $_GET["id"];
-    if (!$tipo || !$prazo || !$valor || !$id ){
+    if (!$nome || !$validade || !$valor || !$id ){
         die("Dados não entraram!");
     }
-    $sql = "UPDATE contas SET tipo = '$tipo', prazo = '$prazo', valor = '$valor' WHERE contas.id = '$id'";
+    $sql = "UPDATE lancamentos SET nome = '$nome', validade = '$validade', valor = '$valor' WHERE lancamentos.id = '$id'";
     $result = $dbconn->query($sql);
     echo $result;
 
     $dbconn->close();
 }
 
-function delConta(){
+function delFixo(){
     $dbconn = new mysqli("localhost", "root", "", "financas");
 
     if ($dbconn->connect_error){
@@ -221,7 +229,7 @@ function delConta(){
     if (!$id ){
         die("Dados não entraram!");
     }
-    $sql = "DELETE FROM contas WHERE contas.id = '$id'";
+    $sql = "DELETE FROM lancamentos WHERE lancamentos.id = '$id'";
     $result = $dbconn->query($sql);
     echo $result;
 
@@ -315,30 +323,30 @@ if (isset($_REQUEST["deluser"])){
     delUser();
 }
 
-if (isset($_REQUEST["getdesp"])){
-    getDesp();
+if (isset($_REQUEST["getmovi"])){
+    getMovi();
 }
-if (isset($_REQUEST["caddesp"])){
-    cadDesp();
+if (isset($_REQUEST["cadmovi"])){
+    cadMovi();
 }
-if (isset($_REQUEST["putdesp"])){
-    putDesp();
+if (isset($_REQUEST["putmovi"])){
+    putMovi();
 }
-if (isset($_REQUEST["deldesp"])){
-    delDesp();
+if (isset($_REQUEST["delmovi"])){
+    delMovi();
 }
 
-if (isset($_REQUEST["getconta"])){
-    getConta();
+if (isset($_REQUEST["getfixo"])){
+    getFixo();
 }
-if (isset($_REQUEST["cadconta"])){
-    cadConta();
+if (isset($_REQUEST["cadfixo"])){
+    cadFixo();
 }
-if (isset($_REQUEST["putconta"])){
-    putConta();
+if (isset($_REQUEST["putfixo"])){
+    putFixo();
 }
-if (isset($_REQUEST["delconta"])){
-    delConta();
+if (isset($_REQUEST["delfixo"])){
+    delFixo();
 }
 
 if (isset($_REQUEST["get"])){

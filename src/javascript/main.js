@@ -4,13 +4,42 @@ function volta(){
 }
 
 function tabelas(){
-    getDesp();
-    getConta();
+    atualizarJSONmovi();
+    atualizarJSONfixo();
+    setTimeout(getMovi, 500);
+    setTimeout(getFixos, 500);
 }
 
-//Refazer tudo
+//TESTAR REQUISIÇÕES
 
-/////////////////////////////////// DESPESAS ///////////////////////////////////
+/////////////////////////////////// MOVIMENTAÇÕES ///////////////////////////////////
+
+async function getMovi(){
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.open("GET", "../json/movi.json", true);
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText);
+        }
+    };
+
+    xhttp.send();
+}
+
+async function atualizarJSONmovi(){
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.open("GET", "../functions.php?getmovi", true);
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText);
+        }
+    };
+    xhttp.send();
+}
 
 function getDesp(){
     var xhttp = new XMLHttpRequest();
@@ -52,50 +81,86 @@ function getDesp(){
     xhttp.send();
 }
 
-function cadDesp(){
+function cadMovi(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
-            getDesp();
-            window.alert("Despesa cadastrada com sucesso!")
+            if(this.responseText == "1"){
+                atualizarJSONmovi();
+                getMovi();
+                document.getElementById("formmovi").reset();
+                window.alert("Movimentação cadastrada com sucesso!")
+                //getDesp();
+            }
+            else{
+                window.alert("Algo deu errado!")
+            }
         }
     };
-    url = "../functions.php?caddesp&tipo=" + document.getElementById("tipodesp").value + "&data=" + document.getElementById("data").value + "&hora=" + document.getElementById("hora").value + "&valor=" + document.getElementById("valordesp").value;
+    url = "../functions.php?cadmovi&nome=" + document.getElementById("nome").value + "&categoria=" + document.getElementById("categoria").value + "&data=" + document.getElementById("data").value + "&valor=" + document.getElementById("valor").value + "&tipo=" + document.getElementById("tipo").value;
     xhttp.open("POST", url, true);
     xhttp.send();
 }
 
-function putDesp(){
+function putMovi(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
-            window.alert("Despesa atualizada com sucesso!");
+            window.alert("Movimentação atualizada com sucesso!");
         }
     };
-    url = "../functions.php?putdesp&tipo=" + document.getElementById("tipodesp").value + "&data=" + document.getElementById("data").value + "&hora=" + document.getElementById("hora").value + "&valor=" + document.getElementById("valordesp").value;
-    xhttp.open("GET", url, true);
+    url = "../functions.php?putmovi&id=" + document.getElementById("idput") + "&nome=" + document.getElementById("nome").value + "&categoria=" + document.getElementById("categoria").value + "&data=" + document.getElementById("data").value + "&valor=" + document.getElementById("valor").value + "&tipo=" + document.getElementById("tipo").value;
+    xhttp.open("POST", url, true);
     xhttp.send()
 }
 
-function delDesp(){
+function delMovi(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
-            window.alert("Despesa apagada com sucesso!");
+            window.alert("Movimentação apagada com sucesso!");
         }
     };
-    url = "../functions.php?deldesp&id=" + document.getElementById("deldesp").value;
-    xhttp.open("GET", url, true);
+    url = "../functions.php?delmovi&id=" + document.getElementById("iddel").value;
+    xhttp.open("POST", url, true);
     xhttp.send()
 }
 
-/////////////////////////////////// CONTAS ///////////////////////////////////
+/////////////////////////////////// CUSTOS FIXOS ///////////////////////////////////
+
+
+async function getFixos(){
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.open("GET", "../json/fixos.json", true);
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText);
+        }
+    };
+
+    xhttp.send();
+}
+
+async function atualizarJSONfixo(){
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.open("GET", "../functions.php?getfixo", true);
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText);
+        }
+    };
+
+    xhttp.send();
+}
 
 function getConta(){
     var xhttp = new XMLHttpRequest();
@@ -138,45 +203,52 @@ function getConta(){
     xhttp.send();
 }
 
-function cadConta(){
+function cadFixo(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
-            getConta();
-            window.alert("Conta cadastrada com sucesso!");
+            if(this.responseText == "1"){
+                atualizarJSONfixo();
+                getFixos();
+                document.getElementById("formfixo").reset();
+                window.alert("Custo fixo cadastrado com sucesso!")
+                //getDesp();
+            }
+            else{
+                window.alert("Algo deu errado!")
+            }
         }
     };
-    url = "../functions.php?cadconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valor=" + document.getElementById("valorconta").value;
+    url = "../functions.php?cadfixo&nome=" + document.getElementById("nome").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
     xhttp.open("POST", url, true);
     xhttp.send();
 }
 
-function putConta(){
+function putFixo(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
-            window.alert("Conta atualizada com sucesso!");
+            window.alert("Custo fixo atualizado com sucesso!");
         }
     };
-    url = "../functions.php?putconta&tipo=" + document.getElementById("tipoconta").value + "&prazo=" + document.getElementById("prazo").value + "&valor=" + document.getElementById("valorconta").value;
-    xhttp.open("GET", url, true);
+    url = "../functions.php?putfixo&id=" + document.getElementById("idput") + "&nome=" + document.getElementById("nome").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
+    xhttp.open("POST", url, true);
     xhttp.send()
 }
 
-function delConta(){
+function delFixo(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
-            window.alert("Conta apagada com sucesso!");
+            window.alert("Custo fixo apagado com sucesso!");
         }
     };
-    url = "../functions.php?delconta&id=" + document.getElementById("delconta").value;
-    xhttp.open("GET", url, true);
+    url = "../functions.php?delfixo&id=" + document.getElementById("iddel").value;
+    xhttp.open("POST", url, true);
     xhttp.send()
 }
