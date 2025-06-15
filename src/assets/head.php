@@ -8,6 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Página Principal</title>
     <script src="../javascript/main.js" defer></script>
-    <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/main.css">
 </head>

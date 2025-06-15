@@ -3,14 +3,27 @@ function volta(){
     window.location.href = "../pags/login.php"
 }
 
-function tabelas(){
+function tabelaMovi(){
     atualizarJSONmovi();
-    atualizarJSONfixo();
     setTimeout(getMovi, 500);
-    setTimeout(getFixos, 500);
+    setTimeout(displayMovi, 500)
 }
 
-//TESTAR REQUISIÇÕES
+function tabelaFixo(){
+    atualizarJSONfixo();
+    setTimeout(getFixos, 500);
+    setTimeout(displayFixo, 500)
+}
+
+function getID(id, metodo){ //Refazer para autocompletar os modais de editar e apagar. Dividir em duas funções. Fazer aplicar aos modais de fixos também.
+    var inputid = id;
+    if(metodo == "put"){
+        document.getElementById("idputm").value = inputid;
+    }
+    if(metodo == "del"){
+        document.getElementById("iddelm").value = inputid;
+    }
+}
 
 /////////////////////////////////// MOVIMENTAÇÕES ///////////////////////////////////
 
@@ -41,7 +54,7 @@ async function atualizarJSONmovi(){
     xhttp.send();
 }
 
-function getDesp(){
+function displayMovi(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -49,35 +62,40 @@ function getDesp(){
             console.log(this.responseText);
 
             objJSON = JSON.parse(this.responseText);
-            despesas = objJSON.despesas;
-            console.log(despesas);
+            movimentacoes = objJSON.movimentacoes;
+            console.log(movimentacoes);
             
-            conteudo = "<table id='despesas'>";
+            conteudo = "<table id='movimentacoes'>";
             conteudo += "<thead>";
             conteudo += "   <tr>";
             conteudo += "       <th>Nome</th>";
-            conteudo += "       <th>Data</th>";
             conteudo += "       <th>Categoria</th>";
+            conteudo += "       <th>Data</th>";
             conteudo += "       <th>Valor</th>";
             conteudo += "   </tr>";
             conteudo += "</thead>";
             conteudo += "<tbody>";
-            despesas.forEach(desp => {
-                conteudo += "   <tr>";
-                conteudo += "       <td>" + desp.tipo + "</td>";
-                conteudo += "       <td>" + desp.data + "</td>";
-                conteudo += "       <td></td>";
-                conteudo += "       <td>" + desp.valor + "</td>";
-                conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#eddmodal'>Editar</button></td>";
-                conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apdmodal'>Apagar</button></td>";
+            movimentacoes.forEach(movi => {
+                conteudo += "   <tr class='linha'>";
+                conteudo += "       <td hidden class='idmovi'>" + movi.id + "</td>";
+                conteudo += "       <td>" + movi.nome + "</td>";
+                conteudo += "       <td>" + movi.categoria + "</td>";
+                conteudo += "       <td>" + movi.data + "</td>";
+                if(movi.tipo == "Despesa"){
+                    conteudo += "       <td style='color:red'>(-) R$" + movi.valor + "</td>";
+                } else{
+                    conteudo += "       <td style='color:green'>(+) R$" + movi.valor + "</td>";
+                }
+                conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edmmodal' onclick='getID(" + movi.id + ", `put`)'>Editar</button></td>";
+                conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apmmodal'onclick='getID(" + movi.id + ", `del`)' >Apagar</button></td>";
                 conteudo += "   </tr>";
             });
             conteudo +="</tbody>";
-            document.getElementById("despesas").innerHTML = conteudo;
+            document.getElementById("movimentacoes").innerHTML = conteudo;
         }
     };
 
-    xhttp.open("GET", "../functions.php?getdesp", true);
+    xhttp.open("GET", "../json/movi.json", true);
     xhttp.send();
 }
 
@@ -87,11 +105,10 @@ function cadMovi(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             if(this.responseText == "1"){
-                atualizarJSONmovi();
-                getMovi();
-                document.getElementById("formmovi").reset();
                 window.alert("Movimentação cadastrada com sucesso!")
-                //getDesp();
+                document.getElementById("formmovi").reset();
+                atualizarJSONmovi();
+                setTimeout(displayMovi, 1000);
             }
             else{
                 window.alert("Algo deu errado!")
@@ -108,11 +125,18 @@ function putMovi(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
-            window.alert("Movimentação atualizada com sucesso!");
+            if(this.responseText == "1"){
+                window.alert("Movimentação atualizada com sucesso!")
+                document.getElementById("formmoviput").reset();
+                atualizarJSONmovi();
+                setTimeout(displayMovi, 1000);
+            }
+            else{
+                window.alert("Algo deu errado!")
+            }
         }
     };
-    url = "../functions.php?putmovi&id=" + document.getElementById("idput") + "&nome=" + document.getElementById("nome").value + "&categoria=" + document.getElementById("categoria").value + "&data=" + document.getElementById("data").value + "&valor=" + document.getElementById("valor").value + "&tipo=" + document.getElementById("tipo").value;
+    url = "../functions.php?putmovi&id=" + document.getElementById("idputm").value + "&nome=" + document.getElementById("nomeputm").value + "&categoria=" + document.getElementById("categoriaput").value + "&data=" + document.getElementById("dataput").value + "&valor=" + document.getElementById("valorputm").value + "&tipo=" + document.getElementById("tipoput").value;
     xhttp.open("POST", url, true);
     xhttp.send()
 }
@@ -122,11 +146,18 @@ function delMovi(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
-            window.alert("Movimentação apagada com sucesso!");
+            if(this.responseText == "1"){
+                window.alert("Movimentação apagada com sucesso!")
+                document.getElementById("formmovidel").reset();
+                atualizarJSONmovi();
+                setTimeout(displayMovi, 1000);
+            }
+            else{
+                window.alert("Algo deu errado!")
+            }
         }
     };
-    url = "../functions.php?delmovi&id=" + document.getElementById("iddel").value;
+    url = "../functions.php?delmovi&id=" + document.getElementById("iddelm").value;
     xhttp.open("POST", url, true);
     xhttp.send()
 }
@@ -162,7 +193,7 @@ async function atualizarJSONfixo(){
     xhttp.send();
 }
 
-function getConta(){
+function displayFixo(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -170,36 +201,35 @@ function getConta(){
             console.log(this.responseText);
 
             objJSON = JSON.parse(this.responseText);
-            contas = objJSON.contas;
-            console.log(contas);
+            fixos = objJSON.fixos;
+            console.log(fixos);
             
-            conteudo = "<table id='contas'>";
+            conteudo = "<table id='fixos'>";
             conteudo += "<thead>";
             conteudo += "   <tr>";
             conteudo += "       <th>Nome</th>";
-            conteudo += "       <th>Prazo</th>";
-            //conteudo += "       <th>Categoria</th>";
+            conteudo += "       <th>Validade</th>";
             conteudo += "       <th>Valor</th>";
             conteudo += "   </tr>";
             conteudo += "</thead>";
             conteudo += "<tbody>";
-            contas.forEach(conta => {
+            fixos.forEach(f => {
                 conteudo += "   <tr>";
-                conteudo += "       <td>" + conta.tipo + "</td>";
-                conteudo += "       <td>" + conta.prazo + "</td>";
-                //conteudo += "       <td></td>";
-                conteudo += "       <td>" + conta.valor + "</td>";
-                conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edcmodal'>Editar</button></td>";
-                conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apcmodal'>Apagar</button></td>";
+                conteudo += "       <td hidden class='idfixo'>" + f.id + "</td>";
+                conteudo += "       <td>" + f.nome + "</td>";
+                conteudo += "       <td>" + f.validade + "</td>";
+                conteudo += "       <td>" + f.valor + "</td>";
+                conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal'>Editar</button></td>";
+                conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apfmodal'>Apagar</button></td>";
                 conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal'>Dar Baixa</button></td>";
                 conteudo += "   </tr>";
             });
             conteudo +="</tbody>";
-            document.getElementById("contas").innerHTML = conteudo;
+            document.getElementById("fixos").innerHTML = conteudo;
         }
     };
 
-    xhttp.open("GET", "../functions.php?getconta", true);
+    xhttp.open("GET", "../json/fixos.json", true);
     xhttp.send();
 }
 
@@ -209,11 +239,10 @@ function cadFixo(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             if(this.responseText == "1"){
-                atualizarJSONfixo();
-                getFixos();
+                window.alert("Lançamento fixo cadastrado com sucesso!")
                 document.getElementById("formfixo").reset();
-                window.alert("Custo fixo cadastrado com sucesso!")
-                //getDesp();
+                atualizarJSONfixo();
+                setTimeout(displayFixo, 1000);
             }
             else{
                 window.alert("Algo deu errado!")
@@ -230,11 +259,19 @@ function putFixo(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
-            window.alert("Custo fixo atualizado com sucesso!");
+            if(this.responseText == "1"){
+                window.alert("Lançamento fixo atualizado com sucesso!")
+                document.getElementById("formfixoput").reset();
+                atualizarJSONfixo();
+                setTimeout(displayFixo, 1000);
+            }
+            else{
+                console.log(this.responseText)
+                window.alert("Algo deu errado!")
+            }
         }
     };
-    url = "../functions.php?putfixo&id=" + document.getElementById("idput") + "&nome=" + document.getElementById("nome").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
+    url = "../functions.php?putfixo&id=" + document.getElementById("idputf").value + "&nome=" + document.getElementById("nomeputf").value + "&validade=" + document.getElementById("validadeput").value + "&valor=" + document.getElementById("valorputf").value;
     xhttp.open("POST", url, true);
     xhttp.send()
 }
@@ -244,11 +281,18 @@ function delFixo(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
-            window.alert("Custo fixo apagado com sucesso!");
+            if(this.responseText == "1"){
+                window.alert("Lançamento fixo apagado com sucesso!")
+                document.getElementById("formfixodel").reset();
+                atualizarJSONfixo();
+                setTimeout(displayFixo, 1000);
+            }
+            else{
+                window.alert("Algo deu errado!")
+            }
         }
     };
-    url = "../functions.php?delfixo&id=" + document.getElementById("iddel").value;
+    url = "../functions.php?delfixo&id=" + document.getElementById("iddelf").value;
     xhttp.open("POST", url, true);
     xhttp.send()
 }

@@ -15,6 +15,27 @@ header{
     padding: 10px;
 }
 
+h1{
+    text-align: center;
+}
+
+ul{
+    list-style-type: none;
+    overflow: hidden;
+    margin: auto;
+    width: fit-content;
+    padding: 0;
+}
+
+li{
+    float: left;
+}
+
+li a{
+    text-decoration: none;
+    display: block;
+}
+
 footer{
     bottom: 0;
     left: 0;
@@ -23,11 +44,6 @@ footer{
     background-color: lightgreen;
     border-top: 5px solid rgb(124, 207, 124);
 }
-
-table, th, td{
-    border: 1px solid black ;
-}
-
 
 .containertable{
     border: 2px solid black;
