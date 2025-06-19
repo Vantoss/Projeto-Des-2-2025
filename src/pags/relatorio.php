@@ -1,5 +1,5 @@
 <?php require_once "../assets/head.php" ?>
-<body onload="tabelas()">
+<body onload="">
     <?php require_once "../assets/header.php"?>
     <h1>Relatório</h1>
 

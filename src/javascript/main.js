@@ -6,13 +6,15 @@ function volta(){
 function tabelaMovi(){
     atualizarJSONmovi();
     setTimeout(getMovi, 500);
-    setTimeout(displayMovi, 500)
+    setTimeout(displayMovi, 500);
+    totalMovi();
 }
 
 function tabelaFixo(){
     atualizarJSONfixo();
     setTimeout(getFixos, 500);
     setTimeout(displayFixo, 500)
+    totalFixo();
 }
 
 function getID(id, metodo){ //Refazer para autocompletar os modais de editar e apagar. Dividir em duas funções. Fazer aplicar aos modais de fixos também.
@@ -22,6 +24,19 @@ function getID(id, metodo){ //Refazer para autocompletar os modais de editar e a
     }
     if(metodo == "del"){
         document.getElementById("iddelm").value = inputid;
+    }
+}
+
+function convertData(data){
+    var d = new Date(data);
+    var newd = d.toLocaleDateString();
+    return newd;
+}
+
+if(document.getElementById("pesquisar")){
+    var form = document.getElementById("formpesquisar")
+    form.onsubmit = function(e){
+        e.preventDefault();
     }
 }
 
@@ -80,7 +95,7 @@ function displayMovi(){
                 conteudo += "       <td hidden class='idmovi'>" + movi.id + "</td>";
                 conteudo += "       <td>" + movi.nome + "</td>";
                 conteudo += "       <td>" + movi.categoria + "</td>";
-                conteudo += "       <td>" + movi.data + "</td>";
+                conteudo += "       <td>" + convertData(movi.data) + "</td>";
                 if(movi.tipo == "Despesa"){
                     conteudo += "       <td style='color:red'>(-) R$" + movi.valor + "</td>";
                 } else{
@@ -162,6 +177,63 @@ function delMovi(){
     xhttp.send()
 }
 
+function totalMovi(){
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            movimentacoes = objJSON.movimentacoes;
+            
+            totald = 0;
+            totalr = 0;
+            movimentacoes.forEach(movi =>{
+                if(movi.tipo == "Despesa"){
+                    totald += parseInt(movi.valor);
+                }
+                if(movi.tipo == "Receita"){
+                    totalr += parseInt(movi.valor);
+                }
+            });
+            if(totald != 0){
+                document.getElementById("numd").innerHTML = totald;  
+            } else{
+                document.getElementById("numd").innerHTML = "N/A";  
+            }
+            if(totalr != 0){
+                document.getElementById("numr").innerHTML = totalr;  
+            } else{
+                document.getElementById("numr").innerHTML = "N/A";  
+            }
+        }
+    };
+
+    xhttp.open("GET", "../json/movi.json", true);
+    xhttp.send();
+}
+
+function pesqMovi(){
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            movimentacoes = objJSON.movimentacoes;
+
+            var nome = document.forms["formpesquisar"]["nomep"].value;
+            var cat = document.forms["formpesquisar"]["categoriap"].value;
+            var data = document.forms["formpesquisar"]["datap"].value;
+            var valor = document.forms["formpesquisar"]["valorp"].value;
+            var tipo = document.forms["formpesquisar"]["tipop"].value;
+            //Filtrar o json a partir dos dados passados e criar um novo contendo apenas o que foi solicitado. Gerar a tabela de novo com base no novo json.
+        }
+    };
+
+
+    xhttp.open("GET", "../json/movi.json", true);
+    xhttp.send();
+}
+
 /////////////////////////////////// CUSTOS FIXOS ///////////////////////////////////
 
 
@@ -217,7 +289,7 @@ function displayFixo(){
                 conteudo += "   <tr>";
                 conteudo += "       <td hidden class='idfixo'>" + f.id + "</td>";
                 conteudo += "       <td>" + f.nome + "</td>";
-                conteudo += "       <td>" + f.validade + "</td>";
+                conteudo += "       <td>" + convertData(f.validade) + "</td>";
                 conteudo += "       <td>" + f.valor + "</td>";
                 conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal'>Editar</button></td>";
                 conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apfmodal'>Apagar</button></td>";
@@ -295,4 +367,28 @@ function delFixo(){
     url = "../functions.php?delfixo&id=" + document.getElementById("iddelf").value;
     xhttp.open("POST", url, true);
     xhttp.send()
+}
+
+function totalFixo(){
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            fixos = objJSON.fixos;
+            
+            total = 0;
+            fixos.forEach(f =>{
+                total += f.valor;
+            });
+            if(total != 0){
+                document.getElementById("numf").innerHTML = totald;  
+            } else{
+                document.getElementById("numf").innerHTML = "N/A";  
+            }
+        }
+    };
+
+    xhttp.open("GET", "../json/fixos.json", true);
+    xhttp.send();
 }

@@ -8,10 +8,55 @@
     <?php require_once "../assets/header.php"?>
     
     <div class="container mt-2">
+        <div class="row">
+            <div class="col" id="resumomovi">
+                <h3>Suas movimentações</h3>
+                <div class="desc">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Mauris et ante sed est laoreet dapibus. 
+                        Proin erat magna, pharetra in augue eget, ultrices volutpat nunc. 
+                        Mauris augue ipsum, interdum id lorem a, placerat pulvinar est. 
+                        Vestibulum a magna neque. Aenean et semper erat, eget pharetra felis. 
+                        Nulla facilisi. Phasellus tristique consectetur libero, eget fermentum justo consectetur sed. 
+                        Duis sed risus condimentum, pellentesque sapien viverra, tempus arcu. 
+                        In id ligula lacinia, ullamcorper felis sed, gravida lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>  
+                </div>
+                <div class="total">
+                    <p id="totald">Total de despesas: <span id="numd"></span></p>
+                    <p id="totalr">Total de receitas: <span id="numr"></span></p>
+                </div>
+            </div>
+        </div>
         <div class="row" id="">
             <div class="containertable col rounded" id="tabelamovi">
                 <div id="cadbtns">
                     <button type='submit' id='cadm' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadmmodal'>Registrar gasto/receita</button>
+                </div>
+                <div id="pesquisar">
+                    <!--<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Button with data-bs-target
+                    </button>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                        </div>
+                    </div>-->
+                    <form id="formpesquisar">
+                        <label for="nomep">Nome:</label>
+                        <input type="text" name="nomem" id="nomep">
+                        <label for="categoriap">Categoria:</label>
+                        <input type="text" name="categoriam" id="categoriap">
+                        <label for="datap">Data:</label>
+                        <input type="date" name="datam" id="datap" >
+                        <label for="valorp">Valor:</label>
+                        <input type="number" name="valorm" id="valorp" >
+                        <label for="tipop">Tipo:</label>
+                        <select name="tipom" id="tipop">
+                            <option value="Despesa">Despesa</option>
+                            <option value="Receita">Receita</option>
+                        </select>
+                        <button type="submit" id="pesqbtn" class="btn btn-success" onclick="pesqMovi()">Pesquisar</button>
+                    </form>
                 </div>
                 <table id="movimentacoes" class="table table-bordered">
                 </table>

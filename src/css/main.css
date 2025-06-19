@@ -53,13 +53,43 @@ footer{
     padding: 10px;
 }
 
+h3{
+    text-align: center;
+}
+
+#totald #totalr{
+    width: 40%;
+}
+
 p{
     text-align: center;
-    font-weight: bold;
+    display: inline-block;
+}
+
+.desc{
+    text-align: center;
+}
+
+.total{
+    text-align: center;
+}
+
+#numd{
+    color: red;
+}
+
+#numr{
+    color: green;
 }
 
 #cadbtns{
     text-align: center;
     margin-bottom: 20px;
     margin-top: 20px;
+}
+
+#pesquisar{
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: rgb(231, 231, 231);
 }

@@ -4,10 +4,26 @@
     
 
     <div class="container mt-2">
+        <div class="row">
+            <div class="col" id="resumofixos">
+                <h3>Seus lançamentos fixos</h3>
+                <div class="desc">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        Mauris et ante sed est laoreet dapibus. 
+                        Proin erat magna, pharetra in augue eget, ultrices volutpat nunc. 
+                        Mauris augue ipsum, interdum id lorem a, placerat pulvinar est. 
+                        Vestibulum a magna neque. Aenean et semper erat, eget pharetra felis. 
+                        Nulla facilisi. Phasellus tristique consectetur libero, eget fermentum justo consectetur sed. 
+                        Duis sed risus condimentum, pellentesque sapien viverra, tempus arcu. 
+                        In id ligula lacinia, ullamcorper felis sed, gravida lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>  
+                </div>
+                <div class="total">
+                    <p id="totalf">Total de lançamentos: <span id="numf"></span></p>
+                </div>
+            </div>
+        </div>
         <div class="row" id="">
-            <h1>Custos fixos</h1>
-            <div class="containertable col rounded" id="tabelafixos">
-                
+            <div class="containertable col rounded" id="tabelafixos">  
                 <div id="cadbtns">
                     <button type='submit' id='cadf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadfmodal'>Registrar lançamento fixo</button>
                 </div>
