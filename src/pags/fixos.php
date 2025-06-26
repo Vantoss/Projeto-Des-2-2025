@@ -57,7 +57,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" id="enviar" onclick="cadFixo()" data-bs-dismiss="modal">Cadastrar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('formfixo').reset()" data-bs-dismiss="modal">Cancelar</button>
                 </div>
 
             </div>
@@ -74,8 +74,7 @@
 
                 <div class="modal-body">
                     <form id="formfixoput">
-                        <label for="idputf">ID:</label><br>
-                        <input type="text" name="id" id="idputf" required><br>
+                        <input hidden type="text" name="id" id="idputf" required>
                         <label for="nomeputf">Nome:</label><br>
                         <input type="text" name="tipoc" id="nomeputf" placeholder="(Luz, água, parcela...)" required><br>
                         <label for="validadeput">Validade:</label><br>
@@ -104,9 +103,9 @@
                 </div>
 
                 <div class="modal-body">
+                    <p>Você tem certeza que quer apagar este lançamento?</p>
                     <form id="formfixodel">
-                        <label for="iddelf">ID:</label><br>
-                        <input type="text" name="id" id="iddelf" required><br>                        
+                        <input hidden type="text" name="id" id="iddelf" required>                       
                     </form>
                 </div>
 

@@ -68,11 +68,74 @@ function createBanco(){
     (1, 'dev1', '12345'),
     (2, 'dev2', '12345')";
 
-    /*$insertdespesas = "INSERT INTO `movimentacoes` (`id`, `id_usuario`, `nome`, `categoria`, `data`, `valor`, `tipo`) VALUES
-    (1, 1, 'Pagamento a vista', '2025-05-14', '17:00:00', 190),
-    (2, 1, 'Pix pro fulano', '2025-05-12', '22:05:00', 100),
-    (3, 1, 'Pix pro armazém', '2025-05-13', '14:10:00', 35),
-    (4, 1, 'Conserto do telhado', '2025-05-02', '12:43:00', 400)";*/
+    $createprocedurefillmovi = "CREATE DEFINER=`root`@`localhost` PROCEDURE `encheMovi`() INSERT INTO movimentacoes (id, id_usuario, nome, categoria, data, valor, tipo) VALUES
+    (NULL, 1, 'Condomínio', 'Moradia', '2024-12-10', '500', 'Despesa' ),
+    (NULL, 1, 'Água', 'Moradia', '2024-12-10', '100.40', 'Despesa' ),
+    (NULL, 1, 'Internet', 'Moradia', '2024-12-10', '85', 'Despesa' ),
+    (NULL, 1, 'Videogame', 'Lazer', '2024-12-15', '80', 'Despesa' ),
+    (NULL, 1, 'Luz', 'Moradia', '2024-12-07', '110.25', 'Despesa' ),
+    (NULL, 1, 'Delivery', 'Alimentação', '2024-12-17', '30', 'Despesa' ),
+    (NULL, 1, 'Consulta', 'Saúde', '2024-12-12', '50', 'Despesa' ),
+    (NULL, 1, 'Curso', 'Educação', '2024-12-08', '100', 'Despesa' ),
+    (NULL, 1, 'Combustível', 'Transporte', '2025-01-02', '6.20', 'Despesa' ),
+    (NULL, 1, 'Salário', 'Trabalho', '2025-01-05', '2100', 'Receita' ),
+    (NULL, 1, 'Condomínio', 'Moradia', '2025-01-07', '500', 'Despesa' ),
+    (NULL, 1, 'Água', 'Moradia', '2025-01-07', '100.40', 'Despesa' ),
+    (NULL, 1, 'Internet', 'Moradia', '2025-01-10', '85', 'Despesa' ),
+    (NULL, 1, 'Luz', 'Moradia', '2025-01-07', '110.25', 'Despesa' ),
+    (NULL, 1, 'Freelance', 'Trabalho', '2025-01-09', '120', 'Receita' ),
+    (NULL, 1, 'Cinema', 'Lazer', '2025-01-12', '40', 'Despesa' ),
+    (NULL, 1, 'Mercado', 'Alimentação', '2025-01-10', '90.43', 'Despesa' ),
+    (NULL, 1, 'Medicamento', 'Saúde', '2025-01-12', '20', 'Despesa' ),
+    (NULL, 1, 'Material', 'Educação', '2025-01-19', '75', 'Despesa' ),
+    (NULL, 1, 'Transporte público', 'Transporte', '2025-01-24', '5', 'Despesa' ),
+    (NULL, 1, 'Salário', 'Trabalho', '2025-02-05', '2000', 'Receita' ),
+    (NULL, 1, 'Condomínio', 'Moradia', '2025-02-10', '500', 'Despesa' ),
+    (NULL, 1, 'Luz', 'Moradia', '2025-02-07', '110.25', 'Despesa' ),
+    (NULL, 1, 'Água', 'Moradia', '2025-02-10', '100.40', 'Despesa' ),
+    (NULL, 1, 'Internet', 'Moradia', '2025-02-10', '85', 'Despesa' ),
+    (NULL, 1, 'Evento', 'Lazer', '2025-02-13', '80', 'Despesa' ),
+    (NULL, 1, 'Restaurante', 'Alimentação', '2025-02-13', '33.5', 'Despesa' ),
+    (NULL, 1, 'Consulta', 'Saúde', '2025-02-21', '50', 'Despesa' ),
+    (NULL, 1, 'Curso', 'Educação', '2025-02-10', '100', 'Despesa' ),
+    (NULL, 1, 'Mecânico', 'Transporte', '2025-02-20', '640', 'Despesa' ),
+    (NULL, 1, 'Salário', 'Trabalho', '2025-03-05', '2150', 'Receita' ),
+    (NULL, 1, 'Condomínio', 'Moradia', '2025-03-10', '500', 'Despesa' ),
+    (NULL, 1, 'Água', 'Moradia', '2025-03-10', '100.40', 'Despesa' ),
+    (NULL, 1, 'Luz', 'Moradia', '2025-03-07', '110.25', 'Despesa' ),
+    (NULL, 1, 'Internet', 'Moradia', '2025-03-10', '85', 'Despesa' ),
+    (NULL, 1, 'Freelance', 'Trabalho', '2025-03-15', '200', 'Receita' ),
+    (NULL, 1, 'Videogame', 'Lazer', '2025-03-17', '55', 'Despesa' ),
+    (NULL, 1, 'Mercado', 'Alimentação', '2025-03-11', '60.30', 'Despesa' ),
+    (NULL, 1, 'IPTU', 'Moradia', '2025-03-23', '400', 'Despesa' ),
+    (NULL, 1, 'Consulta', 'Saúde', '2025-03-18', '30', 'Despesa' ),
+    (NULL, 1, 'Curso', 'Educação', '2025-03-12', '100', 'Despesa' ),
+    (NULL, 1, 'Transporte público', 'Transporte', '2025-03-29', '5', 'Despesa' ),
+    (NULL, 1, 'Salário', 'Trabalho', '2025-04-05', '2000', 'Receita' ),
+    (NULL, 1, 'Condomínio', 'Moradia', '2025-04-10', '500', 'Despesa' ),
+    (NULL, 1, 'Luz', 'Moradia', '2025-04-07', '110.25', 'Despesa' ),
+    (NULL, 1, 'Água', 'Moradia', '2025-04-10', '100.40', 'Despesa' ),
+    (NULL, 1, 'Internet', 'Moradia', '2025-04-10', '85', 'Despesa' ),
+    (NULL, 1, 'Freelance', 'Trabalho', '2025-04-09', '150', 'Receita' ),
+    (NULL, 1, 'Cinema', 'Lazer', '2025-04-21', '40', 'Despesa' ),
+    (NULL, 1, 'Delivery', 'Alimentação', '2025-04-13', '58.99', 'Despesa' ),
+    (NULL, 1, 'Consulta', 'Saúde', '2025-04-23', '40', 'Despesa' ),
+    (NULL, 1, 'Material', 'Educação', '2025-04-24', '60', 'Despesa' ),
+    (NULL, 1, 'Uber', 'Transporte', '2025-04-17', '24.50', 'Despesa' ),
+    (NULL, 1, 'Salário', 'Trabalho', '2025-05-05', '2100', 'Receita' ),
+    (NULL, 1, 'Condomínio', 'Moradia', '2025-05-10', '500', 'Despesa' ),
+    (NULL, 1, 'Luz', 'Moradia', '2025-05-07', '110.25', 'Despesa' ),
+    (NULL, 1, 'Água', 'Moradia', '2025-05-10', '100.40', 'Despesa' ),
+    (NULL, 1, 'Internet', 'Moradia', '2025-05-10', '85', 'Despesa' ),
+    (NULL, 1, 'Evento', 'Lazer', '2025-05-13', '30', 'Despesa' ),
+    (NULL, 1, 'Restaurante', 'Alimentação', '2025-05-20', '25', 'Despesa' ),
+    (NULL, 1, 'Gás', 'Moradia', '2025-05-09', '40', 'Despesa' ),
+    (NULL, 1, 'Consulta', 'Saúde', '2025-05-18', '50', 'Despesa' ),
+    (NULL, 1, 'Curso', 'Educação', '2025-05-12', '100', 'Despesa' ),
+    (NULL, 1, 'Combustível', 'Transporte', '2025-05-20', '6.20', 'Despesa' ),
+    (NULL, 1, 'Salário', 'Trabalho', '2025-06-05', '2050', 'Receita' )";
+
+    $execfillmovi = "CALL `encheMovi` ();";
     
     if (!mysqli_query($conn, $createdb)){
         die("Falha ao criar banco");
@@ -106,9 +169,14 @@ function createBanco(){
         die("Falha ao inserir usuários");
     }
 
-    /*if (!mysqli_query($conn, $insertdespesas)){
-        die("Falha ao inserir despesas");
-    }*/
+    if (!mysqli_query($conn, $createprocedurefillmovi)){
+        die("Falha ao criar procedure de movimentações");
+    }
+
+    if (!mysqli_query($conn, $execfillmovi)){
+        die("Falha ao executer a procedure de movimentações");
+    }
+
 
     return $conn;
 }

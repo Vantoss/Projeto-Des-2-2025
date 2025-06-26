@@ -1,7 +1,9 @@
 <!--A FAZER -->
-<!--Remover os JSONS do Git e fazer com que automaticamente sejam criados durante a primeira execução-->
-<!--Fazer a pesquisa de movimentações -->
-<!--Fazer as páginas de custos fixos e relatório -->
+<!--Consertar a pesquisa de movimentações -->
+<!--Fazer a edição do usuário ao clicar no nome-->
+<!--Paginação das tabelas, dividir por mês-->
+<!--Escrever as descrições -->
+<!--Fazer a página de Relatório (talvez tornar ela a inicial) -->
 <!--Descobrir como integrar gráficos ao projeto (provavelmente através de bibliotecas ou Python) -->
 <?php require_once "../assets/head.php" ?>
 <body onload="tabelaMovi()">
@@ -44,14 +46,24 @@
                     <form id="formpesquisar">
                         <label for="nomep">Nome:</label>
                         <input type="text" name="nomem" id="nomep">
-                        <label for="categoriap">Categoria:</label>
-                        <input type="text" name="categoriam" id="categoriap">
+                        <label for="categoria">Categoria:</label>
+                        <select name="categoriap" id="categoria">
+                            <option value="Qualquer">Qualquer</option>
+                            <option value="Moradia">Moradia</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Trabalho">Trabalho</option>
+                        </select>
                         <label for="datap">Data:</label>
                         <input type="date" name="datam" id="datap" >
                         <label for="valorp">Valor:</label>
                         <input type="number" name="valorm" id="valorp" >
                         <label for="tipop">Tipo:</label>
                         <select name="tipom" id="tipop">
+                            <option value="Qualquer">Qualquer</option>
                             <option value="Despesa">Despesa</option>
                             <option value="Receita">Receita</option>
                         </select>
@@ -80,7 +92,15 @@
                         <label for="nome">Nome:</label><br>
                         <input type="text" name="nomem" id="nome" placeholder="(Supermercado, gasolina...)" required><br>
                         <label for="categoria">Categoria:</label><br>
-                        <input type="text" name="categoriam" id="categoria" placeholder="(Lazer, alimentação...)" required><br>
+                        <select name="categoriam" id="categoria">
+                            <option value="Moradia">Moradia</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Trabalho">Trabalho</option>
+                        </select><br>
                         <label for="data">Data:</label><br>
                         <input type="date" name="datam" id="data" placeholder="Data" required><br>
                         <label for="valor">Valor:</label><br>
@@ -95,7 +115,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" id="enviar" onclick="cadMovi()" data-bs-dismiss="modal">Cadastrar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" onclick="document.getElementById('formmovi').reset()" data-bs-dismiss="modal">Cancelar</button>
                 </div>
 
             </div>
@@ -113,8 +133,7 @@
 
                 <div class="modal-body">
                     <form id="formmoviput">
-                        <label for="idputm">ID:</label><br>
-                        <input type="text" name="id" id="idputm" required><br>
+                        <input hidden type="text" name="id" id="idputm" required>
                         <label for="nomeputm">Nome:</label><br>
                         <input type="text" name="nomem" id="nomeputm" placeholder="(Supermercado, gasolina...)" required><br>
                         <label for="categoriaput">Categoria:</label><br>
@@ -150,9 +169,9 @@
                 </div>
 
                 <div class="modal-body">
+                    <p>Você tem certeza que quer apagar essa movimentação?</p>
                     <form id="formmovidel">
-                        <label for="iddelm">ID:</label><br>
-                        <input type="text" name="id" id="iddelm" required><br>                        
+                        <input hidden type="text" name="id" id="iddelm" required>                  
                     </form>
                 </div>
 

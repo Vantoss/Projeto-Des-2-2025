@@ -17,18 +17,8 @@ function tabelaFixo(){
     totalFixo();
 }
 
-function getID(id, metodo){ //Refazer para autocompletar os modais de editar e apagar. Dividir em duas funções. Fazer aplicar aos modais de fixos também.
-    var inputid = id;
-    if(metodo == "put"){
-        document.getElementById("idputm").value = inputid;
-    }
-    if(metodo == "del"){
-        document.getElementById("iddelm").value = inputid;
-    }
-}
-
 function convertData(data){
-    var d = new Date(data);
+    var d = new Date(data + "T00:00:00");
     var newd = d.toLocaleDateString();
     return newd;
 }
@@ -69,6 +59,49 @@ async function atualizarJSONmovi(){
     xhttp.send();
 }
 
+function autofillputMovi(id, nome, cat, data, valor, tipo){
+    document.getElementById("idputm").value = id;
+    document.getElementById("nomeputm").value = nome;
+    document.getElementById("categoriaput").value = cat;
+    document.getElementById("dataput").value = data;
+    document.getElementById("valorputm").value = valor;
+    document.getElementById("tipoput").value = tipo;
+}
+
+function autofilldelMovi(id){
+    document.getElementById("iddelm").value = id;
+}
+
+function tableBuilderMovi(movimentacoes){
+    conteudo = "<table id='movimentacoes'>";
+    conteudo += "<thead>";
+    conteudo += "   <tr>";
+    conteudo += "       <th>Nome</th>";
+    conteudo += "       <th>Categoria</th>";
+    conteudo += "       <th>Data</th>";
+    conteudo += "       <th>Valor</th>";
+    conteudo += "   </tr>";
+    conteudo += "</thead>";
+    conteudo += "<tbody>";
+    movimentacoes.forEach(movi => {
+        conteudo += "   <tr class='linha'>";
+        conteudo += "       <td hidden class='idmovi'>" + movi.id + "</td>";
+        conteudo += "       <td>" + movi.nome + "</td>";
+        conteudo += "       <td>" + movi.categoria + "</td>";
+        conteudo += "       <td>" + convertData(movi.data) + "</td>";
+        if(movi.tipo == "Despesa"){
+            conteudo += "       <td style='color:red'>(-) R$" + movi.valor + "</td>";
+        } else{
+            conteudo += "       <td style='color:green'>(+) R$" + movi.valor + "</td>";
+        }
+        conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edmmodal' onclick='autofillputMovi(`" + movi.id + "`,`" + movi.nome + "`,`" + movi.categoria + "`,`" + movi.data + "`,`" + movi.valor + "`,`" + movi.tipo + "`)'>Editar</button></td>";
+        conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apmmodal'onclick='autofilldelMovi(`" + movi.id + "`)' >Apagar</button></td>";
+        conteudo += "   </tr>";
+    });
+    conteudo +="</tbody>";
+    document.getElementById("movimentacoes").innerHTML = conteudo;
+}
+
 function displayMovi(){
     var xhttp = new XMLHttpRequest();
 
@@ -80,33 +113,7 @@ function displayMovi(){
             movimentacoes = objJSON.movimentacoes;
             console.log(movimentacoes);
             
-            conteudo = "<table id='movimentacoes'>";
-            conteudo += "<thead>";
-            conteudo += "   <tr>";
-            conteudo += "       <th>Nome</th>";
-            conteudo += "       <th>Categoria</th>";
-            conteudo += "       <th>Data</th>";
-            conteudo += "       <th>Valor</th>";
-            conteudo += "   </tr>";
-            conteudo += "</thead>";
-            conteudo += "<tbody>";
-            movimentacoes.forEach(movi => {
-                conteudo += "   <tr class='linha'>";
-                conteudo += "       <td hidden class='idmovi'>" + movi.id + "</td>";
-                conteudo += "       <td>" + movi.nome + "</td>";
-                conteudo += "       <td>" + movi.categoria + "</td>";
-                conteudo += "       <td>" + convertData(movi.data) + "</td>";
-                if(movi.tipo == "Despesa"){
-                    conteudo += "       <td style='color:red'>(-) R$" + movi.valor + "</td>";
-                } else{
-                    conteudo += "       <td style='color:green'>(+) R$" + movi.valor + "</td>";
-                }
-                conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edmmodal' onclick='getID(" + movi.id + ", `put`)'>Editar</button></td>";
-                conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apmmodal'onclick='getID(" + movi.id + ", `del`)' >Apagar</button></td>";
-                conteudo += "   </tr>";
-            });
-            conteudo +="</tbody>";
-            document.getElementById("movimentacoes").innerHTML = conteudo;
+            tableBuilderMovi(movimentacoes);
         }
     };
 
@@ -124,6 +131,7 @@ function cadMovi(){
                 document.getElementById("formmovi").reset();
                 atualizarJSONmovi();
                 setTimeout(displayMovi, 1000);
+                setTimeout(totalMovi, 1000);
             }
             else{
                 window.alert("Algo deu errado!")
@@ -225,7 +233,79 @@ function pesqMovi(){
             var data = document.forms["formpesquisar"]["datap"].value;
             var valor = document.forms["formpesquisar"]["valorp"].value;
             var tipo = document.forms["formpesquisar"]["tipop"].value;
-            //Filtrar o json a partir dos dados passados e criar um novo contendo apenas o que foi solicitado. Gerar a tabela de novo com base no novo json.
+
+            /*No Qualquer:
+                - pusha todo mundo do array de movis pro pJson
+                - verificar se o elemento pushado é o procurado
+                    - se for, salva o elemento no matchesJson.
+                    - se não for, mantém o elemento e continua o loop até acabar
+                - se não houver nenhum encontrado, mostrar o pJson pro usuário.
+                - se houver encontrados, mostrar o matchesJson pro usuário.
+                ------------------
+            No tipo específico:
+                - pusha os que foram deste tipo pro pJson
+                - verificar se o elemento pushado é o procurado
+                    - se for, salva o elemento no matchesJson.
+                    - se não for, mantém o elemento e continua o loop até acabar.
+                - se não houver nenhum encontrado, mostrar o pjson pro usuário.
+                - se houver encontrados, mostrar o matchesJson pro usuário.
+            */
+
+            //CONSERTAR
+            //Fazer com que ele não traga elementos cujos valores batam com qualquer campo da pesquisa (ex.: no momento, pesquisar "Salário" e "Lazer" vai trazer os dois registros)
+
+            var pJson = [];
+            var matchesJson = [];
+            for(var i = 0; i < movimentacoes.length; i++){
+                //console.log("--------------");
+                if(tipo == "Qualquer"){
+                    pJson.push(movimentacoes[i])
+                    if(movimentacoes[i].nome == nome || movimentacoes[i].categoria == cat || movimentacoes[i].data == data || movimentacoes[i].valor == valor){
+                        matchesJson.push(movimentacoes[i])
+                        //console.log("achou o registro específico") 
+                    } else{
+                        if(nome == "" && cat == "Qualquer" && data == "" && valor == ""){
+                            //console.log("vazio")
+                            continue
+                        } else{
+                            pJson.pop()
+                            //console.log("não achou um específico")
+                        }
+                    }
+                } else{
+                    if (movimentacoes[i].tipo == tipo ){
+                        pJson.push(movimentacoes[i])
+                        //console.log("achou deste tipo") 
+                        if(movimentacoes[i].nome == nome || movimentacoes[i].categoria == cat || movimentacoes[i].data == data || movimentacoes[i].valor == valor){
+                            matchesJson.push(movimentacoes[i])
+                           //console.log("achou o registro específico")
+                        } else{
+                            if(nome == "" && cat == "" && data == "" && valor == ""){
+                                //console.log("vazio")
+                                continue
+                            } else{
+                                pJson.pop()
+                                //console.log("não achou um específico")
+                            }
+                        }
+                    } else{
+                        //console.log("não achou deste tipo")
+                        continue
+                    } 
+                }
+            }
+
+            if(matchesJson.length >= 1){
+                tableBuilderMovi(matchesJson)
+                console.log("Encontrou:" , matchesJson); 
+            } else{
+                if(pJson.length >= 1){
+                    tableBuilderMovi(pJson)
+                    console.log("Todos desse tipo" , pJson);    
+                } else{
+                    console.log("Não achei nada mermão")
+                }
+            }
         }
     };
 
@@ -265,6 +345,42 @@ async function atualizarJSONfixo(){
     xhttp.send();
 }
 
+function autofillputFixo(id, nome, val, valor){
+    document.getElementById("idputf").value = id;
+    document.getElementById("nomeputf").value = nome;
+    document.getElementById("validadeput").value = val;
+    document.getElementById("valorputf").value = valor;
+}
+
+function autofilldelFixo(id){
+    document.getElementById("iddelf").value = id;
+}
+
+function tableBuilderFixo(fixos){
+    conteudo = "<table id='fixos'>";
+    conteudo += "<thead>";
+    conteudo += "   <tr>";
+    conteudo += "       <th>Nome</th>";
+    conteudo += "       <th>Validade</th>";
+    conteudo += "       <th>Valor</th>";
+    conteudo += "   </tr>";
+    conteudo += "</thead>";
+    conteudo += "<tbody>";
+    fixos.forEach(f => {
+        conteudo += "   <tr>";
+        conteudo += "       <td hidden class='idfixo'>" + f.id + "</td>";
+        conteudo += "       <td>" + f.nome + "</td>";
+        conteudo += "       <td>" + convertData(f.validade) + "</td>";
+        conteudo += "       <td>" + f.valor + "</td>";
+        conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal' onclick='autofillputFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.validade + "`,`" + f.valor + "`)'>Editar</button></td>";
+        conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apfmodal' onclick='autofilldelFixo(`"+ f.id + "`)'>Apagar</button></td>";
+        conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal'>Dar Baixa</button></td>";
+        conteudo += "   </tr>";
+    });
+    conteudo +="</tbody>";
+    document.getElementById("fixos").innerHTML = conteudo;
+}
+
 function displayFixo(){
     var xhttp = new XMLHttpRequest();
 
@@ -276,28 +392,7 @@ function displayFixo(){
             fixos = objJSON.fixos;
             console.log(fixos);
             
-            conteudo = "<table id='fixos'>";
-            conteudo += "<thead>";
-            conteudo += "   <tr>";
-            conteudo += "       <th>Nome</th>";
-            conteudo += "       <th>Validade</th>";
-            conteudo += "       <th>Valor</th>";
-            conteudo += "   </tr>";
-            conteudo += "</thead>";
-            conteudo += "<tbody>";
-            fixos.forEach(f => {
-                conteudo += "   <tr>";
-                conteudo += "       <td hidden class='idfixo'>" + f.id + "</td>";
-                conteudo += "       <td>" + f.nome + "</td>";
-                conteudo += "       <td>" + convertData(f.validade) + "</td>";
-                conteudo += "       <td>" + f.valor + "</td>";
-                conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal'>Editar</button></td>";
-                conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apfmodal'>Apagar</button></td>";
-                conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal'>Dar Baixa</button></td>";
-                conteudo += "   </tr>";
-            });
-            conteudo +="</tbody>";
-            document.getElementById("fixos").innerHTML = conteudo;
+            tableBuilderFixo(fixos);
         }
     };
 
@@ -315,6 +410,7 @@ function cadFixo(){
                 document.getElementById("formfixo").reset();
                 atualizarJSONfixo();
                 setTimeout(displayFixo, 1000);
+                setTimeout(totalFixo, 1000);
             }
             else{
                 window.alert("Algo deu errado!")
@@ -379,10 +475,10 @@ function totalFixo(){
             
             total = 0;
             fixos.forEach(f =>{
-                total += f.valor;
+                total += parseInt(f.valor);
             });
             if(total != 0){
-                document.getElementById("numf").innerHTML = totald;  
+                document.getElementById("numf").innerHTML = total;  
             } else{
                 document.getElementById("numf").innerHTML = "N/A";  
             }
