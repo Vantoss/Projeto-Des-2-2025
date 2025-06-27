@@ -24,7 +24,7 @@
         </div>
         <div class="row" id="">
             <div class="containertable col rounded" id="tabelafixos">  
-                <div id="cadbtns">
+                <div id="btns">
                     <button type='submit' id='cadf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadfmodal'>Registrar lançamento fixo</button>
                 </div>
                 <table id="fixos" class="table table-bordered">

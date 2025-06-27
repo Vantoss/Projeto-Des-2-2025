@@ -4,7 +4,6 @@
 <!--Paginação das tabelas, dividir por mês-->
 <!--Escrever as descrições -->
 <!--Fazer a página de Relatório (talvez tornar ela a inicial) -->
-<!--Descobrir como integrar gráficos ao projeto (provavelmente através de bibliotecas ou Python) -->
 <?php require_once "../assets/head.php" ?>
 <body onload="tabelaMovi()">
     <?php require_once "../assets/header.php"?>
@@ -31,18 +30,13 @@
         </div>
         <div class="row" id="">
             <div class="containertable col rounded" id="tabelamovi">
-                <div id="cadbtns">
+                <div id="btns">
                     <button type='submit' id='cadm' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadmmodal'>Registrar gasto/receita</button>
-                </div>
-                <div id="pesquisar">
-                    <!--<button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        Button with data-bs-target
+                    <button class="btn btn-success" id="pm" type="button" data-bs-toggle="collapse" data-bs-target="#pesquisar" aria-expanded="false" aria-controls="collapse">
+                    Pesquisar
                     </button>
-                    <div class="collapse" id="collapseExample">
-                        <div class="card card-body">
-                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                        </div>
-                    </div>-->
+                </div>
+                <div id="pesquisar" class="collapse">
                     <form id="formpesquisar">
                         <label for="nomep">Nome:</label>
                         <input type="text" name="nomem" id="nomep">

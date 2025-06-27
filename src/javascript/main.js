@@ -5,16 +5,23 @@ function volta(){
 
 function tabelaMovi(){
     atualizarJSONmovi();
-    setTimeout(getMovi, 500);
     setTimeout(displayMovi, 500);
+    setTimeout(getMovi, 500);
     totalMovi();
 }
 
 function tabelaFixo(){
     atualizarJSONfixo();
+    setTimeout(displayFixo, 500);
     setTimeout(getFixos, 500);
-    setTimeout(displayFixo, 500)
     totalFixo();
+}
+
+function loadRel(){
+    totalMovi();
+    graph1();
+    graph2();
+    graph3();
 }
 
 function convertData(data){
@@ -314,7 +321,7 @@ function pesqMovi(){
     xhttp.send();
 }
 
-/////////////////////////////////// CUSTOS FIXOS ///////////////////////////////////
+/////////////////////////////////// LANÇAMENTOS FIXOS ///////////////////////////////////
 
 
 async function getFixos(){
@@ -487,4 +494,75 @@ function totalFixo(){
 
     xhttp.open("GET", "../json/fixos.json", true);
     xhttp.send();
+}
+
+/////////////////////////////////// RELATÓRIO ///////////////////////////////////
+
+function graph1(){
+    const ctx1 = document.getElementById('myChart1');
+
+    new Chart(ctx1, {
+        type: 'pie',
+        data: {
+            labels: ['Moradia', 'Alimentação', 'Lazer', 'Saúde', 'Educação', 'Transporte', 'Trabalho'],
+            datasets: [{
+                label: '# de Despesas',
+                data: [12, 19, 3, 5, 2, 3, 6],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function graph2(){
+    const ctx2 = document.getElementById('myChart2');
+
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
+            datasets: [{
+                label: '# de Despesas',
+                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 7, 5],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+function graph3(){
+    const ctx3 = document.getElementById('myChart3');
+
+    new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            datasets: [{
+                label: '# de Despesas',
+                data: [12, 19, 3, 5, 2, 3, 5, 4, 7, 6, 2, 4],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
