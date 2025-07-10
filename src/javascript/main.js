@@ -30,6 +30,11 @@ function convertData(data){
     return newd;
 }
 
+function convertValor(valor){
+    var newv = Number(valor).toLocaleString("pt-BR",{style:"currency", currency:"BRL"});
+    return newv
+}
+
 if(document.getElementById("pesquisar")){
     var form = document.getElementById("formpesquisar")
     form.onsubmit = function(e){
@@ -97,9 +102,9 @@ function tableBuilderMovi(movimentacoes){
         conteudo += "       <td>" + movi.categoria + "</td>";
         conteudo += "       <td>" + convertData(movi.data) + "</td>";
         if(movi.tipo == "Despesa"){
-            conteudo += "       <td style='color:red'>(-) R$" + movi.valor + "</td>";
+            conteudo += "       <td style='color:red'>(-) " + convertValor(movi.valor) + "</td>"; + "</td>";
         } else{
-            conteudo += "       <td style='color:green'>(+) R$" + movi.valor + "</td>";
+            conteudo += "       <td style='color:green'>(+) " + convertValor(movi.valor) + "</td>";
         }
         conteudo += "       <td><button type='submit' id='editard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edmmodal' onclick='autofillputMovi(`" + movi.id + "`,`" + movi.nome + "`,`" + movi.categoria + "`,`" + movi.data + "`,`" + movi.valor + "`,`" + movi.tipo + "`)'>Editar</button></td>";
         conteudo += "       <td><button type='submit' id='apagard' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apmmodal'onclick='autofilldelMovi(`" + movi.id + "`)' >Apagar</button></td>";
@@ -108,8 +113,7 @@ function tableBuilderMovi(movimentacoes){
     conteudo +="</tbody>";
     document.getElementById("movimentacoes").innerHTML = conteudo;
 }
-
-function displayMovi(){
+async function displayMovi(){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -129,46 +133,58 @@ function displayMovi(){
 }
 
 function cadMovi(){
-    var xhttp = new XMLHttpRequest();
+    if(!document.getElementById("nome").value || !document.getElementById("data").value || !document.getElementById("valor").value){
+        window.alert("Faltam dados obrigatórios!")
+        document.forms["formmovi"].reset();
+    } else{
+        var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            if(this.responseText == "1"){
-                window.alert("Movimentação cadastrada com sucesso!")
-                document.getElementById("formmovi").reset();
-                atualizarJSONmovi();
-                setTimeout(displayMovi, 1000);
-                setTimeout(totalMovi, 1000);
-            }
-            else{
-                window.alert("Algo deu errado!")
-            }
-        }
-    };
-    url = "../functions.php?cadmovi&nome=" + document.getElementById("nome").value + "&categoria=" + document.getElementById("categoria").value + "&data=" + document.getElementById("data").value + "&valor=" + document.getElementById("valor").value + "&tipo=" + document.getElementById("tipo").value;
-    xhttp.open("POST", url, true);
-    xhttp.send();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    if(this.responseText == "1"){
+                        window.alert("Movimentação cadastrada com sucesso!")
+                        document.getElementById("formmovi").reset();
+                        atualizarJSONmovi();
+                        setTimeout(displayMovi, 1000);
+                        setTimeout(totalMovi, 1000);
+                    }
+                    else{
+                        window.alert("Algo deu errado!")
+                    }
+                }
+            };
+            url = "../functions.php?cadmovi&nome=" + document.getElementById("nome").value + "&categoria=" + document.getElementById("categoria").value + "&data=" + document.getElementById("data").value + "&valor=" + document.getElementById("valor").value + "&tipo=" + document.getElementById("tipo").value;
+            xhttp.open("POST", url, true);
+            xhttp.send();
+    }
 }
 
 function putMovi(){
-    var xhttp = new XMLHttpRequest();
+    if(!document.getElementById("nomeputm").value || !document.getElementById("dataput").value || !document.getElementById("valorputm").value){
+        window.alert("Faltam dados obrigatórios!")
+        document.forms["formmoviput"].reset();
+    }else{
+        var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            if(this.responseText == "1"){
-                window.alert("Movimentação atualizada com sucesso!")
-                document.getElementById("formmoviput").reset();
-                atualizarJSONmovi();
-                setTimeout(displayMovi, 1000);
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                if(this.responseText == "1"){
+                    window.alert("Movimentação atualizada com sucesso!")
+                    document.getElementById("formmoviput").reset();
+                    atualizarJSONmovi();
+                    setTimeout(displayMovi, 1000);
+                    setTimeout(totalMovi, 1000);
+                }
+                else{
+                    window.alert("Algo deu errado!")
+                }
             }
-            else{
-                window.alert("Algo deu errado!")
-            }
-        }
-    };
-    url = "../functions.php?putmovi&id=" + document.getElementById("idputm").value + "&nome=" + document.getElementById("nomeputm").value + "&categoria=" + document.getElementById("categoriaput").value + "&data=" + document.getElementById("dataput").value + "&valor=" + document.getElementById("valorputm").value + "&tipo=" + document.getElementById("tipoput").value;
-    xhttp.open("POST", url, true);
-    xhttp.send()
+        };
+        url = "../functions.php?putmovi&id=" + document.getElementById("idputm").value + "&nome=" + document.getElementById("nomeputm").value + "&categoria=" + document.getElementById("categoriaput").value + "&data=" + document.getElementById("dataput").value + "&valor=" + document.getElementById("valorputm").value + "&tipo=" + document.getElementById("tipoput").value;
+        xhttp.open("POST", url, true);
+        xhttp.send()
+    }
+    
 }
 
 function delMovi(){
@@ -181,6 +197,7 @@ function delMovi(){
                 document.getElementById("formmovidel").reset();
                 atualizarJSONmovi();
                 setTimeout(displayMovi, 1000);
+                setTimeout(totalMovi, 1000);
             }
             else{
                 window.alert("Algo deu errado!")
@@ -211,12 +228,12 @@ function totalMovi(){
                 }
             });
             if(totald != 0){
-                document.getElementById("numd").innerHTML = totald;  
+                document.getElementById("numd").innerHTML = convertValor(totald);  
             } else{
                 document.getElementById("numd").innerHTML = "N/A";  
             }
             if(totalr != 0){
-                document.getElementById("numr").innerHTML = totalr;  
+                document.getElementById("numr").innerHTML = convertValor(totalr);  
             } else{
                 document.getElementById("numr").innerHTML = "N/A";  
             }
@@ -378,7 +395,7 @@ function tableBuilderFixo(fixos){
         conteudo += "       <td hidden class='idfixo'>" + f.id + "</td>";
         conteudo += "       <td>" + f.nome + "</td>";
         conteudo += "       <td>" + convertData(f.validade) + "</td>";
-        conteudo += "       <td>" + f.valor + "</td>";
+        conteudo += "       <td>" + convertValor(f.valor) + "</td>";
         conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal' onclick='autofillputFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.validade + "`,`" + f.valor + "`)'>Editar</button></td>";
         conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apfmodal' onclick='autofilldelFixo(`"+ f.id + "`)'>Apagar</button></td>";
         conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal'>Dar Baixa</button></td>";
@@ -408,47 +425,60 @@ function displayFixo(){
 }
 
 function cadFixo(){
-    var xhttp = new XMLHttpRequest();
+    if(!document.getElementById("nome").value || !document.getElementById("validade").value || !document.getElementById("valorconta").value){
+        window.alert("Faltam dados obrigatórios!")
+        document.forms["formfixo"].reset();
+    }else{
+        var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            if(this.responseText == "1"){
-                window.alert("Lançamento fixo cadastrado com sucesso!")
-                document.getElementById("formfixo").reset();
-                atualizarJSONfixo();
-                setTimeout(displayFixo, 1000);
-                setTimeout(totalFixo, 1000);
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                if(this.responseText == "1"){
+                    window.alert("Lançamento fixo cadastrado com sucesso!")
+                    document.getElementById("formfixo").reset();
+                    atualizarJSONfixo();
+                    setTimeout(displayFixo, 1000);
+                    setTimeout(totalFixo, 1000);
+                }
+                else{
+                    window.alert("Algo deu errado!")
+                }
             }
-            else{
-                window.alert("Algo deu errado!")
-            }
-        }
-    };
-    url = "../functions.php?cadfixo&nome=" + document.getElementById("nome").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
-    xhttp.open("POST", url, true);
-    xhttp.send();
+        };
+        url = "../functions.php?cadfixo&nome=" + document.getElementById("nome").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
+        xhttp.open("POST", url, true);
+        xhttp.send();   
+    }
+    
 }
 
 function putFixo(){
-    var xhttp = new XMLHttpRequest();
+    if(!document.getElementById("nomeputf").value || !document.getElementById("validadeput").value || !document.getElementById("valorputf").value){
+        window.alert("Faltam dados obrigatórios!")
+        document.forms["formfixoput"].reset();
+    }else{
+        var xhttp = new XMLHttpRequest();
 
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            if(this.responseText == "1"){
-                window.alert("Lançamento fixo atualizado com sucesso!")
-                document.getElementById("formfixoput").reset();
-                atualizarJSONfixo();
-                setTimeout(displayFixo, 1000);
+        xhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                if(this.responseText == "1"){
+                    window.alert("Lançamento fixo atualizado com sucesso!")
+                    document.getElementById("formfixoput").reset();
+                    atualizarJSONfixo();
+                    setTimeout(displayFixo, 1000);
+                    setTimeout(totalFixo, 1000);
+                }
+                else{
+                    console.log(this.responseText)
+                    window.alert("Algo deu errado!")
+                }
             }
-            else{
-                console.log(this.responseText)
-                window.alert("Algo deu errado!")
-            }
-        }
-    };
-    url = "../functions.php?putfixo&id=" + document.getElementById("idputf").value + "&nome=" + document.getElementById("nomeputf").value + "&validade=" + document.getElementById("validadeput").value + "&valor=" + document.getElementById("valorputf").value;
-    xhttp.open("POST", url, true);
-    xhttp.send()
+        };
+        url = "../functions.php?putfixo&id=" + document.getElementById("idputf").value + "&nome=" + document.getElementById("nomeputf").value + "&validade=" + document.getElementById("validadeput").value + "&valor=" + document.getElementById("valorputf").value;
+        xhttp.open("POST", url, true);
+        xhttp.send()    
+    }
+    
 }
 
 function delFixo(){
@@ -461,6 +491,7 @@ function delFixo(){
                 document.getElementById("formfixodel").reset();
                 atualizarJSONfixo();
                 setTimeout(displayFixo, 1000);
+                setTimeout(totalFixo, 1000);
             }
             else{
                 window.alert("Algo deu errado!")
@@ -485,7 +516,7 @@ function totalFixo(){
                 total += parseInt(f.valor);
             });
             if(total != 0){
-                document.getElementById("numf").innerHTML = total;  
+                document.getElementById("numf").innerHTML = convertValor(total);  
             } else{
                 document.getElementById("numf").innerHTML = "N/A";  
             }

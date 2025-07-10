@@ -1,3 +1,10 @@
+var form = document.getElementById("loginform")
+form.onsubmit = function(e){
+    e.preventDefault();
+}
+
+//////////////////////////////////////////////////////////////////////
+
 function login(){
     var xhttp = new XMLHttpRequest();
 
@@ -8,7 +15,7 @@ function login(){
             if (this.responseText == document.getElementById("nomelog").value){
                 window.location.href = "../pags/main.php";
             } else{
-                console.log("Some daqui!")
+                window.alert("Dados incorretos!")
             }
         }
     };
@@ -17,16 +24,25 @@ function login(){
     xhttp.send();
 }
 
+function autofillLogin(nome, senha){
+    document.getElementById("nomelog").value = nome;
+    document.getElementById("senhalog").value = senha;
+}
+
 function cadastro(){
     var xhttp = new XMLHttpRequest();
+
+    var nome = document.getElementById("nomecad").value;
+    var senha = document.getElementById("senhacad").value
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
             window.alert("Usuário cadastrado com sucesso!");
+            autofillLogin(nome, senha);
         }
     };
-    url = "../functions.php?caduser&nome=" + document.getElementById("nomecad").value + "&senha=" + document.getElementById("senhacad").value;
+    url = "../functions.php?caduser&nome=" + nome + "&senha=" + senha;
     xhttp.open("POST", url, true);
     xhttp.send();
 }

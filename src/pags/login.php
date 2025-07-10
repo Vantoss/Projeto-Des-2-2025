@@ -11,16 +11,18 @@
 </head>
 
 <body>
-    <h1 class="mt-4">Faça seu login</h1>
 
     <div class="container mx-auto mt-4" id="login">
         <div class="row">
+            <h1 id="facalogin" class="">Faça seu login</h1>
             <div class="containerlogin col-5 rounded"> <!--Consertar o estilo do col do login -->
-                <label for="nomelog">Nome:</label>
-                <input type="text" name="nomelog" id="nomelog" placeholder="" required><br>
-                <label for="senhalog">Senha:</label>
-                <input type="password" name="senhalog" id="senhalog" placeholder="" required><br>
-                <button id="enviar "type="submit" class="btn btn-success" onclick="login()">Enviar</button>
+                <form id="loginform" method="POST">
+                    <label for="nomelog">Nome:</label>
+                    <input type="text" name="nomelog" id="nomelog" placeholder="" required><br>
+                    <label for="senhalog">Senha:</label>
+                    <input type="password" name="senhalog" id="senhalog" placeholder="" required><br>
+                    <button id="enviar "type="submit" class="btn btn-success" onclick="login()">Enviar</button>
+                </form>
             </div>
         </div>
         <div class="row mt-3"> <!--Fazer com que ao cadastrar o usuário os dados são inseridos nos campos do login (ou logar direto, um ou o outro) -->
@@ -38,26 +40,27 @@
 
             <div class="modal-header">
                 <h4 class="modal-title">Cadastrar Usuário</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="document.getElementById('caduserform').reset()"></button>
             </div>
 
             <div class="modal-body">
-                <label for="nomecad">Nome:</label><br>
-                <input type="text" name="nomecad" id="nomecad" placeholder="" required><br>
-                <label for="senhacad">Senha:</label><br>
-                <input type="password" name="senhacad" id="senhacad" placeholder="" required>
+                <form id="caduserform">
+                    <label for="nomecad">Nome:</label><br>
+                    <input type="text" name="nomecad" id="nomecad" placeholder="" required><br>
+                    <label for="senhacad">Senha:</label><br>
+                    <input type="password" name="senhacad" id="senhacad" placeholder="" required>
+                </form>
             </div>
 
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success" id="enviar" onclick="cadastro()" data-bs-dismiss="modal">Cadastrar usuário</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('caduserform').reset()">Cancelar</button>
             </div>
 
             </div>
         </div>
     </div>
 
-<!--Existe o atualizar nome de usuário mas acho que não tem utilidade. -->
 
 <!--Mudar para que o usuário possa selecionar o nome do usuário que ele quer apagar.-->
     <!--<div class="containerlogin" id="deletar">

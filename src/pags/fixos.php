@@ -41,7 +41,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title">Cadastrar Lançamento</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="document.getElementById('formfixo').reset()"></button>
                 </div>
 
                 <div class="modal-body">
@@ -69,7 +69,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Lançamento</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="document.getElementById('formfixoput').reset()"></button>
                 </div>
 
                 <div class="modal-body">
@@ -86,7 +86,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" id="enviar" onclick="putFixo()" data-bs-dismiss="modal">Salvar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('formfixoput').reset()">Cancelar</button>
                 </div>
 
             </div>

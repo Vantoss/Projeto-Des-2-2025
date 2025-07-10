@@ -15,20 +15,29 @@ header{
     padding: 10px;
 }
 
+#sair{
+    float: left;
+}
+
 h1{
     text-align: center;
 }
 
+#username{
+    color:darkgreen;
+}
+
 ul{
     list-style-type: none;
-    overflow: hidden;
     margin: auto;
-    width: fit-content;
     padding: 0;
+    place-items: center;
 }
+
 
 li{
     float: left;
+    margin-right: 5px;
 }
 
 li a{

@@ -1,5 +1,6 @@
 <!--A FAZER -->
 <!--Consertar a pesquisa de movimentações -->
+<!--Fazer um botão para dar baixa em vários lançamentos ao mesmo tempo. Este botão abrirá um modal o qual listará os lançamentos a serem convertidos em despesas, e permitirá editar os valores -->
 <!--Fazer a edição do usuário ao clicar no nome-->
 <!--Paginação das tabelas, dividir por mês-->
 <!--Escrever as descrições -->
@@ -41,7 +42,7 @@
                         <label for="nomep">Nome:</label>
                         <input type="text" name="nomem" id="nomep">
                         <label for="categoria">Categoria:</label>
-                        <select name="categoriap" id="categoria">
+                        <select name="categoriap" id="categoriap">
                             <option value="Qualquer">Qualquer</option>
                             <option value="Moradia">Moradia</option>
                             <option value="Alimentação">Alimentação</option>
@@ -78,7 +79,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title">Registrar movimentação</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="document.getElementById('formmovi').reset()"></button>
                 </div>
 
                 <div class="modal-body">
@@ -122,7 +123,7 @@
 
                 <div class="modal-header">
                     <h4 class="modal-title">Editar Movimentação</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="document.getElementById('formmoviput').reset()"></button>
                 </div>
 
                 <div class="modal-body">
@@ -131,7 +132,15 @@
                         <label for="nomeputm">Nome:</label><br>
                         <input type="text" name="nomem" id="nomeputm" placeholder="(Supermercado, gasolina...)" required><br>
                         <label for="categoriaput">Categoria:</label><br>
-                        <input type="text" name="categoriam" id="categoriaput" placeholder="(Lazer, alimentação...)" required><br>
+                        <select name="categoriaput" id="categoriaput">
+                            <option value="Moradia">Moradia</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Trabalho">Trabalho</option>
+                        </select><br>
                         <label for="dataput">Data:</label><br>
                         <input type="date" name="datam" id="dataput" placeholder="Data" required><br>
                         <label for="valorputm">Valor:</label><br>
@@ -146,7 +155,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" id="enviar" onclick="putMovi()" data-bs-dismiss="modal">Salvar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('formmoviput').reset()">Cancelar</button>
                 </div>
 
             </div>
@@ -171,7 +180,7 @@
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" id="enviar" onclick="delMovi()" data-bs-dismiss="modal">Apagar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancelar</button>
                 </div>
 
             </div>

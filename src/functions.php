@@ -75,7 +75,7 @@ function getMovi(){
     }
     $id = $_SESSION["id"];
     $mes = date("n");
-    $sql = "SELECT * FROM movimentacoes WHERE id_usuario = '$id' AND MONTH(data) = '5'";
+    $sql = "SELECT * FROM movimentacoes WHERE id_usuario = '$id' AND MONTH(data) = '6'";
     $result = $dbconn->query($sql);
     $array = array();
     while($linha = mysqli_fetch_assoc($result)){
