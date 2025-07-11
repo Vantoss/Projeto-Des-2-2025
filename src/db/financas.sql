@@ -31,6 +31,7 @@ CREATE TABLE `lancamentos` (
   `id` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `nome` varchar(30) NOT NULL,
+  `categoria` varchar(30) NOT NULL,
   `validade` date NOT NULL,
   `valor` float NOT NULL,
   `foi_paga` tinyint(1) NOT NULL

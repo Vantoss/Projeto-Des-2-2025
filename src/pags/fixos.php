@@ -26,6 +26,7 @@
             <div class="containertable col rounded" id="tabelafixos">  
                 <div id="btns">
                     <button type='submit' id='cadf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadfmodal'>Registrar lançamento fixo</button>
+                    <button type='submit' id='lancf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#lancmodal'>Lançar todos</button>
                 </div>
                 <table id="fixos" class="table table-bordered">
                 </table>
@@ -48,6 +49,16 @@
                     <form id="formfixo">
                         <label for="nome">Nome:</label><br>
                         <input type="text" name="tipoc" id="nome" placeholder="(Luz, água, parcela...)" required><br>
+                        <label for="categoria">Categoria:</label><br>
+                        <select name="categoriaf" id="categoria">
+                            <option value="Moradia">Moradia</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Trabalho">Trabalho</option>
+                        </select><br>
                         <label for="validade">Validade:</label><br>
                         <input type="date" name="validade" id="validade" placeholder="Prazo" required><br>
                         <label for="valorconta">Valor:</label><br>
@@ -77,6 +88,16 @@
                         <input hidden type="text" name="id" id="idputf" required>
                         <label for="nomeputf">Nome:</label><br>
                         <input type="text" name="tipoc" id="nomeputf" placeholder="(Luz, água, parcela...)" required><br>
+                        <label for="catputf">Categoria:</label><br>
+                        <select name="categoriaf" id="catputf">
+                            <option value="Moradia">Moradia</option>
+                            <option value="Alimentação">Alimentação</option>
+                            <option value="Lazer">Lazer</option>
+                            <option value="Saúde">Saúde</option>
+                            <option value="Educação">Educação</option>
+                            <option value="Transporte">Transporte</option>
+                            <option value="Trabalho">Trabalho</option>
+                        </select><br>
                         <label for="validadeput">Validade:</label><br>
                         <input type="date" name="validade" id="validadeput" placeholder="Prazo" required><br>
                         <label for="valorputf">Valor:</label><br>
@@ -123,16 +144,54 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Dar Baixa na Conta</h4>
+                    <h4 class="modal-title">Lançar despesa</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body">
-                    Não terminado!
+                    <p>Você tem certeza que quer lançar esta despesa?</p>
+                    <form id="formfixob">
+                        <input hidden type="text" name="id" id="idb" required>
+                        <input hidden type="text" name="nome" id="nomeb" required>                       
+                        <input hidden type="text" name="cat" id="catb" required>        
+                        <input hidden type="date" name="data" id="datab" required>                       
+                        <input hidden type="number" name="valor" id="valorb" required>                   
+                    </form>
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success" id="enviar" onclick="lancFixo()" data-bs-dismiss="modal">Lançar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('formfixob').reset()">Cancelar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" id="lancmodal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Lançar todas as despesas</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <p>Não terminado!</p>
+                    <!--<p>Você tem certeza que quer lançar esta despesa?</p>
+                    <form id="formfixob">
+                        <input hidden type="text" name="id" id="idb" required>
+                        <input hidden type="text" name="nome" id="nomeb" required>                       
+                        <input hidden type="text" name="cat" id="catb" required>        
+                        <input hidden type="date" name="data" id="datab" required>                       
+                        <input hidden type="number" name="valor" id="valorb" required>                   
+                    </form>-->
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" id="enviar" onclick="" data-bs-dismiss="modal">Lançar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('').reset()">Cancelar</button>
                 </div>
 
             </div>

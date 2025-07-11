@@ -187,13 +187,14 @@ function cadFixo(){
         die("Conexão falhou");
     }
     $nome = $_GET["nome"];
+    $categoria = $_GET["categoria"];
     $validade = $_GET["validade"];
     $valor = $_GET["valor"];
     $userid = $_SESSION["id"];
-    if (!$nome || !$validade || !$valor ){
+    if (!$nome || !$categoria || !$validade || !$valor ){
         die("Dados não entraram!");
     }
-    $sql = "INSERT INTO lancamentos (id, id_usuario, nome, validade, valor, foi_paga) VALUES (NULL, '$userid', '$nome', '$validade', '$valor', 0)";
+    $sql = "INSERT INTO lancamentos (id, id_usuario, nome, categoria, validade, valor, foi_paga) VALUES (NULL, '$userid', '$nome', '$categoria', '$validade', '$valor', 0)";
     $result = $dbconn->query($sql);
     echo $result;
 
@@ -207,13 +208,14 @@ function putFixo(){
         die("Conexão falhou");
     }
     $nome = $_GET["nome"];
+    $categoria = $_GET["categoria"];
     $validade = $_GET["validade"];
     $valor = $_GET["valor"];
     $id = $_GET["id"];
-    if (!$nome || !$validade || !$valor || !$id ){
+    if (!$nome || !$categoria || !$validade || !$valor || !$id ){
         die("Dados não entraram!");
     }
-    $sql = "UPDATE lancamentos SET nome = '$nome', validade = '$validade', valor = '$valor' WHERE lancamentos.id = '$id'";
+    $sql = "UPDATE lancamentos SET nome = '$nome', categoria = '$categoria', validade = '$validade', valor = '$valor' WHERE lancamentos.id = '$id'";
     $result = $dbconn->query($sql);
     echo $result;
 
@@ -233,6 +235,32 @@ function delFixo(){
     $sql = "DELETE FROM lancamentos WHERE lancamentos.id = '$id'";
     $result = $dbconn->query($sql);
     echo $result;
+
+    $dbconn->close();
+}
+
+function lancaFixo(){
+    session_start();
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $nome = $_GET["nome"];
+    $categoria = $_GET["categoria"];
+    $data = $_GET["data"];
+    $valor = $_GET["valor"];
+    $tipo = "Despesa";
+    $id = $_GET["id"];
+    $userid = $_SESSION["id"];
+    if (!$nome || !$categoria || !$data || !$valor || !$id ){
+        die("Dados não entraram!");
+    }
+    $sql1 = "UPDATE lancamentos SET foi_paga = 1 WHERE lancamentos.id = '$id';";
+    $result1 = $dbconn->query($sql1);
+    $sql2 = "INSERT INTO movimentacoes (id, id_usuario, nome, categoria, data, valor, tipo) VALUES (NULL, '$userid', '$nome', '$categoria', '$data', '$valor', '$tipo');";
+    $result2 = $dbconn->query($sql2);
+    echo $result2;
 
     $dbconn->close();
 }
@@ -348,6 +376,9 @@ if (isset($_REQUEST["putfixo"])){
 }
 if (isset($_REQUEST["delfixo"])){
     delFixo();
+}
+if (isset($_REQUEST["lancafixo"])){
+    lancaFixo();
 }
 
 if (isset($_REQUEST["get"])){

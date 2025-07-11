@@ -369,11 +369,23 @@ async function atualizarJSONfixo(){
     xhttp.send();
 }
 
-function autofillputFixo(id, nome, val, valor){
+function autofillputFixo(id, nome, cat, val, valor){
     document.getElementById("idputf").value = id;
     document.getElementById("nomeputf").value = nome;
+    document.getElementById("catputf").value = cat;
     document.getElementById("validadeput").value = val;
     document.getElementById("valorputf").value = valor;
+}
+
+function autofillLancFixo(id, nome, cat, valor){
+    var data = new Date();
+    data + "T00:00:00";
+    var novadata = data.toISOString().substring(0,10);
+    document.getElementById("idb").value = id;
+    document.getElementById("nomeb").value = nome;
+    document.getElementById("catb").value = cat;
+    document.getElementById("datab").value = novadata;
+    document.getElementById("valorb").value = valor;
 }
 
 function autofilldelFixo(id){
@@ -385,6 +397,7 @@ function tableBuilderFixo(fixos){
     conteudo += "<thead>";
     conteudo += "   <tr>";
     conteudo += "       <th>Nome</th>";
+    conteudo += "       <th>Categoria</th>";
     conteudo += "       <th>Validade</th>";
     conteudo += "       <th>Valor</th>";
     conteudo += "   </tr>";
@@ -394,11 +407,12 @@ function tableBuilderFixo(fixos){
         conteudo += "   <tr>";
         conteudo += "       <td hidden class='idfixo'>" + f.id + "</td>";
         conteudo += "       <td>" + f.nome + "</td>";
+        conteudo += "       <td>" + f.categoria + "</td>";
         conteudo += "       <td>" + convertData(f.validade) + "</td>";
         conteudo += "       <td>" + convertValor(f.valor) + "</td>";
-        conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal' onclick='autofillputFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.validade + "`,`" + f.valor + "`)'>Editar</button></td>";
+        conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal' onclick='autofillputFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.categoria + "`,`" + f.validade + "`,`" + f.valor + "`)'>Editar</button></td>";
         conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apfmodal' onclick='autofilldelFixo(`"+ f.id + "`)'>Apagar</button></td>";
-        conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal'>Dar Baixa</button></td>";
+        conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal' onclick='autofillLancFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.categoria + "`,`" + f.valor + "`)'>Lançar</button></td>";
         conteudo += "   </tr>";
     });
     conteudo +="</tbody>";
@@ -445,7 +459,7 @@ function cadFixo(){
                 }
             }
         };
-        url = "../functions.php?cadfixo&nome=" + document.getElementById("nome").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
+        url = "../functions.php?cadfixo&nome=" + document.getElementById("nome").value + "&categoria=" + document.getElementById("categoria").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
         xhttp.open("POST", url, true);
         xhttp.send();   
     }
@@ -474,7 +488,7 @@ function putFixo(){
                 }
             }
         };
-        url = "../functions.php?putfixo&id=" + document.getElementById("idputf").value + "&nome=" + document.getElementById("nomeputf").value + "&validade=" + document.getElementById("validadeput").value + "&valor=" + document.getElementById("valorputf").value;
+        url = "../functions.php?putfixo&id=" + document.getElementById("idputf").value + "&nome=" + document.getElementById("nomeputf").value + "&categoria=" + document.getElementById("catputf").value + "&validade=" + document.getElementById("validadeput").value + "&valor=" + document.getElementById("valorputf").value;
         xhttp.open("POST", url, true);
         xhttp.send()    
     }
@@ -499,6 +513,29 @@ function delFixo(){
         }
     };
     url = "../functions.php?delfixo&id=" + document.getElementById("iddelf").value;
+    xhttp.open("POST", url, true);
+    xhttp.send()
+}
+
+function lancFixo(){
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            if(this.responseText == "1"){
+                window.alert("Lançamento convertido em despesa com sucesso!")
+                document.getElementById("formfixob").reset();
+                atualizarJSONfixo();
+                setTimeout(displayFixo, 1000);
+                setTimeout(totalFixo, 1000);
+            }
+            else{
+                console.log(this.responseText);
+                window.alert("Algo deu errado!")
+            }
+        }
+    };
+    url = "../functions.php?lancafixo&id=" + document.getElementById("idb").value + "&nome=" + document.getElementById("nomeb").value  + "&categoria=" + document.getElementById("catb").value +  "&data=" + document.getElementById("datab").value + "&valor=" + document.getElementById("valorb").value;
     xhttp.open("POST", url, true);
     xhttp.send()
 }
