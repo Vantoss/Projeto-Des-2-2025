@@ -409,14 +409,40 @@ function tableBuilderFixo(fixos){
         conteudo += "       <td>" + f.nome + "</td>";
         conteudo += "       <td>" + f.categoria + "</td>";
         conteudo += "       <td>" + convertData(f.validade) + "</td>";
-        conteudo += "       <td>" + convertValor(f.valor) + "</td>";
+        if(f.foi_paga == "1"){
+            conteudo += "       <td>" + convertValor(f.valor) + " (pago) </td>";
+        }else{
+            conteudo += "       <td>" + convertValor(f.valor) + "</td>";
+        }
         conteudo += "       <td><button type='submit' id='editarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#edfmodal' onclick='autofillputFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.categoria + "`,`" + f.validade + "`,`" + f.valor + "`)'>Editar</button></td>";
         conteudo += "       <td><button type='submit' id='apagarc' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#apfmodal' onclick='autofilldelFixo(`"+ f.id + "`)'>Apagar</button></td>";
-        conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal' onclick='autofillLancFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.categoria + "`,`" + f.valor + "`)'>Lançar</button></td>";
+        if(f.foi_paga == "0"){
+            conteudo += "       <td><button type='submit' id='baixa' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#bmodal' onclick='autofillLancFixo(`" + f.id + "`,`" + f.nome + "`,`" + f.categoria + "`,`" + f.valor + "`)'>Lançar</button></td>";
+        }
         conteudo += "   </tr>";
     });
     conteudo +="</tbody>";
     document.getElementById("fixos").innerHTML = conteudo;
+}
+
+function tableBuilderFixoALL(fixos){
+    conteudo = "<table id='alltable'>";
+    conteudo += "<thead>";
+    conteudo += "   <tr>";
+    conteudo += "       <th>Nome</th>";
+    conteudo += "       <th>Categoria</th>";
+    conteudo += "       <th>Valor</th>";
+    conteudo += "   </tr>";
+    conteudo += "</thead>";
+    conteudo += "<tbody>";
+    fixos.forEach(f => {
+        conteudo += "   <tr>";
+        conteudo += "       <td>" + f.nome + "</td>";
+        conteudo += "       <td>" + f.categoria + "</td>";
+        conteudo += "       <td><input type='number' required value='" + f.valor + "'></td>";
+    });
+    conteudo +="</tbody>";
+    document.getElementById("alltable").innerHTML = conteudo;
 }
 
 function displayFixo(){
@@ -461,7 +487,7 @@ function cadFixo(){
         };
         url = "../functions.php?cadfixo&nome=" + document.getElementById("nome").value + "&categoria=" + document.getElementById("categoria").value + "&validade=" + document.getElementById("validade").value + "&valor=" + document.getElementById("valorconta").value;
         xhttp.open("POST", url, true);
-        xhttp.send();   
+        xhttp.send();
     }
     
 }
@@ -538,6 +564,30 @@ function lancFixo(){
     url = "../functions.php?lancafixo&id=" + document.getElementById("idb").value + "&nome=" + document.getElementById("nomeb").value  + "&categoria=" + document.getElementById("catb").value +  "&data=" + document.getElementById("datab").value + "&valor=" + document.getElementById("valorb").value;
     xhttp.open("POST", url, true);
     xhttp.send()
+}
+
+function getNaoPagos(){
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            fixos = objJSON.fixos;
+            console.log(fixos);
+            var nPagos = fixos.filter(f => {
+                if(f.foi_paga == "0"){return f;}
+            });
+            console.log(nPagos)
+            tableBuilderFixoALL(nPagos);
+        }
+    };
+
+    xhttp.open("GET", "../json/fixos.json", true);
+    xhttp.send();
+}
+
+function lancNPagos(){
+    //fazer
 }
 
 function totalFixo(){

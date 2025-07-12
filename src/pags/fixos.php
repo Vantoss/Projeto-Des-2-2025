@@ -26,7 +26,7 @@
             <div class="containertable col rounded" id="tabelafixos">  
                 <div id="btns">
                     <button type='submit' id='cadf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadfmodal'>Registrar lançamento fixo</button>
-                    <button type='submit' id='lancf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#lancmodal'>Lançar todos</button>
+                    <button type='submit' id='lancf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#lancmodal' onclick="getNaoPagos()">Lançar todos</button>
                 </div>
                 <table id="fixos" class="table table-bordered">
                 </table>
@@ -178,20 +178,15 @@
                 </div>
 
                 <div class="modal-body">
-                    <p>Não terminado!</p>
-                    <!--<p>Você tem certeza que quer lançar esta despesa?</p>
-                    <form id="formfixob">
-                        <input hidden type="text" name="id" id="idb" required>
-                        <input hidden type="text" name="nome" id="nomeb" required>                       
-                        <input hidden type="text" name="cat" id="catb" required>        
-                        <input hidden type="date" name="data" id="datab" required>                       
-                        <input hidden type="number" name="valor" id="valorb" required>                   
-                    </form>-->
+                    <p>Os seguintes lançamentos serão convertidos em despesas.</p>
+                    <p>Os registros desta página serão atualizados como pagos.</p>
+                    <p>Edite os valores se necessário:</p>
+                    <table id="alltable" class="table table-borderless"></table>
                 </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success" id="enviar" onclick="" data-bs-dismiss="modal">Lançar</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="document.getElementById('').reset()">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 </div>
 
             </div>

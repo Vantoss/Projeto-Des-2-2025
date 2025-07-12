@@ -2,7 +2,8 @@
 <!--Consertar a pesquisa de movimentações -->
 <!--Fazer um botão para dar baixa em vários lançamentos ao mesmo tempo. Este botão abrirá um modal o qual listará os lançamentos a serem convertidos em despesas, e permitirá editar os valores -->
 <!--Fazer com que as linhas dos lançamentos pagos se tornem cinzas ou algo parecido-->
-<!--Fazer a edição do usuário ao clicar no nome-->
+<!--Fazer a edição do usuário ao clicar no nome--> 
+<!--Ver a questão do cache-->
 <!--Paginação das tabelas, dividir por mês-->
 <!--Escrever as descrições -->
 <!--Fazer a página de Relatório (talvez tornar ela a inicial) -->

@@ -265,6 +265,10 @@ function lancaFixo(){
     $dbconn->close();
 }
 
+function lancaALL(){
+    //Fazer
+}
+
 #################### UTILITARIOS ####################
 
 function get(){
@@ -379,6 +383,9 @@ if (isset($_REQUEST["delfixo"])){
 }
 if (isset($_REQUEST["lancafixo"])){
     lancaFixo();
+}
+if (isset($_REQUEST["lancaall"])){
+    lancaALL();
 }
 
 if (isset($_REQUEST["get"])){

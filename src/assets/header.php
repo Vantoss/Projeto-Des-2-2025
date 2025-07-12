@@ -16,11 +16,11 @@ function active($pag){
         <div class="row">
             <div class="col">
                 <button id="sair" type="submit" class="btn btn-success" onclick="volta()">Sair</button>
-                <ul>
+                <ul id="listbtns">
                     <div id="licentral">
-                        <li><a class="btn btn-success <?php active('/Projeto-Des-2-2025/src/pags/main.php') ?>" href="main.php">Movimentações</a></li>
-                        <li><a class="btn btn-success <?php active('/Projeto-Des-2-2025/src/pags/fixos.php') ?>" href="fixos.php">Lançamentos Fixos</a></li>
-                        <li><a class="btn btn-success <?php active('/Projeto-Des-2-2025/src/pags/relatorio.php') ?>" href="relatorio.php">Relatório</a></li>
+                        <li class="btnh"><a class="btn btn-success <?php active('/Projeto-Des-2-2025/src/pags/main.php') ?>" href="main.php">Movimentações</a></li>
+                        <li class="btnh"><a class="btn btn-success <?php active('/Projeto-Des-2-2025/src/pags/fixos.php') ?>" href="fixos.php">Lançamentos Fixos</a></li>
+                        <li class="btnh"><a class="btn btn-success <?php active('/Projeto-Des-2-2025/src/pags/relatorio.php') ?>" href="relatorio.php">Relatório</a></li>
                     </div>
                 </ul>
             </div>
