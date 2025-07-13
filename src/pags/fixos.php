@@ -185,7 +185,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" id="enviar" onclick="" data-bs-dismiss="modal">Lançar</button>
+                    <button type="submit" class="btn btn-success" id="enviarall" onclick="lancNPagos()" data-bs-dismiss="modal">Lançar</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 </div>
 

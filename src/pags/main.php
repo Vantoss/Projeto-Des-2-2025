@@ -1,7 +1,7 @@
 <!--A FAZER -->
 <!--Consertar a pesquisa de movimentações -->
-<!--Fazer um botão para dar baixa em vários lançamentos ao mesmo tempo. Este botão abrirá um modal o qual listará os lançamentos a serem convertidos em despesas, e permitirá editar os valores -->
 <!--Fazer com que as linhas dos lançamentos pagos se tornem cinzas ou algo parecido-->
+<!--Fazer com que os não pagos sejam duplicados com o mês acrescentado quando forem lançados-->
 <!--Fazer a edição do usuário ao clicar no nome--> 
 <!--Ver a questão do cache-->
 <!--Paginação das tabelas, dividir por mês-->

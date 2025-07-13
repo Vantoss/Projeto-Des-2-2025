@@ -266,7 +266,28 @@ function lancaFixo(){
 }
 
 function lancaALL(){
-    //Fazer
+    session_start();
+    $dbconn = new mysqli("localhost", "root", "", "financas");
+
+    if ($dbconn->connect_error){
+        die("Conexão falhou");
+    }
+    $objs = $_GET["objs"];
+    $data = $_GET["data"];
+    $userid = $_SESSION["id"];
+    $tipo = "Despesa";
+    $array = json_decode($objs, true);
+    foreach($array as $i){
+        $id = $i["id"];
+        $nome = $i["nome"];
+        $categoria = $i["categoria"];
+        $valor = $i["valor"];
+        $sql1 = "UPDATE lancamentos SET foi_paga = 1, valor = '$valor' WHERE lancamentos.id = '$id';";
+        $result1 = $dbconn->query($sql1);
+        $sql2 = "INSERT INTO movimentacoes (id, id_usuario, nome, categoria, data, valor, tipo) VALUES (NULL, '$userid', '$nome', '$categoria', '$data', '$valor', '$tipo');";
+        $result2 = $dbconn->query($sql2);
+    }
+    $dbconn->close();
 }
 
 #################### UTILITARIOS ####################

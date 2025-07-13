@@ -426,23 +426,30 @@ function tableBuilderFixo(fixos){
 }
 
 function tableBuilderFixoALL(fixos){
-    conteudo = "<table id='alltable'>";
-    conteudo += "<thead>";
-    conteudo += "   <tr>";
-    conteudo += "       <th>Nome</th>";
-    conteudo += "       <th>Categoria</th>";
-    conteudo += "       <th>Valor</th>";
-    conteudo += "   </tr>";
-    conteudo += "</thead>";
-    conteudo += "<tbody>";
-    fixos.forEach(f => {
+    if(fixos.length == 0){
+        document.getElementById("alltable").innerHTML = "Não há despesas fixas a serem lançadas.";
+        document.getElementById("enviarall").setAttribute("disabled", "");
+    } else{
+        conteudo = "<table id='alltable'>";
+        conteudo += "<thead>";
         conteudo += "   <tr>";
-        conteudo += "       <td>" + f.nome + "</td>";
-        conteudo += "       <td>" + f.categoria + "</td>";
-        conteudo += "       <td><input type='number' required value='" + f.valor + "'></td>";
-    });
-    conteudo +="</tbody>";
-    document.getElementById("alltable").innerHTML = conteudo;
+        conteudo += "       <th>Nome</th>";
+        conteudo += "       <th>Categoria</th>";
+        conteudo += "       <th>Valor</th>";
+        conteudo += "   </tr>";
+        conteudo += "</thead>";
+        conteudo += "<tbody>";
+        fixos.forEach(f => {
+            conteudo += "   <tr>";
+            conteudo += "       <td hidden class='idlanc'>" + f.id + "</td>";
+            conteudo += "       <td>" + f.nome + "</td>";
+            conteudo += "       <td>" + f.categoria + "</td>";
+            conteudo += "       <td><input class='valorlanc' type='number' required value='" + f.valor + "'></td>";
+        });
+        conteudo +="</tbody>";
+        document.getElementById("alltable").innerHTML = conteudo; 
+    }
+    
 }
 
 function displayFixo(){
@@ -577,7 +584,7 @@ function getNaoPagos(){
             var nPagos = fixos.filter(f => {
                 if(f.foi_paga == "0"){return f;}
             });
-            console.log(nPagos)
+            console.log(nPagos);
             tableBuilderFixoALL(nPagos);
         }
     };
@@ -587,7 +594,36 @@ function getNaoPagos(){
 }
 
 function lancNPagos(){
-    //fazer
+    var table = document.getElementById("alltable");
+    var idvaljson = []
+    for(var i = 1, j = 0; i < table.rows.length; i++, j++){
+        obj = {"id": table.rows[i].cells[0].innerHTML, "nome": table.rows[i].cells[1].innerHTML, "categoria": table.rows[i].cells[2].innerHTML,"valor": document.getElementsByClassName("valorlanc")[j].value}
+        idvaljson.push(obj)
+        console.log(obj);
+    }
+    var data = new Date();
+    data + "T00:00:00";
+    var novadata = data.toISOString().substring(0,10);
+
+    var idvalstring = JSON.stringify(idvaljson)
+    console.log(idvalstring)
+    console.log(novadata)
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText)
+            window.alert("Lançamentos convertidos em despesas com sucesso!")
+            atualizarJSONfixo();
+            setTimeout(displayFixo, 1000);
+            setTimeout(totalFixo, 1000);
+        }
+    };
+
+    url = "../functions.php?lancaall&objs=" + idvalstring + "&data=" + novadata;
+    xhttp.open("POST", url, true);
+    xhttp.send();
 }
 
 function totalFixo(){
@@ -600,7 +636,9 @@ function totalFixo(){
             
             total = 0;
             fixos.forEach(f =>{
-                total += parseInt(f.valor);
+                if(f.foi_paga == "0"){
+                    total += parseInt(f.valor);
+                }
             });
             if(total != 0){
                 document.getElementById("numf").innerHTML = convertValor(total);  
