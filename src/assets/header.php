@@ -6,7 +6,7 @@ function active($pag){
     }
 }
 ?>
-<header>
+<header class="sticky-top">
     <div class="container">
         <div class="row">
             <div class="col">

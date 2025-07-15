@@ -4,10 +4,10 @@ function volta(){
 }
 
 function tabelaMovi(){
+    var mesAtual = new Date().getMonth() + 1;
     atualizarJSONmovi();
-    setTimeout(displayMovi, 500);
+    setTimeout(displayMovi, 500, mesAtual);
     setTimeout(getMovi, 500);
-    totalMovi();
 }
 
 function tabelaFixo(){
@@ -113,21 +113,78 @@ function tableBuilderMovi(movimentacoes){
     conteudo +="</tbody>";
     document.getElementById("movimentacoes").innerHTML = conteudo;
 }
-async function displayMovi(){
+async function displayMovi(mes){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
+            //console.log(this.responseText);
 
             objJSON = JSON.parse(this.responseText);
             movimentacoes = objJSON.movimentacoes;
-            console.log(movimentacoes);
+            //console.log(movimentacoes);
+            var mesfiltrado = movimentacoes.filter(m => {
+                var moviData = new Date(m.data).getMonth() + 1;
+                return mes == moviData;
+            })
             
-            tableBuilderMovi(movimentacoes);
+            tableBuilderMovi(mesfiltrado);
+            mesesBtnsMovi(movimentacoes);
+            totalMovi(mesfiltrado);
         }
     };
 
+    xhttp.open("GET", "../json/movi.json", true);
+    xhttp.send();
+}
+
+function mesesBtnsMovi(movimentacoes){
+    var data = new Date();
+    var options = { month : "long"};
+    var mesAtual = new Intl.DateTimeFormat("pt-BR", options).format(data);
+    var classes = document.getElementsByClassName("mes");
+
+    var mesesjson = [];
+    movimentacoes.forEach(m => {
+        var dataformat = new Date(m.data)
+        var mes = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
+        if(!mesesjson.includes(mes)){
+            mesesjson.push(mes);   
+        }
+    })
+
+    for(var i = 0; i < classes.length; i++){
+        if(classes[i].value.toLowerCase() == mesAtual){
+            classes[i].setAttribute("checked", "")
+        }
+        if(!mesesjson.includes(classes[i].value)){
+            document.getElementById(classes[i].value).setAttribute("hidden", "")
+        }
+    }
+    
+}
+
+function bringMesMovi(mes){
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            movimentacoes = objJSON.movimentacoes;
+            var options = { month : "long"};
+            //console.log(movimentacoes);
+            var mesfiltrado = movimentacoes.filter(m => {
+                var dataformat = new Date(m.data)
+                var moviData = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
+                return mes == moviData;
+            })
+            
+            tableBuilderMovi(mesfiltrado);
+            totalMovi(mesfiltrado);
+        }
+    };
+    
     xhttp.open("GET", "../json/movi.json", true);
     xhttp.send();
 }
@@ -209,39 +266,27 @@ function delMovi(){
     xhttp.send()
 }
 
-function totalMovi(){
-    var xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){
-            objJSON = JSON.parse(this.responseText);
-            movimentacoes = objJSON.movimentacoes;
-            
-            totald = 0;
-            totalr = 0;
-            movimentacoes.forEach(movi =>{
-                if(movi.tipo == "Despesa"){
-                    totald += parseInt(movi.valor);
-                }
-                if(movi.tipo == "Receita"){
-                    totalr += parseInt(movi.valor);
-                }
-            });
-            if(totald != 0){
-                document.getElementById("numd").innerHTML = convertValor(totald);  
-            } else{
-                document.getElementById("numd").innerHTML = "N/A";  
-            }
-            if(totalr != 0){
-                document.getElementById("numr").innerHTML = convertValor(totalr);  
-            } else{
-                document.getElementById("numr").innerHTML = "N/A";  
-            }
+function totalMovi(movimentacoes){
+    totald = 0;
+    totalr = 0;
+    movimentacoes.forEach(movi =>{
+        if(movi.tipo == "Despesa"){
+            totald += parseInt(movi.valor);
         }
-    };
-
-    xhttp.open("GET", "../json/movi.json", true);
-    xhttp.send();
+        if(movi.tipo == "Receita"){
+            totalr += parseInt(movi.valor);
+        }
+    });
+    if(totald != 0){
+        document.getElementById("numd").innerHTML = convertValor(totald);  
+    } else{
+        document.getElementById("numd").innerHTML = "N/A";  
+    }
+    if(totalr != 0){
+        document.getElementById("numr").innerHTML = convertValor(totalr);  
+    } else{
+        document.getElementById("numr").innerHTML = "N/A";  
+    }
 }
 
 function pesqMovi(){

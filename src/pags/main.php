@@ -4,7 +4,7 @@
 <!--Fazer com que os não pagos sejam duplicados com o mês acrescentado quando forem lançados-->
 <!--Fazer a edição do usuário ao clicar no nome--> 
 <!--Ver a questão do cache-->
-<!--Paginação das tabelas, dividir por mês-->
+<!--Fazer a puxada de dados por ano-->
 <!--Escrever as descrições -->
 <!--Fazer a página de Relatório (talvez tornar ela a inicial) -->
 <?php require_once "../assets/head.php" ?>
@@ -65,7 +65,44 @@
                             <option value="Receita">Receita</option>
                         </select>
                         <button type="submit" id="pesqbtn" class="btn btn-success" onclick="pesqMovi()">Pesquisar</button>
+                        <button type="reset" id="resetpesq" class="btn btn-success">Apagar campos</button>
                     </form>
+                </div>
+                <div id="periodo">
+                    <div class="dropdown" id="ano">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ano
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="anolista"></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="mes btn-check" name="meses" id="jan" value="janeiro">
+                        <label class="btn btn-outline-success" for="jan" id="janeiro" onclick="bringMesMovi('janeiro')">Janeiro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="fev" value="fevereiro">
+                        <label class="btn btn-outline-success" for="fev" id="fevereiro" onclick="bringMesMovi('fevereiro')">Fevereiro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="mar" value="março">
+                        <label class="btn btn-outline-success" for="mar" id="março" onclick="bringMesMovi('março')">Março</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="abr" value="abril">
+                        <label class="btn btn-outline-success" for="abr" id="abril" onclick="bringMesMovi('abril')">Abril</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="maio" value="maio">
+                        <label class="btn btn-outline-success" for="maio" id="maio" onclick="bringMesMovi('maio')">Maio</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="jun" value="junho">
+                        <label class="btn btn-outline-success" for="jun" id="junho" onclick="bringMesMovi('junho')">Junho</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="jul" value="julho">
+                        <label class="btn btn-outline-success" for="jul" id="julho" onclick="bringMesMovi('julho')">Julho</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="ago" value="agosto">
+                        <label class="btn btn-outline-success" for="ago" id="agosto" onclick="bringMesMovi('agosto')">Agosto</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="set" value="setembro">
+                        <label class="btn btn-outline-success" for="set" id="setembro" onclick="bringMesMovi('setembro')">Setembro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="out" value="outubro">
+                        <label class="btn btn-outline-success" for="out" id="outubro" onclick="bringMesMovi('outubro')">Outubro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="nov" value="novembro">
+                        <label class="btn btn-outline-success" for="nov" id="novembro" onclick="bringMesMovi('novembro')">Novembro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="dez" value="dezembro">
+                        <label class="btn btn-outline-success" for="dez" id="dezembro" onclick="bringMesMovi('dezembro')">Dezembro</label>
+                    </div>
                 </div>
                 <table id="movimentacoes" class="table table-bordered">
                 </table>

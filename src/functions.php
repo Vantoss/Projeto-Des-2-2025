@@ -74,8 +74,8 @@ function getMovi(){
         die("Conexão falhou");
     }
     $id = $_SESSION["id"];
-    $mes = date("n");
-    $sql = "SELECT * FROM movimentacoes WHERE id_usuario = '$id' AND MONTH(data) = '6'";
+    $ano = date("Y"); //Mudar para receber como parâmetro
+    $sql = "SELECT * FROM movimentacoes WHERE id_usuario = '$id' AND YEAR(data) = '$ano'";
     $result = $dbconn->query($sql);
     $array = array();
     while($linha = mysqli_fetch_assoc($result)){
