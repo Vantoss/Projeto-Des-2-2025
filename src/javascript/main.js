@@ -18,7 +18,7 @@ function tabelaFixo(){
 }
 
 function loadRel(){
-    totalMovi();
+    atualizarJSONmovi();
     graph1();
     graph2();
     graph3();
@@ -199,11 +199,11 @@ function cadMovi(){
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 200){
                     if(this.responseText == "1"){
+                        var mesAtual = new Date().getMonth() + 1;
                         window.alert("Movimentação cadastrada com sucesso!")
                         document.getElementById("formmovi").reset();
                         atualizarJSONmovi();
-                        setTimeout(displayMovi, 1000);
-                        setTimeout(totalMovi, 1000);
+                        setTimeout(displayMovi, 1000, mesAtual);
                     }
                     else{
                         window.alert("Algo deu errado!")
@@ -226,11 +226,11 @@ function putMovi(){
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 if(this.responseText == "1"){
+                    var mesAtual = new Date().getMonth() + 1;
                     window.alert("Movimentação atualizada com sucesso!")
                     document.getElementById("formmoviput").reset();
                     atualizarJSONmovi();
-                    setTimeout(displayMovi, 1000);
-                    setTimeout(totalMovi, 1000);
+                    setTimeout(displayMovi, 1000, mesAtual);
                 }
                 else{
                     window.alert("Algo deu errado!")
@@ -250,11 +250,11 @@ function delMovi(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             if(this.responseText == "1"){
+                var mesAtual = new Date().getMonth() + 1;
                 window.alert("Movimentação apagada com sucesso!")
                 document.getElementById("formmovidel").reset();
                 atualizarJSONmovi();
-                setTimeout(displayMovi, 1000);
-                setTimeout(totalMovi, 1000);
+                setTimeout(displayMovi, 1000, mesAtual);
             }
             else{
                 window.alert("Algo deu errado!")
@@ -271,10 +271,10 @@ function totalMovi(movimentacoes){
     totalr = 0;
     movimentacoes.forEach(movi =>{
         if(movi.tipo == "Despesa"){
-            totald += parseInt(movi.valor);
+            totald += parseFloat(movi.valor);
         }
         if(movi.tipo == "Receita"){
-            totalr += parseInt(movi.valor);
+            totalr += parseFloat(movi.valor);
         }
     });
     if(totald != 0){
@@ -700,70 +700,248 @@ function totalFixo(){
 /////////////////////////////////// RELATÓRIO ///////////////////////////////////
 
 function graph1(){
-    const ctx1 = document.getElementById('myChart1');
+    //IMPLEMENTAR TROCA DE MÊS
+    var xhttp = new XMLHttpRequest();
 
-    new Chart(ctx1, {
-        type: 'pie',
-        data: {
-            labels: ['Moradia', 'Alimentação', 'Lazer', 'Saúde', 'Educação', 'Transporte', 'Trabalho'],
-            datasets: [{
-                label: '# de Despesas',
-                data: [12, 19, 3, 5, 2, 3, 6],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            movimentacoes = objJSON.movimentacoes;
+            //console.log(movimentacoes)
+
+            var categorias = [];
+            movimentacoes.forEach(m => {
+                if(m.tipo == "Despesa"){
+                    categorias.push(m.categoria)    
                 }
-            }
+            })
+            var labels = [];
+            categorias.forEach(m => {
+                if(!labels.includes(m)){
+                    labels.push(m)
+                }
+            })
+            var data = [];
+            labels.forEach(l => {
+                var count = 0;
+                for(var c of categorias){
+                    if (c == l){
+                        count += 1;
+                    }
+                }
+                data.push(count);
+            })
+            
+            //console.log(categorias);
+            //console.log(labels);
+            //console.log(data);
+
+            const ctx1 = document.getElementById('myChart1');
+
+            new Chart(ctx1, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# de Despesas',
+                        data: data,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total de despesas deste mês (por categoria)'
+                        }
+                    }
+                }
+            });
         }
-    });
+    };
+
+    xhttp.open("GET", "../json/movi.json", true);
+    xhttp.send();
 }
 
 function graph2(){
-    const ctx2 = document.getElementById('myChart2');
+    //IMPLEMENTAR TROCA DE MÊS
+    var mesAtual = new Date().getMonth() + 1;
+    var xhttp = new XMLHttpRequest();
 
-    new Chart(ctx2, {
-        type: 'bar',
-        data: {
-            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'],
-            datasets: [{
-                label: '# de Despesas',
-                data: [12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 12, 19, 3, 5, 2, 3, 7, 5],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            movimentacoes = objJSON.movimentacoes;
+            //console.log(movimentacoes)
+
+            var destemes = movimentacoes.filter(m => {
+                var moviData = new Date(m.data + "T00:00:00").getMonth() + 1;
+                if(m.tipo == "Despesa"){
+                    return mesAtual == moviData;    
                 }
+            })
+
+            var labels = [];
+            var moviMes = new Date(destemes[0].data).getMonth() + 1;
+            if(moviMes == "1" || moviMes == "3" || moviMes == "5" || moviMes == "7" || moviMes == "8" || moviMes == "10" || moviMes == "12"){
+                labels.push('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31')
             }
+            if(moviMes == "4" || moviMes == "6" || moviMes == "9" || moviMes == "11"){
+                labels.push('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30')
+            }
+            if(moviMes == "2"){
+                labels.push('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18','19', '20', '21', '22', '23', '24', '25', '26', '27', '28')
+            }
+
+            var dias = [];
+            destemes.forEach(m => {
+                var dia = new Date(m.data + "T00:00:00").getDate()
+                dias.push(String(dia))
+            })
+
+            var data = [];
+            labels.forEach(l => {
+                var count = 0;
+                for(var d of dias){
+                    if (d == l){
+                        count += 1;
+                    }
+                }
+                data.push(count);
+            })
+
+            //console.log(destemes)
+            //console.log(labels)
+            //console.log(dias)
+            //console.log(data)
+
+            const ctx2 = document.getElementById('myChart2');
+
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# de Despesas',
+                        data: data,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total de despesas deste mês (por dia)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+                
+            });
         }
-    });
+    };
+
+    xhttp.open("GET", "../json/movi.json", true);
+    xhttp.send();
 }
 
 function graph3(){
-    const ctx3 = document.getElementById('myChart3');
+    var xhttp = new XMLHttpRequest();
 
-    new Chart(ctx3, {
-        type: 'bar',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [{
-                label: '# de Despesas',
-                data: [12, 19, 3, 5, 2, 3, 5, 4, 7, 6, 2, 4],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            movimentacoes = objJSON.movimentacoes;
+            //console.log(movimentacoes)
+
+            var options = {month : "long"};
+
+            var meses = [];
+            movimentacoes.forEach(m => {
+                if(m.tipo == "Despesa"){
+                    var dataformat = new Date(m.data + "T00:00:00")
+                    var moviData = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
+                    meses.push(moviData)
                 }
+            })
+            var labels = [];
+            meses.forEach(m => {
+                if(!labels.includes(m)){
+                    labels.push(m)
+                }
+            })
+            var data1 = [];
+            labels.forEach(l => {
+                var count = 0;
+                for(var m of meses){
+                    if (m == l){
+                        count += 1;
+                    }
+                }
+                data1.push(count);
+            })
+
+            var data2 = [];
+            labels.forEach(l => {
+                var totald = 0;
+                movimentacoes.forEach(m => {
+                    var dataformat = new Date(m.data + "T00:00:00")
+                    var moviData = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
+                    if(l == moviData){
+                        totald += parseFloat(m.valor);
+                    }
+                })
+                data2.push(totald);
+            })
+            for(var l = 0; l < labels.length; l++){
+                var newl = String(labels[l][0]).toUpperCase() + String(labels[l]).slice(1);
+                labels[l] = newl
             }
+
+            //console.log(meses)
+            //console.log(labels)
+            //console.log(data1)
+            //console.log(data2)
+
+            const ctx3 = document.getElementById('myChart3');
+
+            new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '# de Despesas',
+                        data: data1,
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Total gasto (R$)',
+                        data: data2,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total de despesas deste ano / Total gasto por mês'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
-    });
+    };
+
+    xhttp.open("GET", "../json/movi.json", true);
+    xhttp.send();
 }

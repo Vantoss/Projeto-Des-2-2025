@@ -5,7 +5,7 @@
     <div class="container mt-2">
         <div class="row">
             <div class="col" id="resumorel">
-                <h3>Relatório de <?php echo strftime("%B")?></h3>
+                <h3>Relatório Geral</h3>
                 <div class="desc">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                         Mauris et ante sed est laoreet dapibus. 
@@ -15,10 +15,6 @@
                         Nulla facilisi. Phasellus tristique consectetur libero, eget fermentum justo consectetur sed. 
                         Duis sed risus condimentum, pellentesque sapien viverra, tempus arcu. 
                         In id ligula lacinia, ullamcorper felis sed, gravida lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>  
-                </div>
-                <div class="total">
-                    <p id="totald">Total de despesas: <span id="numd"></span></p>
-                    <p id="totalr">Total de receitas: <span id="numr"></span></p>
                 </div>
             </div>
         </div>

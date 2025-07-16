@@ -6,7 +6,7 @@
 <!--Ver a questão do cache-->
 <!--Fazer a puxada de dados por ano-->
 <!--Escrever as descrições -->
-<!--Fazer a página de Relatório (talvez tornar ela a inicial) -->
+<!--Terminar página de relatório -->
 <?php require_once "../assets/head.php" ?>
 <body onload="tabelaMovi()">
     <?php require_once "../assets/header.php"?>
