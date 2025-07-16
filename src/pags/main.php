@@ -5,8 +5,6 @@
 <!--Fazer a edição do usuário ao clicar no nome--> 
 <!--Ver a questão do cache-->
 <!--Fazer a puxada de dados por ano-->
-<!--Escrever as descrições -->
-<!--Terminar página de relatório -->
 <?php require_once "../assets/head.php" ?>
 <body onload="tabelaMovi()">
     <?php require_once "../assets/header.php"?>
@@ -16,14 +14,7 @@
             <div class="col" id="resumomovi">
                 <h3>Suas movimentações</h3>
                 <div class="desc">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Mauris et ante sed est laoreet dapibus. 
-                        Proin erat magna, pharetra in augue eget, ultrices volutpat nunc. 
-                        Mauris augue ipsum, interdum id lorem a, placerat pulvinar est. 
-                        Vestibulum a magna neque. Aenean et semper erat, eget pharetra felis. 
-                        Nulla facilisi. Phasellus tristique consectetur libero, eget fermentum justo consectetur sed. 
-                        Duis sed risus condimentum, pellentesque sapien viverra, tempus arcu. 
-                        In id ligula lacinia, ullamcorper felis sed, gravida lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>  
+                    <p>Aqui você poderá cadastrar suas despesas e receitas e visualizá-las na tabela abaixo.</p>
                 </div>
                 <div class="total">
                     <p id="totald">Total de despesas: <span id="numd"></span></p>

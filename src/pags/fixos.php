@@ -8,14 +8,11 @@
             <div class="col" id="resumofixos">
                 <h3>Seus lançamentos fixos</h3>
                 <div class="desc">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                        Mauris et ante sed est laoreet dapibus. 
-                        Proin erat magna, pharetra in augue eget, ultrices volutpat nunc. 
-                        Mauris augue ipsum, interdum id lorem a, placerat pulvinar est. 
-                        Vestibulum a magna neque. Aenean et semper erat, eget pharetra felis. 
-                        Nulla facilisi. Phasellus tristique consectetur libero, eget fermentum justo consectetur sed. 
-                        Duis sed risus condimentum, pellentesque sapien viverra, tempus arcu. 
-                        In id ligula lacinia, ullamcorper felis sed, gravida lorem. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>  
+                    <p>Aqui você pode cadastrar seus lançamentos fixos, ou seja, despesas que acontecem todos os meses (ex.: contas de luz, parcelas).<br>
+                    Estes lançamentos serão automaticamente cadastrados como despesas quando a data de vencimento chegar, e poderão ser vistos na tabela da página "Movimentações"<br>
+                    Você pode forçar o cadastro ao apertar tanto o botão "Lançar" quanto o botão "Lançar todos". 
+                    O primeiro cadastrará apenas a despesa selecionada, enquanto o segundo cadastrará todas que não foram pagas ainda.
+                    </p>  
                 </div>
                 <div class="total">
                     <p id="totalf">Total de lançamentos: <span id="numf"></span></p>
@@ -59,8 +56,8 @@
                             <option value="Transporte">Transporte</option>
                             <option value="Trabalho">Trabalho</option>
                         </select><br>
-                        <label for="validade">Validade:</label><br>
-                        <input type="date" name="validade" id="validade" placeholder="Prazo" required><br>
+                        <label for="validade">Vencimento:</label><br>
+                        <input type="date" name="validade" id="validade" required><br>
                         <label for="valorconta">Valor:</label><br>
                         <input type="number" name="valorc" id="valorconta" placeholder="Valor" required>
                     </form>
@@ -98,7 +95,7 @@
                             <option value="Transporte">Transporte</option>
                             <option value="Trabalho">Trabalho</option>
                         </select><br>
-                        <label for="validadeput">Validade:</label><br>
+                        <label for="validadeput">Vencimento:</label><br>
                         <input type="date" name="validade" id="validadeput" placeholder="Prazo" required><br>
                         <label for="valorputf">Valor:</label><br>
                         <input type="number" name="valorc" id="valorputf" placeholder="Valor" required>
