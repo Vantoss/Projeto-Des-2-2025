@@ -179,6 +179,10 @@ function getFixo(){
 
 }
 
+function autoConvertFixo(){
+    
+}
+
 function cadFixo(){
     session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");
@@ -260,8 +264,11 @@ function lancaFixo(){
     $result1 = $dbconn->query($sql1);
     $sql2 = "INSERT INTO movimentacoes (id, id_usuario, nome, categoria, data, valor, tipo) VALUES (NULL, '$userid', '$nome', '$categoria', '$data', '$valor', '$tipo');";
     $result2 = $dbconn->query($sql2);
-    echo $result2;
-
+    $sql3 = "SELECT @validade := validade FROM lancamentos WHERE lancamentos.id = '$id';";
+    $result3 = $dbconn->query($sql3);
+    $sql4 = "INSERT INTO lancamentos (id, id_usuario, nome, categoria, validade, valor, foi_paga) VALUES (NULL, '$userid', '$nome', '$categoria', DATE_ADD(@validade, INTERVAL 1 MONTH) , '$valor', 0);";
+    $result4 = $dbconn->query($sql4);
+    echo $result4;
     $dbconn->close();
 }
 
@@ -286,6 +293,10 @@ function lancaALL(){
         $result1 = $dbconn->query($sql1);
         $sql2 = "INSERT INTO movimentacoes (id, id_usuario, nome, categoria, data, valor, tipo) VALUES (NULL, '$userid', '$nome', '$categoria', '$data', '$valor', '$tipo');";
         $result2 = $dbconn->query($sql2);
+        $sql3 = "SELECT @validade := validade FROM lancamentos WHERE lancamentos.id = '$id';";
+        $result3 = $dbconn->query($sql3);
+        $sql4 = "INSERT INTO lancamentos (id, id_usuario, nome, categoria, validade, valor, foi_paga) VALUES (NULL, '$userid', '$nome', '$categoria', DATE_ADD(@validade, INTERVAL 1 MONTH) , '$valor', 0);";
+        $result4 = $dbconn->query($sql4);
     }
     $dbconn->close();
 }
@@ -407,6 +418,9 @@ if (isset($_REQUEST["lancafixo"])){
 }
 if (isset($_REQUEST["lancaall"])){
     lancaALL();
+}
+if (isset($_REQUEST["auto"])){
+    autoConvertFixo();
 }
 
 if (isset($_REQUEST["get"])){

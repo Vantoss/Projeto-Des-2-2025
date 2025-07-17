@@ -1,7 +1,6 @@
 <!--A FAZER -->
 <!--Consertar a pesquisa de movimentações -->
 <!--Fazer com que as linhas dos lançamentos pagos se tornem cinzas ou algo parecido-->
-<!--Fazer com que os não pagos sejam duplicados com o mês acrescentado quando forem lançados-->
 <!--Fazer a edição do usuário ao clicar no nome--> 
 <!--Ver a questão do cache-->
 <!--Fazer a puxada de dados por ano-->
@@ -17,8 +16,16 @@
                     <p>Aqui você poderá cadastrar suas despesas e receitas e visualizá-las na tabela abaixo.</p>
                 </div>
                 <div class="total">
-                    <p id="totald">Total de despesas: <span id="numd"></span></p>
-                    <p id="totalr">Total de receitas: <span id="numr"></span></p>
+                    <div class="card">
+                        <div class="card-body">
+                            <p id="totald" class="card-text">Total de despesas: <span id="numd"></span></p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <p id="totalr" class="card-text">Total de receitas: <span id="numr"></span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -77,8 +84,8 @@
                         <label class="btn btn-outline-success" for="mar" id="março" onclick="bringMesMovi('março')">Março</label>
                         <input type="radio" class="mes btn-check" name="meses" id="abr" value="abril">
                         <label class="btn btn-outline-success" for="abr" id="abril" onclick="bringMesMovi('abril')">Abril</label>
-                        <input type="radio" class="mes btn-check" name="meses" id="maio" value="maio">
-                        <label class="btn btn-outline-success" for="maio" id="maio" onclick="bringMesMovi('maio')">Maio</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="mai" value="maio">
+                        <label class="btn btn-outline-success" for="mai" id="maio" onclick="bringMesMovi('maio')">Maio</label>
                         <input type="radio" class="mes btn-check" name="meses" id="jun" value="junho">
                         <label class="btn btn-outline-success" for="jun" id="junho" onclick="bringMesMovi('junho')">Junho</label>
                         <input type="radio" class="mes btn-check" name="meses" id="jul" value="julho">

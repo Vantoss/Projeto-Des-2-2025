@@ -15,7 +15,11 @@
                     </p>  
                 </div>
                 <div class="total">
-                    <p id="totalf">Total de lançamentos: <span id="numf"></span></p>
+                    <div class="card">
+                        <div class="card-body">
+                            <p id="totalf" class="card-text">Total de lançamentos: <span id="numf"></span></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -24,6 +28,42 @@
                 <div id="btns">
                     <button type='submit' id='cadf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadfmodal'>Registrar lançamento fixo</button>
                     <button type='submit' id='lancf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#lancmodal' onclick="getNaoPagos()">Lançar todos</button>
+                </div>
+                <div id="periodo">
+                    <div class="dropdown" id="ano">
+                        <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ano
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="anolista"></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="mes btn-check" name="meses" id="jan" value="janeiro">
+                        <label class="btn btn-outline-success" for="jan" id="janeiro" onclick="bringMesFixo('janeiro')">Janeiro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="fev" value="fevereiro">
+                        <label class="btn btn-outline-success" for="fev" id="fevereiro" onclick="bringMesFixo('fevereiro')">Fevereiro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="mar" value="março">
+                        <label class="btn btn-outline-success" for="mar" id="março" onclick="bringMesFixo('março')">Março</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="abr" value="abril">
+                        <label class="btn btn-outline-success" for="abr" id="abril" onclick="bringMesFixo('abril')">Abril</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="mai" value="maio">
+                        <label class="btn btn-outline-success" for="mai" id="maio" onclick="bringMesFixo('maio')">Maio</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="jun" value="junho">
+                        <label class="btn btn-outline-success" for="jun" id="junho" onclick="bringMesFixo('junho')">Junho</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="jul" value="julho">
+                        <label class="btn btn-outline-success" for="jul" id="julho" onclick="bringMesFixo('julho')">Julho</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="ago" value="agosto">
+                        <label class="btn btn-outline-success" for="ago" id="agosto" onclick="bringMesFixo('agosto')">Agosto</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="set" value="setembro">
+                        <label class="btn btn-outline-success" for="set" id="setembro" onclick="bringMesFixo('setembro')">Setembro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="out" value="outubro">
+                        <label class="btn btn-outline-success" for="out" id="outubro" onclick="bringMesFixo('outubro')">Outubro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="nov" value="novembro">
+                        <label class="btn btn-outline-success" for="nov" id="novembro" onclick="bringMesFixo('novembro')">Novembro</label>
+                        <input type="radio" class="mes btn-check" name="meses" id="dez" value="dezembro">
+                        <label class="btn btn-outline-success" for="dez" id="dezembro" onclick="bringMesFixo('dezembro')">Dezembro</label>
+                    </div>
                 </div>
                 <table id="fixos" class="table table-bordered">
                 </table>

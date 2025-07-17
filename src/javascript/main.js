@@ -11,10 +11,10 @@ function tabelaMovi(){
 }
 
 function tabelaFixo(){
+    var mesAtual = new Date().getMonth() + 1;
     atualizarJSONfixo();
-    setTimeout(displayFixo, 500);
+    setTimeout(displayFixo, 500, mesAtual);
     //setTimeout(getFixos, 500);
-    totalFixo();
 }
 
 function loadRel(){
@@ -84,6 +84,18 @@ function autofilldelMovi(id){
 }
 
 function tableBuilderMovi(movimentacoes){
+    movimentacoes.sort((a,b)=>{
+        var dateA = new Date(a.data + "T00:00:00").getDate();
+        var dateB = new Date(b.data + "T00:00:00").getDate();
+        if(dateA < dateB){
+            return -1;
+        }
+        if(dateA > dateB){
+            return 1;
+        }
+        return 0;
+    })
+
     conteudo = "<table id='movimentacoes'>";
     conteudo += "<thead>";
     conteudo += "   <tr>";
@@ -122,14 +134,23 @@ async function displayMovi(mes){
             objJSON = JSON.parse(this.responseText);
             movimentacoes = objJSON.movimentacoes;
             //console.log(movimentacoes);
-            var mesfiltrado = movimentacoes.filter(m => {
-                var moviData = new Date(m.data + "T00:00:00").getMonth() + 1;
-                return mes == moviData;
-            })
+            if(movimentacoes.length == 0){
+                document.getElementById("movimentacoes").innerHTML = "<p class='naotem'>Não há movimentações registradas neste mês</p>"
+                document.getElementById("periodo").setAttribute("hidden", "")
+            } else{
+                if(document.getElementById("periodo").hasAttribute("hidden")){
+                    document.getElementById("periodo").removeAttribute("hidden")
+                }
+                var mesfiltrado = movimentacoes.filter(m => {
+                    var moviData = new Date(m.data + "T00:00:00").getMonth() + 1;
+                    return mes == moviData;
+                })
+                
+                tableBuilderMovi(mesfiltrado);
+                mesesBtnsMovi(movimentacoes);
+                totalMovi(mesfiltrado);    
+            }
             
-            tableBuilderMovi(mesfiltrado);
-            mesesBtnsMovi(movimentacoes);
-            totalMovi(mesfiltrado);
         }
     };
 
@@ -172,14 +193,17 @@ function bringMesMovi(mes){
             movimentacoes = objJSON.movimentacoes;
             var options = { month : "long"};
             //console.log(movimentacoes);
-            var mesfiltrado = movimentacoes.filter(m => {
-                var dataformat = new Date(m.data + "T00:00:00")
-                var moviData = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
-                return mes == moviData;
-            })
-            
-            tableBuilderMovi(mesfiltrado);
-            totalMovi(mesfiltrado);
+            if(movimentacoes.length == 0){
+                document.getElementById("movimentacoes").innerHTML = "<p class='naotem'>Não há movimentações registradas neste mês</p>"
+            } else{
+                var mesfiltrado = movimentacoes.filter(m => {
+                    var dataformat = new Date(m.data + "T00:00:00")
+                    var moviData = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
+                    return mes == moviData;
+                })
+                tableBuilderMovi(mesfiltrado);
+                totalMovi(mesfiltrado);
+            }
         }
     };
     
@@ -436,6 +460,18 @@ function autofilldelFixo(id){
 }
 
 function tableBuilderFixo(fixos){
+    fixos.sort((a,b)=>{
+        var dateA = new Date(a.validade + "T00:00:00").getDate();
+        var dateB = new Date(b.validade + "T00:00:00").getDate();
+        if(dateA < dateB){
+            return -1;
+        }
+        if(dateA > dateB){
+            return 1;
+        }
+        return 0;
+    })
+
     conteudo = "<table id='fixos'>";
     conteudo += "<thead>";
     conteudo += "   <tr>";
@@ -495,21 +531,92 @@ function tableBuilderFixoALL(fixos){
     
 }
 
-function displayFixo(){
+async function displayFixo(mes){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
-            console.log(this.responseText);
+            //console.log(this.responseText);
 
             objJSON = JSON.parse(this.responseText);
             fixos = objJSON.fixos;
-            console.log(fixos);
+            //console.log(fixos);
+            if(fixos.length == 0){
+                document.getElementById("fixos").innerHTML = "<p class='naotem'>Não há lançamentos registrados neste mês</p>"
+                document.getElementById("periodo").setAttribute("hidden", "")
+            } else{
+                if(document.getElementById("periodo").hasAttribute("hidden")){
+                    document.getElementById("periodo").removeAttribute("hidden")
+                }
+                var mesfiltrado = fixos.filter(f => {
+                    var fixoData = new Date(f.validade + "T00:00:00").getMonth() + 1;
+                    return mes == fixoData;
+                })
+                
+                tableBuilderFixo(mesfiltrado);
+                mesesBtnsFixo(fixos);
+                totalFixo(mesfiltrado);    
+            }
             
-            tableBuilderFixo(fixos);
         }
     };
 
+    xhttp.open("GET", "../json/fixos.json", true);
+    xhttp.send();
+}
+
+function mesesBtnsFixo(fixos){
+    var data = new Date();
+    var options = { month : "long"};
+    var mesAtual = new Intl.DateTimeFormat("pt-BR", options).format(data);
+    var classes = document.getElementsByClassName("mes");
+
+    var mesesjson = [];
+    fixos.forEach(f => {
+        var dataformat = new Date(f.validade + "T00:00:00")
+        var mes = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
+        if(!mesesjson.includes(mes)){
+            mesesjson.push(mes);   
+        }
+    })
+
+    for(var i = 0; i < classes.length; i++){
+        if(classes[i].value.toLowerCase() == mesAtual){
+            classes[i].setAttribute("checked", "")
+        }
+        if(!mesesjson.includes(classes[i].value)){
+            document.getElementById(classes[i].value).setAttribute("hidden", "")
+        }
+    }
+}
+
+function bringMesFixo(mes){
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            fixos = objJSON.fixos;
+            //console.log(fixos);
+            if(fixos.length == 0){
+                document.getElementById("fixos").innerHTML = "<p class='naotem'>Não há lançamentos registrados neste mês</p>"
+            } else{
+                var options = { month : "long"};
+                var mesfiltrado = fixos.filter(f => {
+                    var dataformat = new Date(f.validade + "T00:00:00")
+                    var fixoData = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
+                    return mes == fixoData;
+                })    
+                tableBuilderFixo(mesfiltrado);
+                totalFixo(mesfiltrado);
+            }
+            
+            
+            
+        }
+    };
+    
     xhttp.open("GET", "../json/fixos.json", true);
     xhttp.send();
 }

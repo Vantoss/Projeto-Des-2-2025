@@ -53,6 +53,10 @@ footer{
     border-top: 5px solid rgb(124, 207, 124);
 }
 
+#resumomovi, #resumofixos{
+    text-align: center;
+}
+
 .containertable{
     border: 2px solid black;
     width: auto;
@@ -95,6 +99,7 @@ p{
 
 .total{
     text-align: center;
+    display: inline-flex;
 }
 
 #numd{
