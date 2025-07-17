@@ -179,10 +179,6 @@ function getFixo(){
 
 }
 
-function autoConvertFixo(){
-    
-}
-
 function cadFixo(){
     session_start();
     $dbconn = new mysqli("localhost", "root", "", "financas");

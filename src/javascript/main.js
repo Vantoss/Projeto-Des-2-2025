@@ -5,22 +5,29 @@ function volta(){
 
 function tabelaMovi(){
     var mesAtual = new Date().getMonth() + 1;
-    atualizarJSONmovi();
-    setTimeout(displayMovi, 500, mesAtual);
+    atualizarJSONmovi().then(
+        displayMovi(mesAtual)
+    );
+    //setTimeout(displayMovi, 500, mesAtual);
     //setTimeout(getMovi, 500);
 }
 
 function tabelaFixo(){
     var mesAtual = new Date().getMonth() + 1;
-    atualizarJSONfixo();
-    setTimeout(displayFixo, 500, mesAtual);
+    atualizarJSONfixo().then(
+        displayFixo(mesAtual)
+    );
+    autoGetNPagos();
+    //setTimeout(displayFixo, 500, mesAtual);
     //setTimeout(getFixos, 500);
 }
 
 function loadRel(){
     var mesAtual = new Date().getMonth() + 1;
-    atualizarJSONmovi();
-    setTimeout(displayRel, 500, mesAtual);
+    atualizarJSONmovi().then(
+        displayRel(mesAtual)
+    );
+    //setTimeout(displayRel, 500, mesAtual);
 }
 
 function convertData(data){
@@ -124,7 +131,7 @@ function tableBuilderMovi(movimentacoes){
     conteudo +="</tbody>";
     document.getElementById("movimentacoes").innerHTML = conteudo;
 }
-async function displayMovi(mes){
+function displayMovi(mes){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -224,8 +231,10 @@ function cadMovi(){
                         var mesAtual = new Date().getMonth() + 1;
                         window.alert("Movimentação cadastrada com sucesso!")
                         document.getElementById("formmovi").reset();
-                        atualizarJSONmovi();
-                        setTimeout(displayMovi, 1000, mesAtual);
+                        atualizarJSONmovi().then(
+                            setTimeout(displayMovi, 500, mesAtual)
+                        );
+                        
                     }
                     else{
                         window.alert("Algo deu errado!")
@@ -251,8 +260,10 @@ function putMovi(){
                     var mesAtual = new Date().getMonth() + 1;
                     window.alert("Movimentação atualizada com sucesso!")
                     document.getElementById("formmoviput").reset();
-                    atualizarJSONmovi();
-                    setTimeout(displayMovi, 1000, mesAtual);
+                    atualizarJSONmovi().then(
+                        setTimeout(displayMovi, 500, mesAtual)
+                    );
+                    
                 }
                 else{
                     window.alert("Algo deu errado!")
@@ -275,8 +286,10 @@ function delMovi(){
                 var mesAtual = new Date().getMonth() + 1;
                 window.alert("Movimentação apagada com sucesso!")
                 document.getElementById("formmovidel").reset();
-                atualizarJSONmovi();
-                setTimeout(displayMovi, 1000, mesAtual);
+                atualizarJSONmovi().then(
+                    setTimeout(displayMovi, 500, mesAtual)
+                );
+                
             }
             else{
                 window.alert("Algo deu errado!")
@@ -531,7 +544,7 @@ function tableBuilderFixoALL(fixos){
     
 }
 
-async function displayFixo(mes){
+function displayFixo(mes){
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function(){
@@ -611,9 +624,6 @@ function bringMesFixo(mes){
                 tableBuilderFixo(mesfiltrado);
                 totalFixo(mesfiltrado);
             }
-            
-            
-            
         }
     };
     
@@ -631,11 +641,13 @@ function cadFixo(){
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 if(this.responseText == "1"){
+                    var mesAtual = new Date().getMonth() + 1;
                     window.alert("Lançamento fixo cadastrado com sucesso!")
                     document.getElementById("formfixo").reset();
-                    atualizarJSONfixo();
-                    setTimeout(displayFixo, 1000);
-                    setTimeout(totalFixo, 1000);
+                    atualizarJSONfixo().then(
+                        setTimeout(displayFixo, 500, mesAtual)
+                    );
+                    
                 }
                 else{
                     window.alert("Algo deu errado!")
@@ -659,11 +671,13 @@ function putFixo(){
         xhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
                 if(this.responseText == "1"){
+                    var mesAtual = new Date().getMonth() + 1;
                     window.alert("Lançamento fixo atualizado com sucesso!")
                     document.getElementById("formfixoput").reset();
-                    atualizarJSONfixo();
-                    setTimeout(displayFixo, 1000);
-                    setTimeout(totalFixo, 1000);
+                    atualizarJSONfixo().then(
+                        setTimeout(displayFixo, 500, mesAtual)
+                    );
+                    
                 }
                 else{
                     console.log(this.responseText)
@@ -684,11 +698,13 @@ function delFixo(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             if(this.responseText == "1"){
+                var mesAtual = new Date().getMonth() + 1;
                 window.alert("Lançamento fixo apagado com sucesso!")
                 document.getElementById("formfixodel").reset();
-                atualizarJSONfixo();
-                setTimeout(displayFixo, 1000);
-                setTimeout(totalFixo, 1000);
+                atualizarJSONfixo().then(
+                    setTimeout(displayFixo, 500, mesAtual)
+                );
+                
             }
             else{
                 window.alert("Algo deu errado!")
@@ -706,11 +722,13 @@ function lancFixo(){
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
             if(this.responseText == "1"){
+                var mesAtual = new Date().getMonth() + 1;
                 window.alert("Lançamento convertido em despesa com sucesso!")
                 document.getElementById("formfixob").reset();
-                atualizarJSONfixo();
-                setTimeout(displayFixo, 1000);
-                setTimeout(totalFixo, 1000);
+                atualizarJSONfixo().then(
+                    setTimeout(displayFixo, 500, mesAtual)
+                );
+                
             }
             else{
                 console.log(this.responseText);
@@ -721,6 +739,53 @@ function lancFixo(){
     url = "../functions.php?lancafixo&id=" + document.getElementById("idb").value + "&nome=" + document.getElementById("nomeb").value  + "&categoria=" + document.getElementById("catb").value +  "&data=" + document.getElementById("datab").value + "&valor=" + document.getElementById("valorb").value;
     xhttp.open("POST", url, true);
     xhttp.send()
+}
+
+function autoGetNPagos(){
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            objJSON = JSON.parse(this.responseText);
+            fixos = objJSON.fixos;
+
+            var data = new Date();
+            data + "T00:00:00";
+            var novadata = data.toISOString().substring(0,10);
+
+            var nPagos = fixos.filter(f => {
+                if(f.foi_paga == "0" && f.validade == novadata){return f;}
+            });
+            console.log(nPagos);
+
+            if(nPagos.length == 0){
+                return 0;
+            } else{
+                autoLancNPagos(nPagos, novadata)
+            }
+            
+        }
+    };
+
+    xhttp.open("GET", "../json/fixos.json", true);
+    xhttp.send();
+}
+
+function autoLancNPagos(fixos, data){
+    var idvalstring = JSON.stringify(fixos)
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            console.log(this.responseText)
+        }
+    };
+
+    url = "../functions.php?lancaall&objs=" + idvalstring + "&data=" + data;
+    xhttp.open("POST", url, true);
+    xhttp.send();    
+
 }
 
 function getNaoPagos(){
@@ -763,11 +828,13 @@ function lancNPagos(){
 
     xhttp.onreadystatechange = function(){
         if(this.readyState == 4 && this.status == 200){
+            var mesAtual = new Date().getMonth() + 1;
             console.log(this.responseText)
             window.alert("Lançamentos convertidos em despesas com sucesso!")
-            atualizarJSONfixo();
-            setTimeout(displayFixo, 1000);
-            setTimeout(totalFixo, 1000);
+            atualizarJSONfixo().then(
+                setTimeout(displayFixo, 500, mesAtual)
+            );
+            
         }
     };
 
