@@ -134,7 +134,17 @@ function createBanco(){
     (NULL, 1, 'Consulta', 'Saúde', '2025-05-18', '50', 'Despesa' ),
     (NULL, 1, 'Curso', 'Educação', '2025-05-12', '100', 'Despesa' ),
     (NULL, 1, 'Combustível', 'Transporte', '2025-05-20', '6.20', 'Despesa' ),
-    (NULL, 1, 'Salário', 'Trabalho', '2025-06-05', '2050', 'Receita' )";
+    (NULL, 1, 'Salário', 'Trabalho', '2025-06-05', '2050', 'Receita' ),
+    (NULL, 1, 'Condomínio', 'Moradia', '2025-06-10', '500', 'Despesa' ),
+    (NULL, 1, 'Luz', 'Moradia', '2025-06-07', '110.25', 'Despesa' ),
+    (NULL, 1, 'Água', 'Moradia', '2025-06-10', '100.40', 'Despesa' ),
+    (NULL, 1, 'Internet', 'Moradia', '2025-06-10', '85', 'Despesa' ),
+    (NULL, 1, 'Consulta', 'Saúde', '2025-06-18', '50', 'Despesa' ),
+    (NULL, 1, 'Curso', 'Educação', '2025-06-12', '100', 'Despesa' ),
+    (NULL, 1, 'Combustível', 'Transporte', '2025-06-20', '6.20', 'Despesa' ),
+    (NULL, 1, 'Restaurante', 'Alimentação', '2025-06-27', '40', 'Despesa' ),
+    (NULL, 1, 'Salário', 'Trabalho', '2025-07-05', '2100', 'Receita' ),
+    (NULL, 1, 'Uber', 'Transporte', '2025-07-08', '20.50', 'Despesa' );";
 
     $execfillmovi = "CALL `encheMovi` ();";
     

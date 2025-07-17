@@ -1163,7 +1163,7 @@ function graph3(movimentacoes){
             movimentacoes.forEach(m => {
                 var dataformat = new Date(m.data + "T00:00:00")
                 var moviData = new Intl.DateTimeFormat("pt-BR", options).format(dataformat)
-                if(l == moviData){
+                if(l == moviData && m.tipo == "Despesa"){
                     totald += parseFloat(m.valor);
                 }
             })
