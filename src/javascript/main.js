@@ -76,6 +76,12 @@ async function atualizarJSONmovi(){
     };
     xhttp.send();
 }
+function autofillcadMovi(){
+    var data = new Date();
+    data + "T00:00:00";
+    var novadata = data.toISOString().substring(0,10);
+    document.forms["formmovi"]["data"].value = novadata;
+}
 
 function autofillputMovi(id, nome, cat, data, valor, tipo){
     document.getElementById("idputm").value = id;

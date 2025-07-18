@@ -32,7 +32,7 @@
         <div class="row-md-6" id="">
             <div class="containertable col rounded" id="tabelamovi">
                 <div id="btns">
-                    <button type='submit' id='cadm' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadmmodal'>Registrar gasto/receita</button>
+                    <button type='submit' id='cadm' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadmmodal' onclick="autofillcadMovi()">Registrar gasto/receita</button>
                     <button class="btn btn-success" id="pm" type="button" data-bs-toggle="collapse" data-bs-target="#pesquisar" aria-expanded="false" aria-controls="collapse">
                     Pesquisar
                     </button>
@@ -53,7 +53,7 @@
                             <option value="Trabalho">Trabalho</option>
                         </select>
                         <label for="datap">Data:</label>
-                        <input type="date" name="datam" id="datap" >
+                        <input type="date" name="datam" id="datap">
                         <label for="valorp">Valor:</label>
                         <input type="number" name="valorm" id="valorp" >
                         <label for="tipop">Tipo:</label>
