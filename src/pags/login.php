@@ -12,10 +12,10 @@
 
 <body>
 
-    <div class="container mx-auto mt-4" id="login">
+    <div class="container mx-auto mt-5" id="login">
         <div class="row">
             <h1 id="facalogin" class="">Faça seu login</h1>
-            <div class="containerlogin col-5 rounded"> <!--Consertar o estilo do col do login -->
+            <div class="containerlogin col-md-5 rounded"> <!--Consertar o estilo do col do login -->
                 <form id="loginform" method="POST">
                     <label for="nomelog">Nome:</label>
                     <input type="text" name="nomelog" id="nomelog" placeholder="" required><br>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="row mt-3"> <!--Fazer com que ao cadastrar o usuário os dados são inseridos nos campos do login (ou logar direto, um ou o outro) -->
-            <div class="col-5 mx-auto">
+            <div class="col-md-5 mx-auto">
                 <p id="cadtext">Não tem uma conta ainda? <a data-bs-toggle='modal' data-bs-target='#cadusermodal' href="">Crie uma.</a></p>
             </div>
         </div>
@@ -61,13 +61,6 @@
         </div>
     </div>
 
-
-<!--Mudar para que o usuário possa selecionar o nome do usuário que ele quer apagar.-->
-    <!--<div class="containerlogin" id="deletar">
-        <p>Apagar usuário</p>
-        <input type="text" name="iddel" id="iddel" placeholder="ID do usuário" required>
-        <button type="submit" id="enviar" onclick="deletar()">Enviar</input>
-    </div>-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

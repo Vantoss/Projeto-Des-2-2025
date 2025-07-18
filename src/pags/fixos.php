@@ -5,7 +5,7 @@
 
     <div class="container mt-2">
         <div class="row">
-            <div class="col" id="resumofixos">
+            <div class="col-md-12 mx-auto" id="resumofixos">
                 <h3>Seus lançamentos fixos</h3>
                 <div class="desc">
                     <p>Aqui você pode cadastrar seus lançamentos fixos, ou seja, despesas que acontecem todos os meses (ex.: contas de luz, parcelas).<br>
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="">
+        <div class="row-md-6" id="">
             <div class="containertable col rounded" id="tabelafixos">  
                 <div id="btns">
                     <button type='submit' id='cadf' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadfmodal'>Registrar lançamento fixo</button>

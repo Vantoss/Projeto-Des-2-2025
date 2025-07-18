@@ -4,7 +4,7 @@
 
     <div class="container mt-2">
         <div class="row">
-            <div class="col" id="resumorel">
+            <div class="col-md-6 mx-auto" id="resumorel">
                 <h3>Relatório Geral</h3>
                 <div class="desc">
                     <p>Aqui é apresentado um resumo das suas despesas no mês selecionado e ao longo do ano.</p>  
@@ -40,17 +40,17 @@
                     <label class="btn btn-outline-success" for="dez" id="dezembro" onclick="bringMesRel('dezembro')">Dezembro</label>
                 </div>
             </div>
-            <div class="col colgraf">
+            <div class="col-sm-4 colgraf">
                 <div id="grafico1">
                     <canvas id="myChart1"></canvas>
                 </div>
             </div>
-            <div class="col colgraf">
+            <div class="col-sm-4 colgraf">
                 <div id="grafico2">
                     <canvas id="myChart2"></canvas>
                 </div>
             </div>
-            <div class="col colgraf">
+            <div class="col-sm-4 colgraf">
                 <div id="grafico3">
                     <canvas id="myChart3"></canvas>
                 </div>

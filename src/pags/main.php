@@ -10,7 +10,7 @@
     
     <div class="container mt-2">
         <div class="row">
-            <div class="col" id="resumomovi">
+            <div class="col-md-6 mx-auto" id="resumomovi">
                 <h3>Suas movimentações</h3>
                 <div class="desc">
                     <p>Aqui você poderá cadastrar suas despesas e receitas e visualizá-las na tabela abaixo.</p>
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="">
+        <div class="row-md-6" id="">
             <div class="containertable col rounded" id="tabelamovi">
                 <div id="btns">
                     <button type='submit' id='cadm' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#cadmmodal'>Registrar gasto/receita</button>

@@ -557,6 +557,7 @@ function displayFixo(mes){
             if(fixos.length == 0){
                 document.getElementById("fixos").innerHTML = "<p class='naotem'>Não há lançamentos registrados neste mês</p>"
                 document.getElementById("periodo").setAttribute("hidden", "")
+                document.getElementById("numf").innerHTML = "N/A";  
             } else{
                 if(document.getElementById("periodo").hasAttribute("hidden")){
                     document.getElementById("periodo").removeAttribute("hidden")
