@@ -256,7 +256,7 @@ function lancaFixo(){
     if (!$nome || !$categoria || !$data || !$valor || !$id ){
         die("Dados não entraram!");
     }
-    $sql1 = "UPDATE lancamentos SET foi_paga = 1 WHERE lancamentos.id = '$id';";
+    $sql1 = "UPDATE lancamentos SET foi_paga = 1, valor = '$valor' WHERE lancamentos.id = '$id';";
     $result1 = $dbconn->query($sql1);
     $sql2 = "INSERT INTO movimentacoes (id, id_usuario, nome, categoria, data, valor, tipo) VALUES (NULL, '$userid', '$nome', '$categoria', '$data', '$valor', '$tipo');";
     $result2 = $dbconn->query($sql2);

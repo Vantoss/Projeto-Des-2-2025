@@ -187,12 +187,13 @@
 
                 <div class="modal-body">
                     <p>Você tem certeza que quer lançar esta despesa?</p>
+                    <p>Edite o valor se necessário:</p>
                     <form id="formfixob">
                         <input hidden type="text" name="id" id="idb" required>
                         <input hidden type="text" name="nome" id="nomeb" required>                       
                         <input hidden type="text" name="cat" id="catb" required>        
                         <input hidden type="date" name="data" id="datab" required>                       
-                        <input hidden type="number" name="valor" id="valorb" required>                   
+                        <input type="number" name="valor" id="valorb" placeholder="Valor" required>                   
                     </form>
                 </div>
 
